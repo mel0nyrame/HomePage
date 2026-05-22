@@ -13,8 +13,8 @@
     <description>游戏展示官网后端</description>
 
     <modules>
-
         <module>homepage-common</module>
+        <module>homepage-user</module>
     </modules>
 
     <properties>
@@ -23,9 +23,10 @@
         <spring-boot.version>3.5.14</spring-boot.version>
         <mybatis-plus.version>3.5.7</mybatis-plus.version>
         <mybatis-spring.version>3.0.3</mybatis-spring.version>
-        <mysql.version>8.4.0</mysql.version>
+        <mysql.version>9.7.0</mysql.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok.version>1.18.46</lombok.version>
+        <java-jwt.version>4.5.2</java-jwt.version>
     </properties>
 
     <dependencyManagement>
@@ -67,12 +68,24 @@
                 <version>${lombok.version}</version>
             </dependency>
 
+            <!-- JWT -->
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${java-jwt.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
     <build>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
