@@ -1,4 +1,4 @@
-package com.homepage.user.model.dto;
+package com.homepage.auth.model.dto;
 
 import lombok.Data;
 

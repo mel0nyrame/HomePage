@@ -1,6 +1,6 @@
-package com.homepage.user.service;
+package com.homepage.auth.service;
 
-import com.homepage.user.model.dto.UserDTO;
+import com.homepage.auth.model.dto.UserDTO;
 
 /**
  * @Author Mel0ny

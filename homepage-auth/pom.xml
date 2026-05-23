@@ -9,7 +9,7 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>homepage-user</artifactId>
+    <artifactId>homepage-auth</artifactId>
     <packaging>jar</packaging>
     <name>homepage-user</name>
     <description>用户业务</description>

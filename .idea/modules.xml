@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/homepage-user.iml" filepath="$PROJECT_DIR$/homepage-user.iml" />
+      <module fileurl="file://$PROJECT_DIR$/homepage-auth.iml" filepath="$PROJECT_DIR$/homepage-auth.iml" />
     </modules>
   </component>
 </project>

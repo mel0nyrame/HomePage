@@ -14,7 +14,7 @@
 
     <modules>
         <module>homepage-common</module>
-        <module>homepage-user</module>
+        <module>homepage-auth</module>
     </modules>
 
     <properties>

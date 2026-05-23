@@ -1,4 +1,4 @@
-package com.homepage.user.filter;
+package com.homepage.auth.filter;
 
 import com.homepage.common.util.JwtUtil;
 import jakarta.servlet.FilterChain;

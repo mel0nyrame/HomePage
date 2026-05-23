@@ -1,8 +1,8 @@
-package com.homepage.user.controller;
+package com.homepage.auth.controller;
 
 import com.homepage.common.web.Response;
-import com.homepage.user.model.dto.UserDTO;
-import com.homepage.user.service.UserService;
+import com.homepage.auth.model.dto.UserDTO;
+import com.homepage.auth.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 /**

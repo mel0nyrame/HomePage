@@ -1,8 +1,8 @@
-package com.homepage.user.service.impl;
+package com.homepage.auth.service.impl;
 
 import com.homepage.common.util.JwtUtil;
-import com.homepage.user.model.dto.UserDTO;
-import com.homepage.user.service.UserService;
+import com.homepage.auth.model.dto.UserDTO;
+import com.homepage.auth.service.UserService;
 import org.springframework.stereotype.Service;
 
 /**
