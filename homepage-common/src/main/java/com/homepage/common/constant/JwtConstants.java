@@ -7,6 +7,13 @@ package com.homepage.common.constant;
  * @description: JWT常量类
  */
 public class JwtConstants {
+    /**
+     * JWT算法密钥
+     */
     public static final String JWT_SECRET = "a3WkYFJ7yhppb56tWQjkR6ju8vmszmR3syvsKbUn43ceNjkXAV";
+
+    /**
+     * token过期时间 2天 * 24小时 * 60分钟 * 60 秒 * 1000毫秒
+     */
     public static final Long JWT_TOKEN_EXPIRATION_TIME = 2 * 24 * 60 * 60 * 1000L ;
 }

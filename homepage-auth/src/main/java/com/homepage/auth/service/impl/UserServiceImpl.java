@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService {
         this.jwtUtil = jwtUtil;
     }
 
+    /**
+     * 获取token
+     * @param userDTO 用户数据
+     * @return token
+     */
     @Override
     public String token(UserDTO userDTO) {
         return jwtUtil.generateToken(userDTO.getUserId(), userDTO.getUsername(),  userDTO.getPassword());
