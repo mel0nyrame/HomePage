@@ -11,3 +11,6 @@
 
 # Java
 target/
+
+# MacOs
+.DS_Store
