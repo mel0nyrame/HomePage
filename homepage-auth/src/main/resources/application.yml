@@ -11,3 +11,6 @@ spring:
     url: jdbc:mysql://localhost:3306/homepage?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
     username: root # 测试环境用户名
     password: 123 # 测试环境密码
+  web:
+    resources:
+      add-mappings: false

@@ -3,6 +3,7 @@ package com.homepage.auth.controller;
 import com.homepage.auth.model.dto.UserDTO;
 import com.homepage.auth.service.UserService;
 import com.homepage.common.web.Response;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +26,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Response<String> login(@RequestBody UserDTO userDTO) {
+    public Response<String> login(@Validated @RequestBody UserDTO userDTO) {
         String token = userService.login(userDTO.getUsername(), userDTO.getPassword());
         return Response.ok(token);
     }
 
     @PostMapping("/register")
-    public Response<Void> register(@RequestBody UserDTO userDTO) {
+    public Response<Void> register(@Validated @RequestBody UserDTO userDTO) {
         userService.register(userDTO);
         return Response.ok();
     }
