@@ -1,6 +1,6 @@
 package com.homepage.auth.service;
 
-import com.homepage.auth.model.dto.UserDTO;
+import org.springframework.security.core.Authentication;
 
 /**
  * @Author Mel0ny
@@ -10,5 +10,10 @@ import com.homepage.auth.model.dto.UserDTO;
  */
 public interface UserService {
 
-    String token(UserDTO userDTO);
+    /**
+     * 获取token
+     * @param authentication 用户数据
+     * @return token
+     */
+    String token(Authentication authentication);
 }

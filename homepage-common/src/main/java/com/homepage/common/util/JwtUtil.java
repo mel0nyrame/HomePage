@@ -1,14 +1,14 @@
 package com.homepage.common.util;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.Instant;
+import java.util.stream.Collectors;
 
-import static com.homepage.common.constant.JwtConstants.*;
+import static com.homepage.common.constant.JwtConstants.JWT_TOKEN_EXPIRATION_TIME;
 
 /**
  * @Author Mel0ny
@@ -19,35 +19,39 @@ import static com.homepage.common.constant.JwtConstants.*;
 @Component
 public class JwtUtil {
 
-    public String generateToken(Long userId,String username, String password) {
-        Algorithm algorithm = Algorithm.HMAC256(JWT_SECRET);
-        return JWT.create()
-                .withClaim("userId",userId)
-                .withClaim("username",username)
-                .withClaim("password",password)
-                .withIssuer("homepage")
-                .withIssuedAt(new Date(System.currentTimeMillis()))
-                .withExpiresAt(new Date(System.currentTimeMillis() + JWT_TOKEN_EXPIRATION_TIME))
-                .sign(algorithm);
+    public final JwtEncoder encoder;
+
+    public final JwtDecoder decoder;
+
+    public JwtUtil(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder) {
+        this.encoder = jwtEncoder;
+        this.decoder = jwtDecoder;
     }
 
-    public DecodedJWT verifier(String token) {
-        return JWT.require(Algorithm.HMAC256(JWT_SECRET)).build().verify(token);
+    public String generateToken(Authentication authentication) {
+        Instant now = Instant.now();
+        String scope = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(" "));
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("homepage")
+                .issuedAt(now)
+                .expiresAt(now.plusSeconds(JWT_TOKEN_EXPIRATION_TIME))
+                .subject(authentication.getName())
+                .claim("scope", scope)
+                .build();
+        return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 
-    public Long getUserId(String token) {
-        return verifier(token).getClaim("userId").asLong();
+    private Jwt decode(String token) throws JwtException {
+        return this.decoder.decode(token);
     }
 
     public String getUsername(String token) {
-        return verifier(token).getClaim("username").asString();
-    }
-
-    public String getPassword(String token) {
-        return verifier(token).getClaim("password").asString();
+        return decode(token).getSubject();
     }
 
     public boolean isTokenExpired(String token) {
-        return verifier(token).getExpiresAt().before(new Date());
+        return decode(token).getExpiresAt().isBefore(Instant.now());
     }
 }

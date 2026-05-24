@@ -1,8 +1,8 @@
 package com.homepage.auth.service.impl;
 
-import com.homepage.common.util.JwtUtil;
-import com.homepage.auth.model.dto.UserDTO;
 import com.homepage.auth.service.UserService;
+import com.homepage.common.util.JwtUtil;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
      * @return token
      */
     @Override
-    public String token(UserDTO userDTO) {
-        return jwtUtil.generateToken(userDTO.getUserId(), userDTO.getUsername(),  userDTO.getPassword());
+    public String token(Authentication authentication) {
+        return jwtUtil.generateToken(authentication);
     }
 }

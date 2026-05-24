@@ -47,14 +47,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                     // 设置到Security上下文
                     SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                    // 将用户ID添加到请求属性中，方便控制器使用
-                    Long userId = jwtUtil.getUserId(token);
-                    request.setAttribute("userId", userId);
-                    request.setAttribute("username", username);
                 }
             } catch (Exception e) {
-                log.warn("JWT token validation failed: {}", e.getMessage());
+                log.error("JWT token validation failed: {}", e.getMessage());
             }
         }
 

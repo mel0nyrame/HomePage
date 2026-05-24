@@ -1,9 +1,11 @@
 package com.homepage.auth.controller;
 
-import com.homepage.common.web.Response;
-import com.homepage.auth.model.dto.UserDTO;
 import com.homepage.auth.service.UserService;
-import org.springframework.web.bind.annotation.*;
+import com.homepage.common.web.Response;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author Mel0ny
@@ -22,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping("/token")
-    public Response<String> token(@RequestBody UserDTO userDTO) {
-        return Response.ok(userService.token(userDTO));
+    public Response<String> token(Authentication authentication) {
+        return Response.ok(userService.token(authentication));
     }
 }
