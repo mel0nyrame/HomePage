@@ -1,6 +1,6 @@
 package com.homepage.auth.service;
 
-import org.springframework.security.core.Authentication;
+import com.homepage.auth.model.dto.UserDTO;
 
 /**
  * @Author Mel0ny
@@ -11,9 +11,19 @@ import org.springframework.security.core.Authentication;
 public interface UserService {
 
     /**
-     * 获取token
-     * @param authentication 用户数据
-     * @return token
+     * 用户登录
+     * @param username 用户名
+     * @param password 密码
+     * @return JWT token
      */
-    String token(Authentication authentication);
+    String login(String username, String password);
+
+    /**
+     * 用户注册
+     *
+     * @param userDTO 用户信息
+     */
+    void register(UserDTO userDTO);
+
+    // TODO: refresh token
 }

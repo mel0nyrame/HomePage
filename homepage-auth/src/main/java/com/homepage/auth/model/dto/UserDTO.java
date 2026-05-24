@@ -10,7 +10,19 @@ import lombok.Data;
  */
 @Data
 public class UserDTO {
-    private Long userId;
+
+    /**
+     * 用户昵称
+     */
+    private String nickname;
+
+    /**
+     * 用户名
+     */
     private String username;
+
+    /**
+     * 用户密码
+     */
     private String password;
 }
