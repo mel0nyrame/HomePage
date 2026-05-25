@@ -1,6 +1,7 @@
 package com.homepage.auth.config;
 
 import com.homepage.auth.service.AdminService;
+import com.homepage.auth.service.UserService;
 import com.homepage.common.exception.RestAccessDeniedHandler;
 import com.homepage.common.exception.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
@@ -39,8 +40,11 @@ public class SecurityConfig {
 
     @Primary
     @Bean("userAuthenticationManager")
-    public AuthenticationManager userAuthenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
+    public AuthenticationManager userAuthenticationManager(UserService userDetailsService,
+                                                           PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(provider);
     }
 
     @Bean("adminAuthenticationManager")
