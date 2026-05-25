@@ -1,6 +1,7 @@
 package com.homepage.auth.service;
 
 import com.homepage.auth.model.dto.RegisterDTO;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @Author Mel0ny
@@ -8,7 +9,7 @@ import com.homepage.auth.model.dto.RegisterDTO;
  * @Date 5/23/26 01:47
  * @description: 用户业务接口
  */
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     /**
      * 用户登录

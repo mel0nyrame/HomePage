@@ -7,14 +7,15 @@ import com.homepage.auth.service.UserService;
 import com.homepage.common.exception.BusinessException;
 import com.homepage.common.util.JwtUtil;
 import com.homepage.common.web.ResponseCode;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
  * @Date 5/23/26 01:48
  * @description: 用户业务实现类
  */
+@Primary
 @Service
-public class UserServiceImpl implements UserService, UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     private final JwtUtil jwtUtil;
     private final UserMapper userMapper;
@@ -36,7 +38,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     public UserServiceImpl(JwtUtil jwtUtil, UserMapper userMapper,
                            PasswordEncoder passwordEncoder,
-                           @Lazy AuthenticationManager authenticationManager) {
+                           @Lazy @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager) {
         this.jwtUtil = jwtUtil;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;

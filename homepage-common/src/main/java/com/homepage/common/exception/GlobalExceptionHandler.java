@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
     public Response<Void> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
         return Response.fail(ResponseCode.BAD_REQUEST.getCode(), "请求体不能为空");
     }
-    
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response<Void> handleException(Exception e, HttpServletRequest request) {

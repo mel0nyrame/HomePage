@@ -11,36 +11,25 @@ import java.util.Collection;
 /**
  * @Author Mel0ny
  * @Package com.homepage.auth.model.entity
- * @Date 5/24/26 15:07
- * @description: 用户表，对应homepage_user
+ * @Date 5/25/26 21:31
+ * @description: 管理员表实体，对应homepage_admin
  */
+@Getter
 @Setter
-public class UserEntity implements UserDetails {
+public class AdminEntity implements UserDetails {
 
     /**
-     * 用户id
+     * 管理员id
      */
-    public Long id;
+    private Long id;
 
     /**
-     * 用户昵称
+     * 管理员账号
      */
-    @Getter
-    private String nickname;
+    private String account;
 
     /**
-     * 用户名
-     */
-    private String username;
-
-    /**
-     * 用户邮箱
-     */
-    @Getter
-    private String email;
-
-    /**
-     * 用户密码
+     * 管理员密码
      */
     private String password;
 
@@ -50,13 +39,13 @@ public class UserEntity implements UserDetails {
     private Integer enabled;
 
     /**
-     * 用户权限，默认是USER
+     * 管理员权限，默认是ADMIN
      */
     private String authorities;
 
     /**
-     * 获取用户权限
-     * @return 用户权限集合
+     * 获取管理员权限
+     * @return 管理员权限集合
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -64,8 +53,8 @@ public class UserEntity implements UserDetails {
     }
 
     /**
-     * 获取用户密码
-     * @return 用户密码
+     * 获取管理员密码
+     * @return 管理员密码
      */
     @Override
     public String getPassword() {
@@ -73,12 +62,12 @@ public class UserEntity implements UserDetails {
     }
 
     /**
-     * 获取用户名
-     * @return 用户名
+     * 获取管理员名
+     * @return 管理员名
      */
     @Override
     public String getUsername() {
-        return this.username;
+        return this.account;
     }
 
     /**
@@ -91,7 +80,7 @@ public class UserEntity implements UserDetails {
     }
 
     /**
-     * 用户是否过期
+     * 管理员是否过期
      * @return 布尔值
      */
     @Override
@@ -100,7 +89,7 @@ public class UserEntity implements UserDetails {
     }
 
     /**
-     * 用户是否被锁定
+     * 管理员是否被锁定
      * @return 布尔值
      */
     @Override
@@ -109,7 +98,7 @@ public class UserEntity implements UserDetails {
     }
 
     /**
-     * 获取用户凭证是否过期
+     * 获取管理员凭证是否过期
      * @return 布尔值
      */
     @Override

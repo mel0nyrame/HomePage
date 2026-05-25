@@ -1,6 +1,12 @@
 server:
   port: 8801
 
+# 初始化管理员账号密码
+app:
+  admin:
+    init-account: admin
+    init-password: password
+
 spring:
   application:
     name: homepage-user
