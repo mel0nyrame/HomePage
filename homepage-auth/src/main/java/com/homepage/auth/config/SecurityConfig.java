@@ -1,10 +1,11 @@
 package com.homepage.auth.config;
 
-import com.homepage.auth.service.impl.AdminServiceImpl;
+import com.homepage.auth.service.AdminService;
 import com.homepage.common.exception.RestAccessDeniedHandler;
 import com.homepage.common.exception.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -36,16 +37,16 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Primary
     @Bean("userAuthenticationManager")
     public AuthenticationManager userAuthenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
     @Bean("adminAuthenticationManager")
-    public AuthenticationManager adminAuthenticationManager(AdminServiceImpl adminDetailsService,
+    public AuthenticationManager adminAuthenticationManager(AdminService adminDetailsService,
                                                             PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(adminDetailsService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(adminDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return new ProviderManager(provider);
     }
