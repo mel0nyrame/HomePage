@@ -1,5 +1,6 @@
 package com.homepage.auth.model.entity;
 
+import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -24,12 +25,19 @@ public class UserEntity implements UserDetails {
     /**
      * 用户昵称
      */
+    @Getter
     private String nickname;
 
     /**
      * 用户名
      */
     private String username;
+
+    /**
+     * 用户邮箱
+     */
+    @Getter
+    private String email;
 
     /**
      * 用户密码

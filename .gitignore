@@ -1,16 +1,20 @@
 # Default ignored files
 /shelf/
-/workspace.xml
+.idea/workspace.xml
 # Editor-based HTTP Client requests
 /httpRequests/
 # Ignored default folder with query files
 /queries/
 # Datasource local storage ignored files
-/dataSources/
-/dataSources.local.xml
+.idea/dataSources/
+.idea/dataSources.local.xml
 
 # Java
 target/
 
 # MacOs
 .DS_Store
+
+# AI
+.claude
+.codegraph

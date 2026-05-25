@@ -1,6 +1,6 @@
 package com.homepage.auth.service;
 
-import com.homepage.auth.model.dto.UserDTO;
+import com.homepage.auth.model.dto.RegisterDTO;
 
 /**
  * @Author Mel0ny
@@ -21,9 +21,9 @@ public interface UserService {
     /**
      * 用户注册
      *
-     * @param userDTO 用户信息
+     * @param registerDTO 用户信息
      */
-    void register(UserDTO userDTO);
+    void register(RegisterDTO registerDTO);
 
     // TODO: refresh token
 }

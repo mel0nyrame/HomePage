@@ -1,7 +1,7 @@
 package com.homepage.auth.service.impl;
 
 import com.homepage.auth.mapper.UserMapper;
-import com.homepage.auth.model.dto.UserDTO;
+import com.homepage.auth.model.dto.RegisterDTO;
 import com.homepage.auth.model.entity.UserEntity;
 import com.homepage.auth.service.UserService;
 import com.homepage.common.exception.BusinessException;
@@ -44,18 +44,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public String login(String username, String password) {
+    public String login(String account, String password) {
         // TODO:若发送大量请求会导致数据库崩溃，等待处理
 
-        // 查询用户是否存在
-        if (userMapper.existsByUsername(username) == 0) {
+        boolean exists = userMapper.selectUser(account) != null
+                || userMapper.selectUserByEmail(account) != null;
+        if (!exists) {
             throw new BusinessException(ResponseCode.USER_NOT_EXIST);
         }
 
         try {
             // 传递和设置用户对象
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(username, password)
+                    new UsernamePasswordAuthenticationToken(account, password)
             );
             // 返回验证token
             return jwtUtil.generateToken(authentication);
@@ -68,17 +69,23 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Transactional
     @Override
-    public void register(UserDTO userDTO) {
+    public void register(RegisterDTO registerDTO) {
         // 查询用户名是否存在
-        if (userMapper.existsByUsername(userDTO.getUsername()) > 0) {
+        if (userMapper.existsByUsername(registerDTO.getUsername()) > 0) {
             throw new BusinessException(ResponseCode.USER_ALREADY_EXIST);
+        }
+
+        // 查询邮箱是否存在
+        if (userMapper.existsByEmail(registerDTO.getEmail()) > 0) {
+            throw new BusinessException(ResponseCode.USER_EMAIL_EXIST);
         }
 
         // 设置用户对象
         UserEntity user = new UserEntity();
-        user.setNickname(userDTO.getNickname());
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setNickname(registerDTO.getNickname());
+        user.setUsername(registerDTO.getUsername());
+        user.setEmail(registerDTO.getEmail());
+        user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
         // 插入数据库
         userMapper.insertUser(user);
@@ -86,18 +93,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**
      * 用户定位用户
-     * @param username the username identifying the user whose data is required.
+     * @param account the username identifying the user whose data is required.
      * @return 用户对象
      * @throws UsernameNotFoundException 用户未找到
      */
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userMapper.selectUser(username);
-
+    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
+        UserEntity user = userMapper.selectUser(account);
         if (user == null) {
-            throw new UsernameNotFoundException(username);
+            user = userMapper.selectUserByEmail(account);
         }
-
+        if (user == null) {
+            throw new UsernameNotFoundException(account);
+        }
         return user;
     }
+
 }

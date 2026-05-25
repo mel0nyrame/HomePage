@@ -5,7 +5,9 @@ import com.homepage.common.web.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response<Void> handleBusinessException(BusinessException e, HttpServletRequest request) {
         log.warn("业务异常 [{}] {} -> {}", e.getCode(), request.getRequestURI(), e.getMessage());
         return Response.fail(e.getCode(), e.getMessage());
@@ -39,6 +42,12 @@ public class GlobalExceptionHandler {
         return Response.fail(ResponseCode.PARAM_VALID_ERROR.getCode(), message);
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Response<Void> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
+        return Response.fail(ResponseCode.BAD_REQUEST.getCode(), "请求体不能为空");
+    }
+    
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Response<Void> handleException(Exception e, HttpServletRequest request) {
@@ -47,8 +56,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response<Void> handleNoHandlerFound(NoHandlerFoundException e) {
         return Response.fail(ResponseCode.NOT_FOUND);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    public Response<Void> handleHttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+        return Response.fail(ResponseCode.METHOD_NOT_ALLOWED);
     }
 
 }
