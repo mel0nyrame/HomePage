@@ -32,6 +32,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity
 public class SecurityConfig {
 
+    private final String[] requestMatchers = {
+            "/api/user/login",
+            "/api/user/register",
+            "/api/admin/login",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/api-docs/**",
+            "/api-docs"
+    };
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -67,7 +77,7 @@ public class SecurityConfig {
                 )
                 // 设置认证请求配置
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/user/login", "/api/user/register", "/api/admin/login").permitAll()
+                        .requestMatchers(requestMatchers).permitAll()
                         .anyRequest().authenticated()
                 );
 

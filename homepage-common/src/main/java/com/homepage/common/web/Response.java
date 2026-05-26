@@ -1,19 +1,15 @@
 package com.homepage.common.web;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.io.Serial;
 import java.io.Serializable;
 
-/**
- * @Author Mel0ny
- * @Package com.homepage.common.web
- * @Date 5/21/26 21:21
- * @description: 响应类
- */
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(description = "统一响应对象")
 public class Response<T> implements Serializable {
 
     @Serial
@@ -25,8 +21,13 @@ public class Response<T> implements Serializable {
         this.data = data;
     }
 
+    @Schema(description = "状态码", example = "200")
     private final int code;
+
+    @Schema(description = "提示信息", example = "ok")
     private final String message;
+
+    @Schema(description = "响应数据")
     private final T data;
 
     public static <T> Response<T> ok() {

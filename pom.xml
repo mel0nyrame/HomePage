@@ -27,6 +27,7 @@
         <mapstruct.version>1.6.3</mapstruct.version>
         <lombok.version>1.18.46</lombok.version>
         <spring-security-oauth2.version>3.5.14</spring-security-oauth2.version>
+        <spring-doc.version>2.8.17</spring-doc.version>
     </properties>
 
     <dependencyManagement>
@@ -81,6 +82,14 @@
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis-spring.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- SpringDoc -->
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${spring-doc.version}</version>
                 <scope>compile</scope>
             </dependency>
 
