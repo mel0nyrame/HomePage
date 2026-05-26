@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: homepage-user
+    name: homepage-auth
   profiles:
     active: dev
   datasource:
@@ -14,3 +14,9 @@ spring:
   web:
     resources:
       add-mappings: false
+
+# 初始化管理员账号密码
+app:
+  admin:
+    init-account: admin
+    init-password: password

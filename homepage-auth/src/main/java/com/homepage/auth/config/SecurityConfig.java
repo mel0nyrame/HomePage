@@ -1,9 +1,15 @@
 package com.homepage.auth.config;
 
+import com.homepage.auth.admin.service.AdminService;
+import com.homepage.auth.user.service.UserService;
 import com.homepage.common.exception.RestAccessDeniedHandler;
 import com.homepage.common.exception.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,7 +25,7 @@ import org.springframework.security.web.SecurityFilterChain;
  * @Author Mel0ny
  * @Package com.homepage.auth.config
  * @Date 5/22/26 23:05
- * @description: 配置Spring Security
+ * @description: 配置Spring Security，包含用户和管理员认证管理器
  */
 @Configuration
 @EnableWebSecurity
@@ -66,5 +72,22 @@ public class SecurityConfig {
                 );
 
         return http.build();
+    }
+
+    @Primary
+    @Bean("userAuthenticationManager")
+    public AuthenticationManager userAuthenticationManager(UserService userDetailsService,
+                                                           PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(provider);
+    }
+
+    @Bean("adminAuthenticationManager")
+    public AuthenticationManager adminAuthenticationManager(AdminService adminDetailsService,
+                                                            PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(adminDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return new ProviderManager(provider);
     }
 }

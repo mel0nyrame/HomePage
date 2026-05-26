@@ -1,5 +1,0 @@
-# 初始化管理员账号密码
-app:
-  admin:
-    init-account: admin
-    init-password: password
