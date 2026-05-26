@@ -1,5 +1,8 @@
 package com.homepage.common.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,11 +18,14 @@ import java.util.Collection;
  * @description: 用户表，对应homepage_user
  */
 @Setter
+@Getter
+@TableName("homepage_user")
 public class UserEntity implements UserDetails {
 
     /**
      * 用户id
      */
+    @TableId(type = IdType.AUTO)
     public Long id;
 
     /**

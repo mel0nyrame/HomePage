@@ -12,7 +12,7 @@ CREATE TABLE homepage_user
     `email`       VARCHAR(32) UNIQUE COMMENT '邮箱',
     `password`    VARCHAR(256) NOT NULL COMMENT '用户密码',
     `enabled`     TINYINT(1)   NOT NULL DEFAULT 1 COMMENT '是否启用',
-    `authorities` VARCHAR(255) DEFAULT 'USER' COMMENT '用户权限',
+    `authorities` VARCHAR(256) DEFAULT 'USER' COMMENT '用户权限',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_username` (`username`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
@@ -23,7 +23,7 @@ CREATE TABLE homepage_admin
     `account`     VARCHAR(32) UNIQUE COMMENT '管理员账号',
     `password`    VARCHAR(256) NOT NULL COMMENT '用户密码',
     `enabled`     TINYINT(1)   NOT NULL DEFAULT 1 COMMENT '是否启用',
-    `authorities` VARCHAR(255)          DEFAULT 'ADMIN' COMMENT '管理员权限',
+    `authorities` VARCHAR(256) DEFAULT 'ADMIN' COMMENT '管理员权限',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_account` (`account`)
 ) ENGINE = InnoDB

@@ -1,5 +1,8 @@
 package com.homepage.common.model.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,11 +19,13 @@ import java.util.Collection;
  */
 @Getter
 @Setter
+@TableName("homepage_admin")
 public class AdminEntity implements UserDetails {
 
     /**
      * 管理员id
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**

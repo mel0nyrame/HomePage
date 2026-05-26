@@ -32,7 +32,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (adminMapper.existsByAccount() > 0) {
+        if (adminMapper.selectCount(null) > 0) {
             return;
         }
         AdminEntity admin = new AdminEntity();
@@ -40,6 +40,6 @@ public class DataInitializer implements CommandLineRunner {
         admin.setPassword(passwordEncoder.encode(initPassword));
         admin.setEnabled(1);
         admin.setAuthorities("ADMIN");
-        adminMapper.insertAdmin(admin);
+        adminMapper.insert(admin);
     }
 }

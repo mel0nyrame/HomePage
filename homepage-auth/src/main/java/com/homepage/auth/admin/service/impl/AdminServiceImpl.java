@@ -1,5 +1,6 @@
 package com.homepage.auth.admin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.homepage.auth.admin.mapper.AdminMapper;
 import com.homepage.common.model.dto.AdminRegisterDTO;
 import com.homepage.common.model.entity.AdminEntity;
@@ -27,9 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @description: 管理员业务实现类
  */
 @Service
-public class AdminServiceImpl implements AdminService {
-
-    private final AdminMapper adminMapper;
+public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements AdminService {
 
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
@@ -37,23 +36,19 @@ public class AdminServiceImpl implements AdminService {
 
     public AdminServiceImpl(JwtUtil jwtUtil,
                             @Lazy @Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
-                            AdminMapper adminMapper,
                             PasswordEncoder passwordEncoder) {
         this.jwtUtil = jwtUtil;
         this.adminAuthenticationManager = adminAuthenticationManager;
-        this.adminMapper = adminMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public String login(String account, String password) {
-        // 查询管理员是否存在
-        if (adminMapper.selectByAccount(account) == null) {
+        if (lambdaQuery().eq(AdminEntity::getAccount, account).one() == null) {
             throw new BusinessException(ResponseCode.USER_NOT_EXIST);
         }
 
         try {
-            // 传递和设置管理员对象
             Authentication authentication = adminAuthenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(account, password)
             );
@@ -68,29 +63,20 @@ public class AdminServiceImpl implements AdminService {
     @Transactional
     @Override
     public void register(AdminRegisterDTO adminRegisterDTO) {
-        // 查询账号是否存在
-        if (adminMapper.existsByUsername(adminRegisterDTO.getAccount()) > 0) {
+        if (lambdaQuery().eq(AdminEntity::getAccount, adminRegisterDTO.getAccount()).exists()) {
             throw new BusinessException(ResponseCode.USER_ALREADY_EXIST);
         }
 
-        // 设置管理员账号
         AdminEntity adminEntity = new AdminEntity();
         adminEntity.setAccount(adminRegisterDTO.getAccount());
         adminEntity.setPassword(passwordEncoder.encode(adminRegisterDTO.getPassword()));
 
-        // 插入数据库
-        adminMapper.insertAdmin(adminEntity);
+        this.save(adminEntity);
     }
 
-    /**
-     * 用于定位管理员
-     * @param account the 管理员账号 identifying the user whose data is required.
-     * @return 管理员对象
-     * @throws UsernameNotFoundException 管理员未找到
-     */
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        AdminEntity admin = adminMapper.selectByAccount(account);
+        AdminEntity admin = lambdaQuery().eq(AdminEntity::getAccount, account).one();
         if (admin == null) {
             throw new UsernameNotFoundException("管理员不存在: " + account);
         }
