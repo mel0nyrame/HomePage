@@ -1,12 +1,12 @@
-package com.homepage.auth.service.impl;
+package com.homepage.user.service.impl;
 
-import com.homepage.auth.mapper.UserMapper;
-import com.homepage.auth.model.dto.RegisterDTO;
-import com.homepage.auth.model.entity.UserEntity;
-import com.homepage.auth.service.UserService;
 import com.homepage.common.exception.BusinessException;
 import com.homepage.common.util.JwtUtil;
 import com.homepage.common.web.ResponseCode;
+import com.homepage.user.mapper.UserMapper;
+import com.homepage.auth.model.dto.RegisterDTO;
+import com.homepage.user.model.entity.UserEntity;
+import com.homepage.user.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;

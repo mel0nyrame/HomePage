@@ -1,9 +1,8 @@
-package com.homepage.auth.controller;
+package com.homepage.admin.controller;
 
 import com.homepage.auth.model.dto.AdminLoginDTO;
 import com.homepage.auth.model.dto.AdminRegisterDTO;
-import com.homepage.auth.model.dto.RegisterDTO;
-import com.homepage.auth.service.AdminService;
+import com.homepage.admin.service.AdminService;
 import com.homepage.common.web.Response;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.controller
+ * @Package com.homepage.admin.controller
  * @Date 5/25/26 21:32
  * @description: 管理员业务接口
  */

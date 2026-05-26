@@ -1,4 +1,4 @@
-package com.homepage.auth.service;
+package com.homepage.admin.service;
 
 import com.homepage.auth.model.dto.AdminLoginDTO;
 import com.homepage.auth.model.dto.AdminRegisterDTO;
@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.service
+ * @Package com.homepage.admin.service
  * @Date 5/25/26 21:44
  * @description: 管理员业务接口
  */

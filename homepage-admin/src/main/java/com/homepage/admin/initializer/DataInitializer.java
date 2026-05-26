@@ -1,7 +1,7 @@
-package com.homepage.auth.initializer;
+package com.homepage.admin.initializer;
 
-import com.homepage.auth.mapper.AdminMapper;
-import com.homepage.auth.model.entity.AdminEntity;
+import com.homepage.admin.mapper.AdminMapper;
+import com.homepage.admin.model.entity.AdminEntity;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.initializer
+ * @Package com.homepage.admin.initializer
  * @Date 5/25/26 21:55
  * @description: 管理员账号初始化
  */

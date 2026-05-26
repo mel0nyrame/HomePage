@@ -1,6 +1,6 @@
-package com.homepage.auth.mapper;
+package com.homepage.user.mapper;
 
-import com.homepage.auth.model.entity.UserEntity;
+import com.homepage.user.model.entity.UserEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.mapper
+ * @Package com.homepage.user.mapper
  * @Date 5/24/26 15:15
  * @description: homepage_user表crud接口
  */

@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.model.dto
+ * @Package com.homepage.admin.model.dto
  * @Date 5/25/26 21:22
  * @description: 传递管理员登录信息
  */

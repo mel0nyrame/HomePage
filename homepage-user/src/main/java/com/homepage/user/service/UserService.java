@@ -1,4 +1,4 @@
-package com.homepage.auth.service;
+package com.homepage.user.service;
 
 import com.homepage.auth.model.dto.RegisterDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;

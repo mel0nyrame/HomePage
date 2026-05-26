@@ -1,12 +1,10 @@
-package com.homepage.auth.service.impl;
+package com.homepage.admin.service.impl;
 
-import com.homepage.auth.mapper.AdminMapper;
+import com.homepage.admin.mapper.AdminMapper;
 import com.homepage.auth.model.dto.AdminLoginDTO;
 import com.homepage.auth.model.dto.AdminRegisterDTO;
-import com.homepage.auth.model.dto.RegisterDTO;
-import com.homepage.auth.model.entity.AdminEntity;
-import com.homepage.auth.model.entity.UserEntity;
-import com.homepage.auth.service.AdminService;
+import com.homepage.admin.model.entity.AdminEntity;
+import com.homepage.admin.service.AdminService;
 import com.homepage.common.exception.BusinessException;
 import com.homepage.common.util.JwtUtil;
 import com.homepage.common.web.ResponseCode;
@@ -25,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.service.impl
+ * @Package com.homepage.admin.service.impl
  * @Date 5/25/26 21:44
  * @description: 管理员业务实现类
  */

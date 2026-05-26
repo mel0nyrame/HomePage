@@ -1,13 +1,13 @@
-package com.homepage.auth.mapper;
+package com.homepage.admin.mapper;
 
-import com.homepage.auth.model.entity.AdminEntity;
+import com.homepage.admin.model.entity.AdminEntity;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.mapper
+ * @Package com.homepage.admin.mapper
  * @Date 5/25/26 21:21
  * @description: homepage_admin表crud接口
  */

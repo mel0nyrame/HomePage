@@ -1,9 +1,9 @@
-package com.homepage.auth.controller;
+package com.homepage.user.controller;
 
+import com.homepage.common.web.Response;
 import com.homepage.auth.model.dto.LoginDTO;
 import com.homepage.auth.model.dto.RegisterDTO;
-import com.homepage.auth.service.UserService;
-import com.homepage.common.web.Response;
+import com.homepage.user.service.UserService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

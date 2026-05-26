@@ -1,6 +1,5 @@
 package com.homepage.auth.model.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -8,7 +7,7 @@ import lombok.Data;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.model.dto
+ * @Package com.homepage.admin.model.dto
  * @Date 5/25/26 22:03
  * @description: 传递添加管理员信息
  */

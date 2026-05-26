@@ -9,8 +9,11 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
+        <module name="homepage-user" />
         <module name="homepage-common" />
+        <module name="homepage-admin" />
         <module name="homepage-auth" />
       </profile>
     </annotationProcessing>

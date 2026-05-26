@@ -1,4 +1,4 @@
-package com.homepage.auth.model.entity;
+package com.homepage.user.model.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,26 +10,37 @@ import java.util.Collection;
 
 /**
  * @Author Mel0ny
- * @Package com.homepage.auth.model.entity
- * @Date 5/25/26 21:31
- * @description: 管理员表实体，对应homepage_admin
+ * @Package com.homepage.user.model.entity
+ * @Date 5/24/26 15:07
+ * @description: 用户表，对应homepage_user
  */
-@Getter
 @Setter
-public class AdminEntity implements UserDetails {
+public class UserEntity implements UserDetails {
 
     /**
-     * 管理员id
+     * 用户id
      */
-    private Long id;
+    public Long id;
 
     /**
-     * 管理员账号
+     * 用户昵称
      */
-    private String account;
+    @Getter
+    private String nickname;
 
     /**
-     * 管理员密码
+     * 用户名
+     */
+    private String username;
+
+    /**
+     * 用户邮箱
+     */
+    @Getter
+    private String email;
+
+    /**
+     * 用户密码
      */
     private String password;
 
@@ -39,13 +50,13 @@ public class AdminEntity implements UserDetails {
     private Integer enabled;
 
     /**
-     * 管理员权限，默认是ADMIN
+     * 用户权限，默认是USER
      */
     private String authorities;
 
     /**
-     * 获取管理员权限
-     * @return 管理员权限集合
+     * 获取用户权限
+     * @return 用户权限集合
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -53,8 +64,8 @@ public class AdminEntity implements UserDetails {
     }
 
     /**
-     * 获取管理员密码
-     * @return 管理员密码
+     * 获取用户密码
+     * @return 用户密码
      */
     @Override
     public String getPassword() {
@@ -62,12 +73,12 @@ public class AdminEntity implements UserDetails {
     }
 
     /**
-     * 获取管理员名
-     * @return 管理员名
+     * 获取用户名
+     * @return 用户名
      */
     @Override
     public String getUsername() {
-        return this.account;
+        return this.username;
     }
 
     /**
@@ -80,7 +91,7 @@ public class AdminEntity implements UserDetails {
     }
 
     /**
-     * 管理员是否过期
+     * 用户是否过期
      * @return 布尔值
      */
     @Override
@@ -89,7 +100,7 @@ public class AdminEntity implements UserDetails {
     }
 
     /**
-     * 管理员是否被锁定
+     * 用户是否被锁定
      * @return 布尔值
      */
     @Override
@@ -98,7 +109,7 @@ public class AdminEntity implements UserDetails {
     }
 
     /**
-     * 获取管理员凭证是否过期
+     * 获取用户凭证是否过期
      * @return 布尔值
      */
     @Override
