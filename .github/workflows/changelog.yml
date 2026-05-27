@@ -18,7 +18,7 @@ jobs:
           ref: main
 
       - name: Generate CHANGELOG
-        run: bash scripts/gen-changelog.sh
+        run: bash .github/scripts/gen-changelog.sh
 
       - name: Commit and push
         run: |
