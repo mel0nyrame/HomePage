@@ -70,6 +70,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
 
         AdminEntity adminEntity = new AdminEntity();
         adminEntity.setAccount(adminRegisterDTO.getAccount());
+        adminEntity.setNickname(adminRegisterDTO.getNickname());
         adminEntity.setPassword(passwordEncoder.encode(adminRegisterDTO.getPassword()));
 
         this.save(adminEntity);

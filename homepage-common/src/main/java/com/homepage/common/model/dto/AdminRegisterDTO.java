@@ -10,6 +10,11 @@ import lombok.Data;
 @Schema(description = "管理员注册请求")
 public class AdminRegisterDTO {
 
+    @NotBlank(message = "管理员昵称不能为空")
+    @Size(min = 3, max = 20, message = "管理员昵称必须大于3小于20")
+    @Schema(description = "管理员昵称", example = "张三", minLength = 3, maxLength = 20)
+    private String nickname;
+
     @NotBlank(message = "管理员账号不能为空")
     @Size(min = 3, max = 20, message = "管理员账号必须大于3小于20")
     @Schema(description = "管理员账号", example = "new_admin", minLength = 3, maxLength = 20)

@@ -26,5 +26,6 @@ springdoc:
 # 初始化管理员账号密码
 app:
   admin:
+    init-nickname: Admin
     init-account: admin
     init-password: password

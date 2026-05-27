@@ -24,6 +24,9 @@ public class DataInitializer implements CommandLineRunner {
         this.passwordEncoder = passwordEncoder;
     }
 
+    @Value("${app.admin.init-nickname}")
+    private String initNickname;
+
     @Value("${app.admin.init-account}")
     private String initAccount;
 
@@ -36,6 +39,7 @@ public class DataInitializer implements CommandLineRunner {
             return;
         }
         AdminEntity admin = new AdminEntity();
+        admin.setNickname(initNickname);
         admin.setAccount(initAccount);
         admin.setPassword(passwordEncoder.encode(initPassword));
         admin.setEnabled(1);

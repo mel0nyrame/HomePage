@@ -18,7 +18,7 @@ CREATE TABLE homepage_user
         COMMENT '更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_username` (`username`),
-    UNIQUE KEY `uk_nickname` (`nickname`),
+    KEY `idx_nickname` (`nickname`),
     UNIQUE KEY `uk_email` (`email`),
     KEY `idx_enabled` (`enabled`),
     KEY `idx_create_time` (`create_time`)
@@ -40,7 +40,7 @@ CREATE TABLE homepage_admin
         COMMENT '更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_account` (`account`),
-    UNIQUE KEY `uk_nickname` (`nickname`),
+    KEY `idx_nickname` (`nickname`),
     KEY `idx_enabled` (`enabled`),
     KEY `idx_create_time` (`create_time`)
 ) ENGINE = InnoDB
