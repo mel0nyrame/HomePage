@@ -6,7 +6,7 @@ USE homepage;
 
 CREATE TABLE homepage_user
 (
-    `id`          BIGINT       NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+    `id`          BIGINT       NOT NULL COMMENT '用户ID',
     `nickname`    VARCHAR(64)  NOT NULL COMMENT '用户昵称',
     `username`    VARCHAR(32)  NULL COMMENT '用户账号',
     `email`       VARCHAR(64)  NULL COMMENT '邮箱',
@@ -18,6 +18,7 @@ CREATE TABLE homepage_user
         COMMENT '更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_username` (`username`),
+    UNIQUE KEY `uk_nickname` (`nickname`),
     UNIQUE KEY `uk_email` (`email`),
     KEY `idx_enabled` (`enabled`),
     KEY `idx_create_time` (`create_time`)
@@ -28,7 +29,8 @@ CREATE TABLE homepage_user
 
 CREATE TABLE homepage_admin
 (
-    `id`          BIGINT       NOT NULL AUTO_INCREMENT COMMENT '管理员ID',
+    `id`          BIGINT       NOT NULL COMMENT '管理员ID',
+    `nickname`    VARCHAR(64)  NOT NULL COMMENT '管理员昵称',
     `account`     VARCHAR(32)  NULL COMMENT '管理员账号',
     `password`    VARCHAR(256) NOT NULL COMMENT '管理员密码',
     `enabled`     TINYINT(1)   NOT NULL DEFAULT 1 COMMENT '是否启用 [0=禁用, 1=启用]',
@@ -38,6 +40,7 @@ CREATE TABLE homepage_admin
         COMMENT '更新时间',
     PRIMARY KEY (`id`),
     UNIQUE KEY `uk_account` (`account`),
+    UNIQUE KEY `uk_nickname` (`nickname`),
     KEY `idx_enabled` (`enabled`),
     KEY `idx_create_time` (`create_time`)
 ) ENGINE = InnoDB

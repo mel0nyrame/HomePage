@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @TableName("homepage_admin")
-public class AdminEntity {
+public class  AdminEntity {
 
     /**
      * 管理员id，使用雪花算法生成
