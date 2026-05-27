@@ -7,6 +7,7 @@ import com.homepage.common.web.ResponseCode;
 import com.homepage.auth.user.mapper.UserMapper;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.entity.UserEntity;
+import com.homepage.common.model.security.HomepageUserDetails;
 import com.homepage.auth.user.service.UserService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -93,6 +94,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }
-        return user;
+        return new HomepageUserDetails(user);
     }
 }

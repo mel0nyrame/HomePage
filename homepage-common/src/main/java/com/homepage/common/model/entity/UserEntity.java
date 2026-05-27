@@ -1,15 +1,9 @@
 package com.homepage.common.model.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.baomidou.mybatisplus.annotation.*;
+import lombok.Data;
 
-import java.util.Collection;
+import java.time.LocalDateTime;
 
 /**
  * @Author Mel0ny
@@ -17,21 +11,19 @@ import java.util.Collection;
  * @Date 5/24/26 15:07
  * @description: 用户表，对应homepage_user
  */
-@Setter
-@Getter
+@Data
 @TableName("homepage_user")
-public class UserEntity implements UserDetails {
+public class UserEntity {
 
     /**
-     * 用户id
+     * 用户id，使用雪花算法生成
      */
-    @TableId(type = IdType.AUTO)
-    public Long id;
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
 
     /**
      * 用户昵称
      */
-    @Getter
     private String nickname;
 
     /**
@@ -42,7 +34,6 @@ public class UserEntity implements UserDetails {
     /**
      * 用户邮箱
      */
-    @Getter
     private String email;
 
     /**
@@ -61,65 +52,14 @@ public class UserEntity implements UserDetails {
     private String authorities;
 
     /**
-     * 获取用户权限
-     * @return 用户权限集合
+     * 创建时间
      */
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return AuthorityUtils.commaSeparatedStringToAuthorityList(this.authorities);
-    }
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
 
     /**
-     * 获取用户密码
-     * @return 用户密码
+     * 修改时间
      */
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
-
-    /**
-     * 获取用户名
-     * @return 用户名
-     */
-    @Override
-    public String getUsername() {
-        return this.username;
-    }
-
-    /**
-     * 获取是否开启
-     * @return 布尔值
-     */
-    @Override
-    public boolean isEnabled() {
-        return this.enabled != null && this.enabled == 1;
-    }
-
-    /**
-     * 用户是否过期
-     * @return 布尔值
-     */
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    /**
-     * 用户是否被锁定
-     * @return 布尔值
-     */
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    /**
-     * 获取用户凭证是否过期
-     * @return 布尔值
-     */
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
 }

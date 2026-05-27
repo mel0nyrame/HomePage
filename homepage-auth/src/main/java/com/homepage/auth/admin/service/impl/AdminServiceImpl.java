@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.homepage.auth.admin.mapper.AdminMapper;
 import com.homepage.common.model.dto.AdminRegisterDTO;
 import com.homepage.common.model.entity.AdminEntity;
+import com.homepage.common.model.security.AdminUserDetails;
 import com.homepage.auth.admin.service.AdminService;
 import com.homepage.common.exception.BusinessException;
 import com.homepage.common.util.JwtUtil;
@@ -80,6 +81,6 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         if (admin == null) {
             throw new UsernameNotFoundException("管理员不存在: " + account);
         }
-        return admin;
+        return new AdminUserDetails(admin);
     }
 }
