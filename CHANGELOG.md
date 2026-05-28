@@ -1342,5 +1342,125 @@
 
 ---
 
-*自动生成于 2026-05-28 10:22:16 UTC*
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`de5e9f4`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 55 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — feat(auth,common): 用户注册增加邮箱验证码验证功能
+
+**`66a87d0`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/admin/controller/AdminController.java` | 2 | 4 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 5 | 5 |
+| `homepage-auth/src/main/java/com/homepage/auth/config/OpenApiConfig.java` | 0 | 27 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/controller/UserController.java` | 9 | 4 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/UserService.java` | 10 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 42 | 1 |
+| `homepage-auth/src/main/resources/application.yml` | 7 | 0 |
+| `homepage-auth/src/main/resources/templates/EmailVerificationCode.html` | 166 | 0 |
+| `homepage-auth/src/test/java/com/homepage/HutoolTest.java` | 27 | 0 |
+| `homepage-common/pom.xml` | 18 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/config/OpenApiConfig.java` | 27 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/constant/RedisConstants.java` | 13 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/EmailDTO.java` | 15 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/util/MailUtil.java` | 73 | 0 |
+
+### 改动位置
+
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class UserController {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+- public interface UserService extends UserDetailsService, IService<UserEntity> {
+
+---
+
+## 2026-05-29 — ♻️ refactor(auth,common): 修复时序攻击、NPE风险，消除代码重复
+
+**`e2a87f5`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/HomepageAuthApplication.java` | 2 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/controller/AdminController.java` | 4 | 2 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/AdminService.java` | 1 | 2 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 0 | 12 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminUserDetailsServiceImpl.java` | 34 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/config/SecurityConfig.java` | 5 | 5 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/controller/UserController.java` | 6 | 3 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/UserService.java` | 1 | 2 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserDetailsServiceImpl.java` | 37 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 6 | 23 |
+| `homepage-common/src/main/java/com/homepage/common/constant/JwtConstants.java` | 4 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/constant/RedisConstants.java` | 4 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/EmailDTO.java` | 12 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/util/MailUtil.java` | 41 | 17 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 25 | 1 |
+
+### 改动位置
+
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class MailUtil {
+- public class RedisUtil {
+- public class SecurityConfig {
+- public class UserController {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+
+---
+
+## 2026-05-29 — ✨  feat(auth): 新增重发验证码接口，修复邮件配置
+
+**`91174ae`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 2 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/config/SecurityConfig.java` | 2 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/controller/UserController.java` | 7 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/UserService.java` | 6 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 8 | 0 |
+| `homepage-auth/src/main/resources/application.yml` | 3 | 0 |
+| `homepage-auth/src/main/resources/templates/EmailVerificationCode.html` | 79 | 160 |
+| `homepage-common/src/main/java/com/homepage/common/exception/GlobalExceptionHandler.java` | 1 | 6 |
+| `homepage-common/src/main/java/com/homepage/common/util/MailUtil.java` | 1 | 1 |
+
+### 改动位置
+
+- public class CaptchaServiceImpl implements CaptchaService {
+- public class MailUtil {
+- public class SecurityConfig {
+- public class UserController {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+- public interface UserService extends IService<UserEntity> {
+
+---
+
+## 2026-05-29 — Merge branch 'dev-mel0ny'
+
+**`ec85bbd`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-28 19:18:21 UTC*
 
