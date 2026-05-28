@@ -823,5 +823,112 @@
 
 ---
 
-*自动生成于 2026-05-27 11:28:36 UTC*
+## 2026-05-27 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`756729c`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 19 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-27 — docs():新增了定时启动脚本的功能
+
+**`2b87df2`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/scripts/com.homepage.sync-changelog.plist` | 26 | 0 |
+| `.github/scripts/gen-changelog.sh` | 97 | 0 |
+| `.github/scripts/install-sync.sh` | 66 | 0 |
+| `.github/scripts/sync-changelog.bat` | 2 | 0 |
+| `.github/scripts/sync-changelog.sh` | 18 | 0 |
+| `.github/workflows/changelog.yml` | 1 | 1 |
+| `scripts/gen-changelog.sh` | 0 | 97 |
+| `项目文档.md` | 11 | 3 |
+
+### 改动位置
+
+- AdminServiceImpl.login()
+- Service 层 `loadUserByUsername()` 从数据库查出实体后，包装为对应
+- application.yml 中配置了初始管理员凭据：
+- homepage-main (父 POM)
+
+---
+
+## 2026-05-27 — docs():新增了定时启动脚本的功能
+
+**`d2e6ee9`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/scripts/com.homepage.sync-changelog.plist` | 26 | 0 |
+| `.github/scripts/gen-changelog.sh` | 97 | 0 |
+| `.github/scripts/install-sync.sh` | 66 | 0 |
+| `.github/scripts/sync-changelog.bat` | 2 | 0 |
+| `.github/scripts/sync-changelog.sh` | 18 | 0 |
+| `.github/workflows/changelog.yml` | 1 | 1 |
+| `scripts/gen-changelog.sh` | 0 | 97 |
+| `项目文档.md` | 11 | 3 |
+
+### 改动位置
+
+- AdminServiceImpl.login()
+- Service 层 `loadUserByUsername()` 从数据库查出实体后，包装为对应
+- application.yml 中配置了初始管理员凭据：
+- homepage-main (父 POM)
+
+---
+
+## 2026-05-27 — Merge branch 'dev'
+
+**`b4856b9`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-28 — fix(.github):修复了自动脚本，实现静默执行
+
+**`a42b00d`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.devcontainer/devcontainer.json` | 4 | 0 |
+| `.github/scripts/com.homepage.sync-changelog.plist` | 1 | 1 |
+| `.github/scripts/gen-changelog.sh` | 1 | 1 |
+| `.github/scripts/install-sync.sh` | 42 | 8 |
+| `.github/scripts/sync-changelog.bat` | 0 | 2 |
+| `.github/scripts/sync-changelog.sh` | 1 | 1 |
+| `.github/workflows/qodana_code_quality.yml` | 40 | 0 |
+| `qodana.yaml` | 49 | 0 |
+
+### 改动位置
+
+- case "$(uname -s)" in
+
+---
+
+## 2026-05-28 — Merge branch 'dev'
+
+**`ca28c72`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-28 02:44:10 UTC*
 
