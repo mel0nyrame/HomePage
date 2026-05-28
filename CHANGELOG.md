@@ -899,6 +899,29 @@
 
 ---
 
+## 2026-05-28 — ✨ feat(auth): 获取验证码图片
+
+**`88d61a7`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/pom.xml` | 12 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/controller/CaptchaController.java` | 30 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/CaptchaService.java` | 20 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 75 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/config/SecurityConfig.java` | 1 | 0 |
+| `homepage-auth/src/main/resources/application.yml` | 8 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/constant/RedisConstants.java` | 11 | 0 |
+| `pom.xml` | 18 | 0 |
+
+### 改动位置
+
+- public class SecurityConfig {
+
+---
+
 ## 2026-05-28 — fix(.github):修复了自动脚本，实现静默执行
 
 **`a42b00d`** | klei
@@ -980,5 +1003,103 @@
 
 ---
 
-*自动生成于 2026-05-28 02:50:55 UTC*
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`382f2e8`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 51 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — ✨ feat(auth,common): 完善验证码功能
+
+**`c865127`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/admin/controller/AdminController.java` | 1 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/AdminService.java` | 3 | 3 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 21 | 6 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/controller/CaptchaController.java` | 2 | 3 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/CaptchaService.java` | 9 | 4 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 3 | 6 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/controller/UserController.java` | 1 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/UserService.java` | 3 | 3 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 22 | 8 |
+| `homepage-common/pom.xml` | 6 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/constant/RedisConstants.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/exception/GlobalExceptionHandler.java` | 1 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/AdminLoginDTO.java` | 8 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/AdminRegisterDTO.java` | 8 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/LoginDTO.java` | 8 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/RegisterDTO.java` | 8 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 53 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/web/Response.java` | 4 | 4 |
+
+### 改动位置
+
+- public class AdminController {
+- public class AdminLoginDTO {
+- public class AdminRegisterDTO {
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class CaptchaController {
+- public class CaptchaServiceImpl implements CaptchaService {
+- public class GlobalExceptionHandler {
+- public class LoginDTO {
+- public class RegisterDTO {
+- public class Response<T> implements Serializable {
+- public class UserController {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+- public interface AdminService extends UserDetailsService, IService<AdminEntity>
+- public interface UserService extends UserDetailsService, IService<UserEntity> {
+
+---
+
+## 2026-05-28 — 🔒 fix(auth,common): 修复验证码安全漏洞与代码质量问题
+
+**`a236c72`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 2 | 8 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 2 | 7 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 2 | 12 |
+| `homepage-common/src/main/java/com/homepage/common/exception/GlobalExceptionHandler.java` | 7 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/AdminLoginDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/AdminRegisterDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/CaptchaAware.java` | 12 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/LoginDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/RegisterDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 27 | 16 |
+
+### 改动位置
+
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class CaptchaServiceImpl implements CaptchaService {
+- public class RedisUtil {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+
+---
+
+## 2026-05-28 — Merge remote-tracking branch 'origin/main'
+
+**`8077475`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-28 03:55:16 UTC*
 
