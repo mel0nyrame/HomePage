@@ -29,6 +29,9 @@ spring:
     # 测试用信息
     username: ronald.tom@foxmail.com
     password: your-password-here
+    port: 465
+    ssl:
+      enabled: true
 
 springdoc:
   api-docs:

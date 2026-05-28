@@ -1,166 +1,85 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>邮箱验证码</title>
-    <style>
-        table {
-            width: 700px;
-            margin: 0 auto;
-        }
-
-        #top {
-            width: 700px;
-            border-bottom: 1px solid #ccc;
-            margin: 0 auto 30px;
-        }
-
-        #top table {
-            font: 12px Tahoma, Arial, 宋体;
-            height: 40px;
-        }
-
-        #content {
-            width: 680px;
-            padding: 0 10px;
-            margin: 0 auto;
-        }
-
-        #content_top {
-            line-height: 1.5;
-            font-size: 14px;
-            margin-bottom: 25px;
-            color: #4d4d4d;
-        }
-
-        #content_top strong {
-            display: block;
-            margin-bottom: 15px;
-        }
-
-        #content_top strong span {
-            color: #f60;
-            font-size: 16px;
-        }
-
-        #verificationCode {
-            color: #f60;
-            font-size: 24px;
-        }
-
-        #content_bottom {
-            margin-bottom: 30px;
-        }
-
-        #content_bottom small {
-            display: block;
-            margin-bottom: 20px;
-            font-size: 12px;
-            color: #747474;
-        }
-
-        #bottom {
-            width: 700px;
-            margin: 0 auto;
-        }
-
-        #bottom div {
-            padding: 10px 10px 0;
-            border-top: 1px solid #ccc;
-            color: #747474;
-            margin-bottom: 20px;
-            line-height: 1.3em;
-            font-size: 12px;
-        }
-
-        #content_top strong span {
-            font-size: 18px;
-            color: #FE4F70;
-        }
-
-        #sign {
-            text-align: right;
-            font-size: 18px;
-            color: #000000;
-            font-weight: bold;
-        }
-
-
-        #verificationCode {
-            height: 100px;
-            width: 680px;
-            text-align: center;
-            margin: 30px 0;
-        }
-
-        #verificationCode div {
-            height: 100px;
-            width: 680px;
-
-        }
-
-        .button {
-            color: #FE4F70;
-            margin-left: 10px;
-            height: 80px;
-            width: 80px;
-            resize: none;
-            font-size: 42px;
-            border: none;
-            outline: none;
-            padding: 10px 15px;
-            background: #ededed;
-            text-align: center;
-            border-radius: 17px;
-            box-shadow: 6px 6px 12px #cccccc,
-            -6px -6px 12px #ffffff;
-        }
-
-        .button:hover {
-            box-shadow: inset 6px 6px 4px #d1d1d1,
-            inset -6px -6px 4px #ffffff;
-        }
-
-    </style>
 </head>
-<body>
-<table>
-    <tbody>
-    <tr>
-        <td>
-            <div id="top">
-                <table>
-                    <tbody><tr><td></td></tr></tbody>
-                </table>
-            </div>
+<body style="margin: 0; padding: 0; background-color: #faf9f7; font-family: 'Georgia', 'Times New Roman', 'Songti SC', 'SimSun', serif;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #faf9f7;">
+        <tr>
+            <td align="center" style="padding: 48px 24px;">
+                <!-- Main Card -->
+                <table role="presentation" width="520" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff;">
+                    <!-- Top Accent Line -->
+                    <tr>
+                        <td style="height: 3px; background-color: #2c2c2c;"></td>
+                    </tr>
 
-            <div id="content">
-                <div id="content_top">
-                    <strong>尊敬的用户，您好！</strong>
-                    <strong>
-                        您正在进行<span>注册账号</span>操作，请在验证码中输入以下验证码完成操作：
-                    </strong>
-                    <div id="verificationCode">
-                        <button class="button" th:each="a:${verifyCode}">[[${a}]]</button>
-                    </div>
-                </div>
-                <div id="content_bottom">
-                    <small>
-                        注意：此操作可能会修改您的密码、登录邮箱或绑定手机。如非本人操作，请及时登录并修改密码以保证帐户安全
-                        <br>（工作人员不会向你索取此验证码，请勿泄漏！)
-                    </small>
-                </div>
-            </div>
-            <div id="bottom">
-                <div>
-                    <p>此为系统邮件，请勿回复<br>
-                        请保管好您的邮箱，避免账号被他人盗用
-                    </p>
-                    <p id="sign">——詩筠</p>
-                </div>
-            </div>
-        </td>
-    </tr>
-    </tbody>
-</table>
+                    <!-- Header -->
+                    <tr>
+                        <td style="padding: 40px 40px 32px; text-align: center;">
+                            <p style="margin: 0 0 8px; color: #888888; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                                HomePage
+                            </p>
+                            <h1 style="margin: 0; color: #2c2c2c; font-size: 24px; font-weight: 400; font-style: italic;">
+                                邮箱验证码
+                            </h1>
+                        </td>
+                    </tr>
+
+                    <!-- Divider -->
+                    <tr>
+                        <td style="padding: 0 40px;">
+                            <div style="border-top: 1px solid #e0e0e0;"></div>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td style="padding: 32px 40px;">
+                            <!-- Greeting -->
+                            <p style="margin: 0 0 24px; color: #444444; font-size: 15px; line-height: 1.8; text-align: justify;">
+                                您好，您正在进行注册账号操作。请使用以下验证码完成验证：
+                            </p>
+
+                            <!-- Verification Code -->
+                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
+                                <tr>
+                                    <td th:each="a, iter : ${verifyCode}" style="padding: 0 6px;">
+                                        <div style="width: 44px; height: 52px; border: 1px solid #2c2c2c; text-align: center; line-height: 52px; font-size: 22px; color: #2c2c2c; font-family: 'Georgia', serif;">
+                                            [[${a}]]
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Expiry Notice -->
+                            <p style="margin: 0 0 32px; color: #999999; font-size: 13px; line-height: 1.5; text-align: center; font-style: italic;">
+                                有效期 5 分钟
+                            </p>
+
+                            <!-- Security Notice -->
+                            <div style="border-top: 1px solid #e0e0e0; padding-top: 24px;">
+                                <p style="margin: 0; color: #888888; font-size: 12px; line-height: 1.8;">
+                                    工作人员不会向您索取此验证码，请勿泄露给他人。如非本人操作，请忽略此邮件。
+                                </p>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style="background-color: #faf9f7; padding: 24px 40px; border-top: 1px solid #e0e0e0;">
+                            <p style="margin: 0; color: #aaaaaa; font-size: 11px; line-height: 1.6; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                                此为系统邮件，请勿回复<br>
+                                请保管好您的邮箱，避免账号被他人盗用
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
+</html>

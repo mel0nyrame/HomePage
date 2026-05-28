@@ -35,6 +35,8 @@ public class SecurityConfig {
     private final String[] requestMatchers = {
             "/api/user/login",
             "/api/user/register",
+            "/api/user/email/verify",
+            "/api/user/email/retry",
             "/api/admin/login",
             "/api/captcha/**",
             "/swagger-ui.html",

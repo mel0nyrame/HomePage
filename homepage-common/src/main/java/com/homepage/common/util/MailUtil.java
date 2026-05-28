@@ -33,7 +33,7 @@ public class MailUtil {
     private String sender;
 
     private final int CAPTCHA_LENGTH = 6;
-    private final long CAPTCHA_EXPIRE_SECONDS = 60;
+    private final long CAPTCHA_EXPIRE_SECONDS = 5 * 60;
 
     private final JavaMailSender mailSender;
     private final StringRedisTemplate redisTemplate;

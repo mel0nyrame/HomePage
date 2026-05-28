@@ -4,6 +4,7 @@ import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.IdUtil;
 import com.homepage.auth.captcha.service.CaptchaService;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         String code = shearCaptcha.getCode();
 
         // captchaId
-        String uuid = UUID.randomUUID().toString();
+        String uuid = IdUtil.fastSimpleUUID();
         // redis的key
         String key = REDIS_AUTH_CAPTCHA_PREFIX + uuid;
         // 验证码放入redis，过期时间为60秒

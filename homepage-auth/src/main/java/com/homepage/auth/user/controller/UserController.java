@@ -44,4 +44,11 @@ public class UserController {
         userService.verifyEmail(emailDTO);
         return Response.ok();
     }
+
+    @PostMapping("/email/retry")
+    @Operation(summary = "重新发送验证码", description = "当验证码过期之后，重新发送验证码")
+    public Response<Void> retryEmail(@RequestBody EmailDTO emailDTO) {
+        userService.retryEmail(emailDTO.getEmail());
+        return Response.ok();
+    }
 }

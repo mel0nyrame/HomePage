@@ -37,5 +37,11 @@ public interface UserService extends IService<UserEntity> {
      */
     void verifyEmail(EmailDTO emailDTO);
 
+    /**
+     * 重新发送验证码
+     * @param email 邮箱
+     */
+    void retryEmail(String email);
+
     // TODO: refresh token
 }

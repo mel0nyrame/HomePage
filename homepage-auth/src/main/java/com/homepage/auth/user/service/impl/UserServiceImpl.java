@@ -119,9 +119,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }
 
+        // 使用完成之后删除验证码
+        redisTemplate.opsForValue().getAndDelete(REDIS_USER_PREFIX + emailDTO.getEmail());
+
         UserEntity user = JSONUtil.toBean(userJson, UserEntity.class);
 
         // 插入信息
         this.save(user);
+    }
+
+    @Override
+    public void retryEmail(String email) {
+        mailUtil.sendEmail(email);
     }
 }
