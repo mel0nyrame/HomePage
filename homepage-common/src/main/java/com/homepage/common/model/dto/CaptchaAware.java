@@ -7,6 +7,6 @@ package com.homepage.common.model.dto;
  * @description: 标记含有验证码字段的 DTO，供 RedisUtil.verifyCaptcha() 统一处理
  */
 public interface CaptchaAware {
-    String getCaptchaID();
+    String getCaptchaId();
     String getCaptcha();
 }

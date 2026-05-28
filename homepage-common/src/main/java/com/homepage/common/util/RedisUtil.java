@@ -23,7 +23,7 @@ public class RedisUtil {
     private static final String CAPTCHA_VERIFY_LUA =
             "local v = redis.call('GET', KEYS[1]) " +
             "if v then redis.call('DEL', KEYS[1]) end " +
-            "return v";
+            "return {v}";
 
     @SuppressWarnings("unchecked")
     private static final RedisScript<List<String>> CAPTCHA_SCRIPT =
@@ -41,7 +41,7 @@ public class RedisUtil {
      * @param dto 实现了 CaptchaAware 的 DTO
      */
     public void verifyCaptcha(CaptchaAware dto) {
-        verifyCaptcha(dto.getCaptchaID(), dto.getCaptcha());
+        verifyCaptcha(dto.getCaptchaId(), dto.getCaptcha());
     }
 
     /**
@@ -53,7 +53,7 @@ public class RedisUtil {
     public void verifyCaptcha(String captchaId, String inputCaptcha) {
         String key = REDIS_AUTH_CAPTCHA_PREFIX + captchaId;
         List<String> result = redisTemplate.execute(CAPTCHA_SCRIPT, List.of(key));
-        String captcha = (result != null && !result.isEmpty()) ? result.get(0) : null;
+        String captcha = !result.isEmpty() ? result.getFirst() : null;
         if (captcha == null) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }

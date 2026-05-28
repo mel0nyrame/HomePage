@@ -18,7 +18,7 @@ public class LoginDTO implements CaptchaAware {
 
     @NotBlank(message = "验证码id不能空")
     @Schema(description = "验证码ID", example = "uuid")
-    private String captchaID;
+    private String captchaId;
 
     @NotBlank(message = "验证码不能为空")
     @Schema(description = "验证码", example = "7yagX")
