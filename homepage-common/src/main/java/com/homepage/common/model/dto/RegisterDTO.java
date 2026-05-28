@@ -31,4 +31,12 @@ public class RegisterDTO {
             message = "密码必须由数字和字母组成，并且长度大于等于6个字符")
     @Schema(description = "用户密码，必须包含数字和字母，长度>=6", example = "abc123")
     private String password;
+
+    @NotBlank(message = "验证码id不能空")
+    @Schema(description = "验证码ID", example = "uuid")
+    private String captchaID;
+
+    @NotBlank(message = "验证码不能为空")
+    @Schema(description = "验证码", example = "7yagX")
+    private String captcha;
 }

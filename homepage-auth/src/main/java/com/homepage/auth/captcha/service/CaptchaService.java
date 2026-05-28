@@ -1,7 +1,5 @@
 package com.homepage.auth.captcha.service;
 
-import com.homepage.auth.captcha.service.impl.CaptchaServiceImpl;
-
 /**
  * @Author Mel0ny
  * @Package com.homepage.auth.captcha.service
@@ -10,11 +8,18 @@ import com.homepage.auth.captcha.service.impl.CaptchaServiceImpl;
  */
 public interface CaptchaService {
 
-
     /**
      * 创建验证码的id和图片base64编码
      *
      * @return 验证码的id和图片base64编码
      */
-    CaptchaServiceImpl.Captcha captcha();
+    Captcha captcha();
+
+    /**
+     * 验证码数据载体
+     *
+     * @param captchaId 验证码id
+     * @param image     验证码图片base64编码
+     */
+    record Captcha(String captchaId, String image) {}
 }

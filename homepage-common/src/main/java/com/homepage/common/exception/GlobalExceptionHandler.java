@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import javax.naming.AuthenticationException;
 import java.util.stream.Collectors;
 
 /**
@@ -70,7 +69,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AuthorizationDeniedException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
     public Response<Void> handleAuthorizationDenied(AuthorizationDeniedException e) {
         return Response.fail(ResponseCode.PERMISSION_DENIED);
     }

@@ -26,7 +26,7 @@ public class UserController {
     @Operation(summary = "用户登录", description = "使用用户名/邮箱和密码登录，返回JWT令牌")
     @PostMapping("/login")
     public Response<String> login(@Validated @RequestBody LoginDTO loginDTO) {
-        String token = userService.login(loginDTO.getAccount(), loginDTO.getPassword());
+        String token = userService.login(loginDTO);
         return Response.ok(token);
     }
 

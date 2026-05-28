@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.concurrent.TimeUnit;
 
-import static com.homepage.common.constant.RedisConstants.REDIS_CAPTCHA_PREFIX;
+import static com.homepage.common.constant.RedisConstants.REDIS_AUTH_CAPTCHA_PREFIX;
 
 /**
  * @Author Mel0ny
@@ -48,7 +48,7 @@ public class CaptchaServiceImpl implements CaptchaService {
         // captchaId
         String uuid = UUID.randomUUID().toString();
         // redis的key
-        String key = REDIS_CAPTCHA_PREFIX + uuid;
+        String key = REDIS_AUTH_CAPTCHA_PREFIX + uuid;
         // 验证码放入redis，过期时间为60秒
         redisTemplate.opsForValue().set(key, code, 60, TimeUnit.SECONDS);
 
@@ -67,9 +67,6 @@ public class CaptchaServiceImpl implements CaptchaService {
             throw new RuntimeException(e);
         }
 
-        return new Captcha(uuid, image);
-    }
-
-    public record Captcha(String captchaId, String image) {
+        return new CaptchaService.Captcha(uuid, image);
     }
 }

@@ -1,7 +1,6 @@
 package com.homepage.auth.captcha.controller;
 
 import com.homepage.auth.captcha.service.CaptchaService;
-import com.homepage.auth.captcha.service.impl.CaptchaServiceImpl;
 import com.homepage.common.web.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,8 +21,8 @@ public class CaptchaController {
 
     @PostMapping("/")
     @Operation(summary = "获取验证码base64图片", description = "获取验证码id和以base64编码的图片")
-    public Response<CaptchaServiceImpl.Captcha> captcha() {
-        CaptchaServiceImpl.Captcha captcha = captchaService.captcha();
+    public Response<CaptchaService.Captcha> captcha() {
+        CaptchaService.Captcha captcha = captchaService.captcha();
         return Response.ok(captcha);
     }
 

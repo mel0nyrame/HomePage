@@ -2,12 +2,14 @@ package com.homepage.auth.admin.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.homepage.auth.admin.mapper.AdminMapper;
+import com.homepage.auth.admin.service.AdminService;
+import com.homepage.common.exception.BusinessException;
+import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
 import com.homepage.common.model.entity.AdminEntity;
 import com.homepage.common.model.security.AdminUserDetails;
-import com.homepage.auth.admin.service.AdminService;
-import com.homepage.common.exception.BusinessException;
 import com.homepage.common.util.JwtUtil;
+import com.homepage.common.util.RedisUtil;
 import com.homepage.common.web.ResponseCode;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
@@ -32,26 +34,35 @@ import org.springframework.transaction.annotation.Transactional;
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements AdminService {
 
     private final JwtUtil jwtUtil;
+    private final RedisUtil redisUtil;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager adminAuthenticationManager;
 
     public AdminServiceImpl(JwtUtil jwtUtil,
                             @Lazy @Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
-                            PasswordEncoder passwordEncoder) {
+                            PasswordEncoder passwordEncoder,
+                            RedisUtil redisUtil
+    ) {
         this.jwtUtil = jwtUtil;
         this.adminAuthenticationManager = adminAuthenticationManager;
         this.passwordEncoder = passwordEncoder;
+        this.redisUtil = redisUtil;
     }
 
     @Override
-    public String login(String account, String password) {
-        if (lambdaQuery().eq(AdminEntity::getAccount, account).one() == null) {
+    public String login(AdminLoginDTO adminLoginDTO) {
+        // 验证验证码
+        redisUtil.verifyCaptcha(adminLoginDTO.getCaptchaID(), adminLoginDTO.getCaptcha());
+
+        // 查询管理员
+        if (lambdaQuery().eq(AdminEntity::getAccount, adminLoginDTO.getAccount()).one() == null) {
             throw new BusinessException(ResponseCode.USER_NOT_EXIST);
         }
 
         try {
+            // 设置权限
             Authentication authentication = adminAuthenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(account, password)
+                    new UsernamePasswordAuthenticationToken(adminLoginDTO.getAccount(), adminLoginDTO.getPassword())
             );
             return jwtUtil.generateToken(authentication);
         } catch (BadCredentialsException e) {
@@ -64,6 +75,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     @Transactional
     @Override
     public void register(AdminRegisterDTO adminRegisterDTO) {
+        // 验证验证码
+        redisUtil.verifyCaptcha(adminRegisterDTO.getCaptchaID(), adminRegisterDTO.getCaptcha());
+
+        // 查询管理员
         if (lambdaQuery().eq(AdminEntity::getAccount, adminRegisterDTO.getAccount()).exists()) {
             throw new BusinessException(ResponseCode.USER_ALREADY_EXIST);
         }

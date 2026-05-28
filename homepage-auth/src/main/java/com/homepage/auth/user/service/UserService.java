@@ -1,6 +1,7 @@
 package com.homepage.auth.user.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.entity.UserEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,11 +16,10 @@ public interface UserService extends UserDetailsService, IService<UserEntity> {
 
     /**
      * 用户登录
-     * @param username 用户名
-     * @param password 密码
+     * @param loginDTO 用户登陆信息
      * @return JWT token
      */
-    String login(String username, String password);
+    String login(LoginDTO loginDTO);
 
     /**
      * 用户注册

@@ -28,7 +28,7 @@ public class AdminController {
     @Operation(summary = "管理员登录", description = "使用管理员账号和密码登录，返回JWT令牌")
     @PostMapping("/login")
     public Response<String> login(@Validated @RequestBody AdminLoginDTO adminLoginDTO) {
-        String token = adminService.login(adminLoginDTO.getAccount(), adminLoginDTO.getPassword());
+        String token = adminService.login(adminLoginDTO);
         return Response.ok(token);
     }
 

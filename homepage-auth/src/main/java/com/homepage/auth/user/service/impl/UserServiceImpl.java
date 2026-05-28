@@ -1,14 +1,16 @@
 package com.homepage.auth.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.homepage.common.exception.BusinessException;
-import com.homepage.common.util.JwtUtil;
-import com.homepage.common.web.ResponseCode;
 import com.homepage.auth.user.mapper.UserMapper;
+import com.homepage.auth.user.service.UserService;
+import com.homepage.common.exception.BusinessException;
+import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.entity.UserEntity;
 import com.homepage.common.model.security.HomepageUserDetails;
-import com.homepage.auth.user.service.UserService;
+import com.homepage.common.util.JwtUtil;
+import com.homepage.common.util.RedisUtil;
+import com.homepage.common.web.ResponseCode;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
@@ -36,27 +38,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final RedisUtil redisUtil;
 
     public UserServiceImpl(JwtUtil jwtUtil,
                            PasswordEncoder passwordEncoder,
-                           @Lazy @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager) {
+                           @Lazy @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager, RedisUtil redisUtil) {
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
+        this.redisUtil = redisUtil;
     }
 
     @Override
-    public String login(String account, String password) {
+    public String login(LoginDTO loginDTO) {
+        // 验证验证码
+        redisUtil.verifyCaptcha(loginDTO.getCaptchaID(), loginDTO.getCaptcha());
+
+        // 通过邮箱和用户名来查询用户是否存在
         boolean exists = lambdaQuery()
-                .and(w -> w.eq(UserEntity::getUsername, account).or().eq(UserEntity::getEmail, account))
+                .and(w -> w.eq(UserEntity::getUsername, loginDTO.getAccount())
+                        .or().eq(UserEntity::getEmail, loginDTO.getAccount()))
                 .exists();
         if (!exists) {
             throw new BusinessException(ResponseCode.USER_NOT_EXIST);
         }
 
         try {
+            // 设置权限
             Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(account, password)
+                    new UsernamePasswordAuthenticationToken(loginDTO.getAccount(), loginDTO.getPassword())
             );
             return jwtUtil.generateToken(authentication);
         } catch (BadCredentialsException e) {
@@ -69,6 +79,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Transactional
     @Override
     public void register(RegisterDTO registerDTO) {
+        // 验证验证码
+        redisUtil.verifyCaptcha(registerDTO.getCaptchaID(), registerDTO.getCaptcha());
+
+        // 查询用户
         if (lambdaQuery().eq(UserEntity::getUsername, registerDTO.getUsername()).exists()) {
             throw new BusinessException(ResponseCode.USER_ALREADY_EXIST);
         }

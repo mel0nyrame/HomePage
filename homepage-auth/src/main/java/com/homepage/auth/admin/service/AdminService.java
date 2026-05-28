@@ -1,6 +1,7 @@
 package com.homepage.auth.admin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
 import com.homepage.common.model.entity.AdminEntity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,11 +17,10 @@ public interface AdminService extends UserDetailsService, IService<AdminEntity> 
     /**
      * 管理员登录
      *
-     * @param account  管理员账号
-     * @param password 密码
+     * @param adminLoginDTO 管理员登陆信息
      * @return JWT token
      */
-    String login(String account, String password);
+    String login(AdminLoginDTO adminLoginDTO);
 
     /**
      * 管理员注册

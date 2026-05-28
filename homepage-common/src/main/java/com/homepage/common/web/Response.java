@@ -50,12 +50,12 @@ public class Response<T> implements Serializable {
         return new Response<>(ResponseCode.INTERNAL_SERVER_ERROR.getCode(), message, null);
     }
 
-    public static <T> Response<T> fail(ResponseCode ResponseCode) {
-        return new Response<>(ResponseCode.getCode(), ResponseCode.getMessage(), null);
+    public static <T> Response<T> fail(ResponseCode responseCode) {
+        return new Response<>(responseCode.getCode(), responseCode.getMessage(), null);
     }
 
-    public static <T> Response<T> fail(ResponseCode ResponseCode, String message) {
-        return new Response<>(ResponseCode.getCode(), message, null);
+    public static <T> Response<T> fail(ResponseCode responseCode, String message) {
+        return new Response<>(responseCode.getCode(), message, null);
     }
 
     public static <T> Response<T> fail(int code, String message) {
