@@ -930,5 +930,55 @@
 
 ---
 
-*自动生成于 2026-05-28 02:44:10 UTC*
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`ef1eed7`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 108 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — fix():文件位置变动
+
+**`8f862b6`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/qodana.yaml` | 49 | 0 |
+| `.github/workflows/qodana_code_quality.yml` | 1 | 0 |
+| `qodana.yaml` | 0 | 49 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — Merge branch 'dev'
+
+**`c31556a`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-28 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`24c7c96`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-28 02:50:55 UTC*
 
