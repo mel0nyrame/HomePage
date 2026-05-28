@@ -7,6 +7,10 @@ package com.homepage.common.constant;
  * @description: Redis常量类
  */
 public class RedisConstants {
+
+    // 防止实例化
+    private RedisConstants() {}
+
     /**
      * 图片验证码前缀
      */

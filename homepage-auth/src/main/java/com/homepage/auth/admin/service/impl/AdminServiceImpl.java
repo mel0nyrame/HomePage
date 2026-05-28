@@ -7,7 +7,6 @@ import com.homepage.common.exception.BusinessException;
 import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
 import com.homepage.common.model.entity.AdminEntity;
-import com.homepage.common.model.security.AdminUserDetails;
 import com.homepage.common.util.JwtUtil;
 import com.homepage.common.util.RedisUtil;
 import com.homepage.common.web.ResponseCode;
@@ -18,8 +17,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,14 +80,5 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         admin.setPassword(passwordEncoder.encode(adminRegisterDTO.getPassword()));
 
         this.save(admin);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        AdminEntity admin = lambdaQuery().eq(AdminEntity::getAccount, account).one();
-        if (admin == null) {
-            throw new UsernameNotFoundException("管理员不存在: " + account);
-        }
-        return new AdminUserDetails(admin);
     }
 }

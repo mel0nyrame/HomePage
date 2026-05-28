@@ -1,15 +1,21 @@
 package com.homepage.common.util;
 
 import cn.hutool.core.util.RandomUtil;
+import com.homepage.common.exception.BusinessException;
+import com.homepage.common.web.ResponseCode;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import static com.homepage.common.constant.RedisConstants.REDIS_EMAIL_CAPTCHA_PREFIX;
@@ -26,6 +32,9 @@ public class MailUtil {
     @Value("${spring.mail.username}")
     private String sender;
 
+    private final int CAPTCHA_LENGTH = 6;
+    private final long CAPTCHA_EXPIRE_SECONDS = 60;
+
     private final JavaMailSender mailSender;
     private final StringRedisTemplate redisTemplate;
     private final TemplateEngine templateEngine;
@@ -41,23 +50,34 @@ public class MailUtil {
      *
      * @param email 邮箱地址
      */
-    public void sendEmail(String email) {
-        // 设置信息
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom('<' + sender + '>');
-        message.setTo(email);
-        message.setSubject("欢迎访问Homepage");
+    @Async
+    public CompletableFuture<Void> sendEmail(String email) {
+        try {
+            // 设置信息
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-        // 设置验证码并放入redis，设置过期时间为60秒
-        String captcha = RandomUtil.randomNumbers(6);
-        redisTemplate.opsForValue().set(REDIS_EMAIL_CAPTCHA_PREFIX + email,captcha,60, TimeUnit.SECONDS);
+            helper.setFrom('<' + sender + '>');
+            helper.setTo(email);
+            helper.setSubject("HomePage 邮箱验证码");
 
-        // 设置邮箱内容并放入信息中
-        String context = generateEmailContent(captcha);
-        message.setText(context);
+            // 设置验证码并放入redis
+            String captcha = RandomUtil.randomNumbers(CAPTCHA_LENGTH);
+            redisTemplate.opsForValue().set(REDIS_EMAIL_CAPTCHA_PREFIX + email, captcha, CAPTCHA_EXPIRE_SECONDS, TimeUnit.SECONDS);
 
-        // 发送信息
-        mailSender.send(message);
+            // 设置邮箱内容并放入信息中
+            String context = generateEmailContent(captcha);
+            helper.setText(context, true);
+
+            // 发送信息
+            mailSender.send(message);
+
+            return CompletableFuture.completedFuture(null);
+        } catch (MessagingException e) {
+            throw new BusinessException(ResponseCode.MESSAGE_SEND_FAILED);
+        } catch (Exception e) {
+            return CompletableFuture.failedFuture(e);
+        }
     }
 
     /**
@@ -67,7 +87,11 @@ public class MailUtil {
      */
     private String generateEmailContent(String captcha) {
         Context context = new Context();
-        context.setVariable("verifyCode", Arrays.asList(captcha.split("")));
+        // 将验证码拆分为单个字符列表，便于模板中逐个显示
+        List<String> captchaChars = captcha.chars()
+                .mapToObj(c -> String.valueOf((char) c))
+                .toList();
+        context.setVariable("verifyCode", captchaChars);
         return templateEngine.process("EmailVerificationCode.html", context);
     }
 }

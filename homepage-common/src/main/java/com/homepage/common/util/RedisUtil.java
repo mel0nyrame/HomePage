@@ -7,9 +7,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
+import java.security.MessageDigest;
 import java.util.List;
 
 import static com.homepage.common.constant.RedisConstants.REDIS_AUTH_CAPTCHA_PREFIX;
+import static com.homepage.common.constant.RedisConstants.REDIS_EMAIL_CAPTCHA_PREFIX;
 
 /**
  * @Author Mel0ny
@@ -52,12 +54,34 @@ public class RedisUtil {
      */
     public void verifyCaptcha(String captchaId, String inputCaptcha) {
         String key = REDIS_AUTH_CAPTCHA_PREFIX + captchaId;
+        verifyAndDeleteCaptcha(key, inputCaptcha);
+    }
+
+    /**
+     * 验证邮箱验证码（Lua 脚本原子化读取+删除，防止并发重放）
+     *
+     * @param email        邮箱地址
+     * @param inputCaptcha 输入的验证码
+     */
+    public void verifyEmailCaptcha(String email, String inputCaptcha) {
+        String key = REDIS_EMAIL_CAPTCHA_PREFIX + email;
+        verifyAndDeleteCaptcha(key, inputCaptcha);
+    }
+
+    /**
+     * 通用验证码验证逻辑（Lua 脚本原子化读取+删除）
+     *
+     * @param key          Redis键
+     * @param inputCaptcha 输入的验证码
+     */
+    private void verifyAndDeleteCaptcha(String key, String inputCaptcha) {
         List<String> result = redisTemplate.execute(CAPTCHA_SCRIPT, List.of(key));
         String captcha = !result.isEmpty() ? result.getFirst() : null;
         if (captcha == null) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }
-        if (!captcha.equals(inputCaptcha)) {
+        // 使用常量时间比较防止时序攻击
+        if (!MessageDigest.isEqual(captcha.getBytes(), inputCaptcha.getBytes())) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_ERROR);
         }
     }

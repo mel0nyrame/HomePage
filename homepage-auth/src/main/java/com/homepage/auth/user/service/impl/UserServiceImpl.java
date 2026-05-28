@@ -9,7 +9,6 @@ import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.entity.UserEntity;
-import com.homepage.common.model.security.HomepageUserDetails;
 import com.homepage.common.util.JwtUtil;
 import com.homepage.common.util.MailUtil;
 import com.homepage.common.util.RedisUtil;
@@ -23,15 +22,12 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.homepage.common.constant.RedisConstants.REDIS_EMAIL_CAPTCHA_PREFIX;
 import static com.homepage.common.constant.RedisConstants.REDIS_USER_PREFIX;
 
 /**
@@ -114,31 +110,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Override
     public void verifyEmail(EmailDTO emailDTO) {
-        // 获取验证码，检验验证码
-        String captcha = redisTemplate.opsForValue().get(REDIS_EMAIL_CAPTCHA_PREFIX + emailDTO.getEmail());
-        if (captcha == null) {
-            throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
-        }
-        if (!captcha.equals(emailDTO.getCaptcha())) {
-            throw new BusinessException(ResponseCode.USER_VERIFY_CODE_ERROR);
-        }
+        // 验证邮箱验证码
+        redisUtil.verifyEmailCaptcha(emailDTO.getEmail(), emailDTO.getCaptcha());
 
         // 获取存在redis中的用户信息
         String userJson = redisTemplate.opsForValue().get(REDIS_USER_PREFIX + emailDTO.getEmail());
+        if (userJson == null) {
+            throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
+        }
+
         UserEntity user = JSONUtil.toBean(userJson, UserEntity.class);
 
         // 插入信息
         this.save(user);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        UserEntity user = lambdaQuery()
-                .and(w -> w.eq(UserEntity::getUsername, account).or().eq(UserEntity::getEmail, account))
-                .one();
-        if (user == null) {
-            throw new UsernameNotFoundException(account);
-        }
-        return new HomepageUserDetails(user);
     }
 }

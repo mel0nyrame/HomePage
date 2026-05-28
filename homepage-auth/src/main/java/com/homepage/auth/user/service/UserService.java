@@ -5,7 +5,6 @@ import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.entity.UserEntity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * The interface User service.
@@ -15,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @Date 5/23/26 01:47
  * @description: 用户业务接口
  */
-public interface UserService extends UserDetailsService, IService<UserEntity> {
+public interface UserService extends IService<UserEntity> {
 
     /**
      * 用户登录
