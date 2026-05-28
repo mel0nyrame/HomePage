@@ -1205,5 +1205,39 @@
 
 ---
 
-*自动生成于 2026-05-28 04:51:10 UTC*
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`0a3b1d9`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 41 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — fix(qodana):更新了qodana.yaml的位置
+
+**`a5dadb1`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/qodana.yaml` | 0 | 49 |
+| `.github/workflows/qodana_code_quality.yml` | 0 | 1 |
+| `qodana.yaml` | 49 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+*自动生成于 2026-05-28 07:26:34 UTC*
 
