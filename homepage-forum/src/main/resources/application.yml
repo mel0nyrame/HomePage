@@ -1,0 +1,17 @@
+server:
+  port: 8802
+
+spring:
+  application:
+    name: homepage-forum
+  profiles:
+    active: dev
+  web:
+    resources:
+      add-mappings: false
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
