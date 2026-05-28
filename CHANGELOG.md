@@ -1165,5 +1165,45 @@
 
 ---
 
-*自动生成于 2026-05-28 04:48:14 UTC*
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`231ff2a`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 33 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — ⏺ 🔧 ci: 将 Qodana linter 版本降级为 2025.1 以兼容当前 CLI
+
+**`ec1838a`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/qodana.yaml` | 1 | 1 |
+
+### 改动位置
+
+- projectJDK: "21" #(Applied in CI/CD pipeline)
+
+---
+
+## 2026-05-28 — Merge remote-tracking branch 'origin/main'
+
+**`8af7751`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-28 04:51:10 UTC*
 
