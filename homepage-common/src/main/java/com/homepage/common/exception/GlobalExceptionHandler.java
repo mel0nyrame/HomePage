@@ -3,6 +3,7 @@ package com.homepage.common.exception;
 import com.homepage.common.web.Response;
 import com.homepage.common.web.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -28,8 +29,12 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Response<Void> handleBusinessException(BusinessException e, HttpServletRequest request) {
+    public Response<Void> handleBusinessException(BusinessException e, HttpServletRequest request,
+                                                  HttpServletResponse response) {
+        HttpStatus status = e.getCode() >= 1000 && e.getCode() < 2000
+                ? HttpStatus.BAD_REQUEST
+                : HttpStatus.INTERNAL_SERVER_ERROR;
+        response.setStatus(status.value());
         log.warn("业务异常 [{}] {} -> {}", e.getCode(), request.getRequestURI(), e.getMessage());
         return Response.fail(e.getCode(), e.getMessage());
     }

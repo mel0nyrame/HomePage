@@ -53,16 +53,11 @@ public class CaptchaServiceImpl implements CaptchaService {
         redisTemplate.opsForValue().set(key, code, 60, TimeUnit.SECONDS);
 
         String image;
-        try {
-            // 字节输出流
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
             // 将图片写入输出流
             ImageIO.write(shearCaptcha.getImage(), "png", bos);
             byte[] bytes = bos.toByteArray();
-            // base64编码
-            Base64.Encoder encoder = Base64.getEncoder();
-            image = "data:image/png;base64," + encoder.encodeToString(bytes);
-
+            image = "data:image/png;base64," + Base64.getEncoder().encodeToString(bytes);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

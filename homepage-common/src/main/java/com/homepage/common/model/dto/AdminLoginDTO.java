@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Schema(description = "管理员登录请求")
-public class AdminLoginDTO {
+public class AdminLoginDTO implements CaptchaAware {
 
     @NotBlank(message = "管理员账号不能为空")
     @Schema(description = "管理员账号", example = "admin")

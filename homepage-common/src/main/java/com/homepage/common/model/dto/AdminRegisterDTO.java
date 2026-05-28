@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Schema(description = "管理员注册请求")
-public class AdminRegisterDTO {
+public class AdminRegisterDTO implements CaptchaAware {
 
     @NotBlank(message = "管理员昵称不能为空")
     @Size(min = 3, max = 20, message = "管理员昵称必须大于3小于20")

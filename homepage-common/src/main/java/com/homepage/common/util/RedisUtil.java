@@ -1,10 +1,13 @@
 package com.homepage.common.util;
 
-import com.homepage.common.constant.RedisConstants;
 import com.homepage.common.exception.BusinessException;
+import com.homepage.common.model.dto.CaptchaAware;
 import com.homepage.common.web.ResponseCode;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 import static com.homepage.common.constant.RedisConstants.REDIS_AUTH_CAPTCHA_PREFIX;
 
@@ -17,6 +20,15 @@ import static com.homepage.common.constant.RedisConstants.REDIS_AUTH_CAPTCHA_PRE
 @Component
 public class RedisUtil {
 
+    private static final String CAPTCHA_VERIFY_LUA =
+            "local v = redis.call('GET', KEYS[1]) " +
+            "if v then redis.call('DEL', KEYS[1]) end " +
+            "return v";
+
+    @SuppressWarnings("unchecked")
+    private static final RedisScript<List<String>> CAPTCHA_SCRIPT =
+            (RedisScript<List<String>>) (RedisScript<?>) RedisScript.of(CAPTCHA_VERIFY_LUA, List.class);
+
     private final StringRedisTemplate redisTemplate;
 
     public RedisUtil(StringRedisTemplate redisTemplate) {
@@ -26,28 +38,27 @@ public class RedisUtil {
     /**
      * 验证验证码
      *
+     * @param dto 实现了 CaptchaAware 的 DTO
+     */
+    public void verifyCaptcha(CaptchaAware dto) {
+        verifyCaptcha(dto.getCaptchaID(), dto.getCaptcha());
+    }
+
+    /**
+     * 验证验证码（Lua 脚本原子化读取+删除，防止并发重放）
+     *
      * @param captchaId    验证码id
      * @param inputCaptcha 输入的验证码
      */
     public void verifyCaptcha(String captchaId, String inputCaptcha) {
-        String captcha = getCaptcha(REDIS_AUTH_CAPTCHA_PREFIX + captchaId);
+        String key = REDIS_AUTH_CAPTCHA_PREFIX + captchaId;
+        List<String> result = redisTemplate.execute(CAPTCHA_SCRIPT, List.of(key));
+        String captcha = (result != null && !result.isEmpty()) ? result.get(0) : null;
         if (captcha == null) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }
-        if (!captcha.equalsIgnoreCase(inputCaptcha)) {
+        if (!captcha.equals(inputCaptcha)) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_ERROR);
         }
-        redisTemplate.delete(REDIS_AUTH_CAPTCHA_PREFIX + captchaId);
-    }
-
-
-    /**
-     * 从redis中获取验证码
-     *
-     * @param key redis的key
-     * @return redis中的验证码
-     */
-    public String getCaptcha(String key) {
-        return redisTemplate.opsForValue().get(key);
     }
 }

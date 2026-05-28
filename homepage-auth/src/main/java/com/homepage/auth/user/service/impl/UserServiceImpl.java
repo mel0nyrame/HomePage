@@ -52,19 +52,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public String login(LoginDTO loginDTO) {
         // 验证验证码
-        redisUtil.verifyCaptcha(loginDTO.getCaptchaID(), loginDTO.getCaptcha());
-
-        // 通过邮箱和用户名来查询用户是否存在
-        boolean exists = lambdaQuery()
-                .and(w -> w.eq(UserEntity::getUsername, loginDTO.getAccount())
-                        .or().eq(UserEntity::getEmail, loginDTO.getAccount()))
-                .exists();
-        if (!exists) {
-            throw new BusinessException(ResponseCode.USER_NOT_EXIST);
-        }
+        redisUtil.verifyCaptcha(loginDTO);
 
         try {
-            // 设置权限
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getAccount(), loginDTO.getPassword())
             );
@@ -80,7 +70,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     @Override
     public void register(RegisterDTO registerDTO) {
         // 验证验证码
-        redisUtil.verifyCaptcha(registerDTO.getCaptchaID(), registerDTO.getCaptcha());
+        redisUtil.verifyCaptcha(registerDTO);
 
         // 查询用户
         if (lambdaQuery().eq(UserEntity::getUsername, registerDTO.getUsername()).exists()) {

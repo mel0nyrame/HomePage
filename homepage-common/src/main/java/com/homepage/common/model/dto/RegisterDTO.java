@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Schema(description = "用户注册请求")
-public class RegisterDTO {
+public class RegisterDTO implements CaptchaAware {
 
     @NotBlank(message = "用户昵称不能为空")
     @Size(min = 3, max = 20, message = "用户昵称必须大于3小于20")

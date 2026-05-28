@@ -52,15 +52,9 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     @Override
     public String login(AdminLoginDTO adminLoginDTO) {
         // 验证验证码
-        redisUtil.verifyCaptcha(adminLoginDTO.getCaptchaID(), adminLoginDTO.getCaptcha());
-
-        // 查询管理员
-        if (lambdaQuery().eq(AdminEntity::getAccount, adminLoginDTO.getAccount()).one() == null) {
-            throw new BusinessException(ResponseCode.USER_NOT_EXIST);
-        }
+        redisUtil.verifyCaptcha(adminLoginDTO);
 
         try {
-            // 设置权限
             Authentication authentication = adminAuthenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(adminLoginDTO.getAccount(), adminLoginDTO.getPassword())
             );
@@ -76,7 +70,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     @Override
     public void register(AdminRegisterDTO adminRegisterDTO) {
         // 验证验证码
-        redisUtil.verifyCaptcha(adminRegisterDTO.getCaptchaID(), adminRegisterDTO.getCaptcha());
+        redisUtil.verifyCaptcha(adminRegisterDTO);
 
         // 查询管理员
         if (lambdaQuery().eq(AdminEntity::getAccount, adminRegisterDTO.getAccount()).exists()) {
