@@ -1288,5 +1288,59 @@
 
 ---
 
-*自动生成于 2026-05-28 07:50:20 UTC*
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`5a27971`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 50 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — feat():添加了forum模块
+
+**`bb5ccb4`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/scripts/sync-changelog.sh` | 1 | 0 |
+| `.idea/compiler.xml` | 10 | 0 |
+| `.idea/encodings.xml` | 2 | 0 |
+| `homepage-forum/pom.xml` | 120 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/HomepageForumApplication.java` | 14 | 0 |
+| `homepage-forum/src/main/resources/application.yml` | 17 | 0 |
+| `pom.xml` | 1 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — Merge branch 'dev'
+
+**`d2bbb2d`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-28 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`165a8c9`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-28 10:22:16 UTC*
 
