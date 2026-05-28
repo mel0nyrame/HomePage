@@ -7,5 +7,18 @@ package com.homepage.common.constant;
  * @description: Redis常量类
  */
 public class RedisConstants {
+    /**
+     * 图片验证码前缀
+     */
     public final static String REDIS_AUTH_CAPTCHA_PREFIX = "auth:captcha:";
+
+    /**
+     * 邮箱验证码前缀
+     */
+    public final static String REDIS_EMAIL_CAPTCHA_PREFIX = "email:captcha:";
+
+    /**
+     * 用户信息前缀
+     */
+    public final static String REDIS_USER_PREFIX = "user:";
 }

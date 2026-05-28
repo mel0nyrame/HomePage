@@ -1,19 +1,23 @@
 package com.homepage.auth.user.service.impl;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.homepage.auth.user.mapper.UserMapper;
 import com.homepage.auth.user.service.UserService;
 import com.homepage.common.exception.BusinessException;
+import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.entity.UserEntity;
 import com.homepage.common.model.security.HomepageUserDetails;
 import com.homepage.common.util.JwtUtil;
+import com.homepage.common.util.MailUtil;
 import com.homepage.common.util.RedisUtil;
 import com.homepage.common.web.ResponseCode;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -24,6 +28,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.concurrent.TimeUnit;
+
+import static com.homepage.common.constant.RedisConstants.REDIS_EMAIL_CAPTCHA_PREFIX;
+import static com.homepage.common.constant.RedisConstants.REDIS_USER_PREFIX;
 
 /**
  * @Author Mel0ny
@@ -39,14 +48,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final RedisUtil redisUtil;
+    private final StringRedisTemplate redisTemplate;
+    private final MailUtil mailUtil;
 
     public UserServiceImpl(JwtUtil jwtUtil,
                            PasswordEncoder passwordEncoder,
-                           @Lazy @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager, RedisUtil redisUtil) {
+                           @Lazy @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager,
+                           RedisUtil redisUtil,
+                           StringRedisTemplate redisTemplate,
+                           MailUtil mailUtil) {
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.redisUtil = redisUtil;
+        this.redisTemplate = redisTemplate;
+        this.mailUtil = mailUtil;
     }
 
     @Override
@@ -81,12 +97,37 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             throw new BusinessException(ResponseCode.USER_EMAIL_EXIST);
         }
 
+        // 设置实体类
         UserEntity user = new UserEntity();
         user.setNickname(registerDTO.getNickname());
         user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
 
+        // 将实体类转为json，放入redis，过期时间设为五分钟
+        String userJson = JSONUtil.toJsonStr(user);
+        redisTemplate.opsForValue().set(REDIS_USER_PREFIX + registerDTO.getEmail(), userJson, 5, TimeUnit.MINUTES);
+
+        // 给输入的邮箱发送验证码邮件
+        mailUtil.sendEmail(registerDTO.getEmail());
+    }
+
+    @Override
+    public void verifyEmail(EmailDTO emailDTO) {
+        // 获取验证码，检验验证码
+        String captcha = redisTemplate.opsForValue().get(REDIS_EMAIL_CAPTCHA_PREFIX + emailDTO.getEmail());
+        if (captcha == null) {
+            throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
+        }
+        if (!captcha.equals(emailDTO.getCaptcha())) {
+            throw new BusinessException(ResponseCode.USER_VERIFY_CODE_ERROR);
+        }
+
+        // 获取存在redis中的用户信息
+        String userJson = redisTemplate.opsForValue().get(REDIS_USER_PREFIX + emailDTO.getEmail());
+        UserEntity user = JSONUtil.toBean(userJson, UserEntity.class);
+
+        // 插入信息
         this.save(user);
     }
 

@@ -3,16 +3,14 @@ package com.homepage.auth.admin.controller;
 import com.homepage.auth.admin.service.AdminService;
 import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
+import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.web.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "管理员接口", description = "管理员登录与注册相关接口")
 @RestController

@@ -22,6 +22,13 @@ spring:
       password: 123 # 测试环境密码
       timeout: 5s
       connect-timeout: 5s
+  mail:
+    host: smtp.qq.com
+    protocol: smtp
+    default-encoding: UTF-8
+    # 测试用信息
+    username: ronald.tom@foxmail.com
+    password: your-password-here
 
 springdoc:
   api-docs:

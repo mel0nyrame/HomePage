@@ -1,16 +1,14 @@
 package com.homepage.auth.user.controller;
 
 import com.homepage.auth.user.service.UserService;
+import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.web.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "用户接口", description = "用户登录与注册相关接口")
 @RestController
@@ -34,6 +32,13 @@ public class UserController {
     @PostMapping("/register")
     public Response<Void> register(@Validated @RequestBody RegisterDTO registerDTO) {
         userService.register(registerDTO);
+        return Response.ok();
+    }
+
+    @GetMapping("/email")
+    @Operation(summary = "验证邮箱", description = "验证邮箱验证码")
+    public Response<Void> verifyEmail(@RequestBody EmailDTO emailDTO) {
+        userService.verifyEmail(emailDTO);
         return Response.ok();
     }
 }

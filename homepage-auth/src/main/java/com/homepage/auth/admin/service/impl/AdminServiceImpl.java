@@ -77,12 +77,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
             throw new BusinessException(ResponseCode.USER_ALREADY_EXIST);
         }
 
-        AdminEntity adminEntity = new AdminEntity();
-        adminEntity.setAccount(adminRegisterDTO.getAccount());
-        adminEntity.setNickname(adminRegisterDTO.getNickname());
-        adminEntity.setPassword(passwordEncoder.encode(adminRegisterDTO.getPassword()));
+        AdminEntity admin = new AdminEntity();
+        admin.setAccount(adminRegisterDTO.getAccount());
+        admin.setNickname(adminRegisterDTO.getNickname());
+        admin.setPassword(passwordEncoder.encode(adminRegisterDTO.getPassword()));
 
-        this.save(adminEntity);
+        this.save(admin);
     }
 
     @Override
