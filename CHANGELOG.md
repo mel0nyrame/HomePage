@@ -1205,5 +1205,88 @@
 
 ---
 
-*自动生成于 2026-05-28 04:51:10 UTC*
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`0a3b1d9`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 41 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — fix(qodana):更新了qodana.yaml的位置
+
+**`a5dadb1`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/qodana.yaml` | 0 | 49 |
+| `.github/workflows/qodana_code_quality.yml` | 0 | 1 |
+| `qodana.yaml` | 49 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`85c0af9`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 35 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-28 — 🐞 fix(auth,common): 修复字段和获取不到验证码的bug
+
+**`2d98a18`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-common/src/main/java/com/homepage/common/model/dto/AdminLoginDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/AdminRegisterDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/CaptchaAware.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/LoginDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/RegisterDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 3 | 3 |
+
+### 改动位置
+
+- public class AdminLoginDTO implements CaptchaAware {
+- public class AdminRegisterDTO implements CaptchaAware {
+- public class LoginDTO implements CaptchaAware {
+- public class RedisUtil {
+- public class RegisterDTO implements CaptchaAware {
+
+---
+
+## 2026-05-28 — Merge branch 'dev-mel0ny'
+
+**`a304da9`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-28 07:50:20 UTC*
 
