@@ -15,6 +15,7 @@
     <modules>
         <module>homepage-common</module>
         <module>homepage-auth</module>
+        <module>homepage-forum</module>
     </modules>
 
     <properties>
