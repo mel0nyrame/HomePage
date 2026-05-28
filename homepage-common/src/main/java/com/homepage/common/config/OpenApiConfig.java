@@ -1,4 +1,4 @@
-package com.homepage.auth.config;
+package com.homepage.common.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

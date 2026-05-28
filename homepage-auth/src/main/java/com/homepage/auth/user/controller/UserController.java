@@ -1,6 +1,7 @@
 package com.homepage.auth.user.controller;
 
 import com.homepage.auth.user.service.UserService;
+import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.web.Response;
@@ -34,6 +35,20 @@ public class UserController {
     @PostMapping("/register")
     public Response<Void> register(@Validated @RequestBody RegisterDTO registerDTO) {
         userService.register(registerDTO);
+        return Response.ok();
+    }
+
+    @PostMapping("/email/verify")
+    @Operation(summary = "验证邮箱", description = "验证邮箱验证码")
+    public Response<Void> verifyEmail(@Validated @RequestBody EmailDTO emailDTO) {
+        userService.verifyEmail(emailDTO);
+        return Response.ok();
+    }
+
+    @PostMapping("/email/retry")
+    @Operation(summary = "重新发送验证码", description = "当验证码过期之后，重新发送验证码")
+    public Response<Void> retryEmail(@RequestBody EmailDTO emailDTO) {
+        userService.retryEmail(emailDTO.getEmail());
         return Response.ok();
     }
 }

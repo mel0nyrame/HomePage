@@ -7,6 +7,10 @@ package com.homepage.common.constant;
  * @description: JWT常量类
  */
 public class JwtConstants {
+
+    // 防止实例化
+    private JwtConstants() {}
+
     /**
      * JWT算法密钥
      */

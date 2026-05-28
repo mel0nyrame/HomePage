@@ -1,7 +1,7 @@
 package com.homepage.auth.config;
 
-import com.homepage.auth.admin.service.AdminService;
-import com.homepage.auth.user.service.UserService;
+import com.homepage.auth.admin.service.impl.AdminUserDetailsServiceImpl;
+import com.homepage.auth.user.service.impl.UserDetailsServiceImpl;
 import com.homepage.common.exception.RestAccessDeniedHandler;
 import com.homepage.common.exception.RestAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
@@ -35,13 +35,15 @@ public class SecurityConfig {
     private final String[] requestMatchers = {
             "/api/user/login",
             "/api/user/register",
+            "/api/user/email/verify",
+            "/api/user/email/retry",
             "/api/admin/login",
             "/api/captcha/**",
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/api-docs/**",
             "/api-docs",
-            "/actuator/**"
+            "/actuator/health"
     };
 
     @Bean
@@ -88,7 +90,7 @@ public class SecurityConfig {
 
     @Primary
     @Bean("userAuthenticationManager")
-    public AuthenticationManager userAuthenticationManager(UserService userDetailsService,
+    public AuthenticationManager userAuthenticationManager(UserDetailsServiceImpl userDetailsService,
                                                            PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
@@ -96,7 +98,7 @@ public class SecurityConfig {
     }
 
     @Bean("adminAuthenticationManager")
-    public AuthenticationManager adminAuthenticationManager(AdminService adminDetailsService,
+    public AuthenticationManager adminAuthenticationManager(AdminUserDetailsServiceImpl adminDetailsService,
                                                             PasswordEncoder passwordEncoder) {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider(adminDetailsService);
         provider.setPasswordEncoder(passwordEncoder);

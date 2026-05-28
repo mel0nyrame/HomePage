@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
 import com.homepage.common.model.entity.AdminEntity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
  * @Author Mel0ny
@@ -12,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @Date 5/25/26 21:44
  * @description: 管理员业务接口
  */
-public interface AdminService extends UserDetailsService, IService<AdminEntity> {
+public interface AdminService extends IService<AdminEntity> {
 
     /**
      * 管理员登录
