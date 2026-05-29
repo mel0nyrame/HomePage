@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-OUTPUT="CHANGELOG.md"
+OUTPUT="doc/CHANGELOG.md"
 REPO_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 OUTPUT="$REPO_ROOT/$OUTPUT"
 

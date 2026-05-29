@@ -25,7 +25,7 @@ case "$(uname -s)" in
         # Load
         launchctl load "$PLIST_DST"
 
-        echo "已加载 launchd 任务，每 10 分钟自动同步 CHANGELOG.md。"
+        echo "已加载 launchd 任务，每 10 分钟自动同步 doc/CHANGELOG.md。"
         echo "检查状态: launchctl list | grep homepage"
         ;;
 
@@ -36,7 +36,7 @@ case "$(uname -s)" in
         # Remove existing entry first
         (crontab -l 2>/dev/null | grep -v "$SYNC_SCRIPT"; echo "$CRON_LINE") | crontab -
 
-        echo "已添加 crontab 条目，每 10 分钟自动同步 CHANGELOG.md。"
+        echo "已添加 crontab 条目，每 10 分钟自动同步 doc/CHANGELOG.md。"
         echo "检查状态: crontab -l"
         ;;
 
@@ -86,7 +86,7 @@ VBS_EOF
             //tr "wscript.exe \"$VBS_FILE\"" \
             //sc minute //mo 10 //f
 
-        echo "已创建 Windows 计划任务，每 10 分钟自动同步 CHANGELOG.md（静默后台执行）。"
+        echo "已创建 Windows 计划任务，每 10 分钟自动同步 doc/CHANGELOG.md（静默后台执行）。"
         echo "检查状态: schtasks //query //tn \"Sync Changelog\""
         ;;
 
