@@ -12,6 +12,10 @@ target/
 # MacOs
 .DS_Store
 
+# Configuration
+application-dev.yml
+application-prod.yml
+
 # AI
 .claude
 .codegraph
