@@ -27,8 +27,9 @@ public class RegisterDTO implements CaptchaAware {
     private String email;
 
     @NotBlank(message = "密码不能为空")
-    @Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,}$",
-            message = "密码必须由数字和字母组成，并且长度大于等于6个字符")
+    @Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$",
+            message = "密码必须由数字和字母组成，并且长度大于等于8个字符")
+    @Size(min = 8,message = "密码必须大于8位数")
     @Schema(description = "用户密码，必须包含数字和字母，长度>=6", example = "abc123")
     private String password;
 

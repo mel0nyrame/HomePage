@@ -99,6 +99,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());
         user.setPassword(passwordEncoder.encode(registerDTO.getPassword()));
+        user.setEnabled(1);
+        user.setAuthorities("USER");
 
         // 将实体类转为json，放入redis，过期时间设为五分钟
         String userJson = JSONUtil.toJsonStr(user);
