@@ -3,7 +3,6 @@ package com.homepage.common.exception;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.homepage.common.web.Response;
 import com.homepage.common.web.ResponseCode;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
