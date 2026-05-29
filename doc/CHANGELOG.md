@@ -1733,5 +1733,54 @@
 
 ---
 
-*自动生成于 2026-05-29 18:26:14 UTC*
+## 2026-05-29 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`955cc21`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 79 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — ♻️ refactor(docs): 移动文档文件到 doc 文件夹
+
+**`c852fc8`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/scripts/gen-changelog.sh` | 1 | 1 |
+| `.github/scripts/install-sync.sh` | 3 | 3 |
+| `.github/scripts/sync-changelog.sh` | 5 | 5 |
+| `.github/workflows/changelog.yml` | 1 | 1 |
+| `CHANGELOG.md` | 0 | 1659 |
+| `doc/CHANGELOG.md` | 1659 | 0 |
+| `doc/项目文档.md` | 402 | 0 |
+| `项目文档.md` | 0 | 402 |
+
+### 改动位置
+
+- VBS_EOF
+- case "$(uname -s)" in
+- cd "$REPO_ROOT"
+
+---
+
+## 2026-05-30 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`71db1b8`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-29 18:44:10 UTC*
 
