@@ -1462,5 +1462,56 @@
 
 ---
 
-*自动生成于 2026-05-28 19:18:21 UTC*
+## 2026-05-28 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`a5d8f36`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 121 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-29 — 🐞 fix(yaml): 修改敏感信息
+
+**`c9f45dd`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.gitignore` | 4 | 0 |
+| `.idea/db-forest-config.xml` | 10 | 0 |
+| `homepage-auth/src/main/resources/application-dev-template.yml` | 30 | 0 |
+| `homepage-auth/src/main/resources/application.yml` | 1 | 31 |
+
+### 改动位置
+
+- target/
+
+---
+
+## 2026-05-29 — Merge branch 'dev-mel0ny'
+
+**`b46f4f7`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-29 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`52fa866`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-29 05:20:34 UTC*
 
