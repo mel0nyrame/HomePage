@@ -1,6 +1,7 @@
 package com.homepage.auth.user.service.impl;
 
-import com.homepage.auth.user.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.homepage.auth.user.mapper.UserMapper;
 import com.homepage.common.model.entity.UserEntity;
 import com.homepage.common.model.security.HomepageUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,18 +18,21 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private final UserService userService;
+    private final UserMapper userMapper;
 
-    public UserDetailsServiceImpl(UserService userService) {
-        this.userService = userService;
+    public UserDetailsServiceImpl(UserMapper userMapper) {
+        this.userMapper = userMapper;
     }
 
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        UserEntity user = userService.lambdaQuery()
-                .and(w -> w.eq(UserEntity::getUsername, account)
-                        .or().eq(UserEntity::getEmail, account))
-                .one();
+        UserEntity user = userMapper.selectOne(
+                new LambdaQueryWrapper<UserEntity>().and(
+                        w -> w.eq(UserEntity::getUsername, account)
+                                .or()
+                                .eq(UserEntity::getEmail, account)
+                )
+        );
         if (user == null) {
             throw new UsernameNotFoundException(account);
         }

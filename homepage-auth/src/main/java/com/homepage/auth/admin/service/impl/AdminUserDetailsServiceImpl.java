@@ -1,6 +1,7 @@
 package com.homepage.auth.admin.service.impl;
 
-import com.homepage.auth.admin.service.AdminService;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.homepage.auth.admin.mapper.AdminMapper;
 import com.homepage.common.model.entity.AdminEntity;
 import com.homepage.common.model.security.AdminUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,15 +18,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminUserDetailsServiceImpl implements UserDetailsService {
 
-    private final AdminService adminService;
+    private final AdminMapper adminMapper;
 
-    public AdminUserDetailsServiceImpl(AdminService adminService) {
-        this.adminService = adminService;
+    public AdminUserDetailsServiceImpl(AdminMapper adminMapper) {
+        this.adminMapper = adminMapper;
     }
 
     @Override
     public UserDetails loadUserByUsername(String account) throws UsernameNotFoundException {
-        AdminEntity admin = adminService.lambdaQuery().eq(AdminEntity::getAccount, account).one();
+        AdminEntity admin = adminMapper.selectOne(
+                new LambdaQueryWrapper<AdminEntity>().eq(AdminEntity::getAccount, account)
+        );
         if (admin == null) {
             throw new UsernameNotFoundException("管理员不存在: " + account);
         }

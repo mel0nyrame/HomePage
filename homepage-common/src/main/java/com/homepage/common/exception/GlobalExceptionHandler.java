@@ -3,7 +3,6 @@ package com.homepage.common.exception;
 import com.homepage.common.web.Response;
 import com.homepage.common.web.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -30,7 +29,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public Response<Void> handleBusinessException(BusinessException e, HttpServletRequest request) {
-        log.warn("业务异常 [{}] {} -> {}", e.getCode(), request.getRequestURI(), e.getMessage());
+        log.warn("ip:{} 业务异常 [{}] {} -> {}", request.getRemoteAddr(),e.getCode(), request.getRequestURI(), e.getMessage());
         return Response.fail(e.getCode(), e.getMessage());
     }
 

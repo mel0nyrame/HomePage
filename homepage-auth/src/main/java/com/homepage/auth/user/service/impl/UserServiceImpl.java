@@ -13,8 +13,8 @@ import com.homepage.common.util.JwtUtil;
 import com.homepage.common.util.MailUtil;
 import com.homepage.common.util.RedisUtil;
 import com.homepage.common.web.ResponseCode;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,7 +24,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.TimeUnit;
 
@@ -36,6 +35,7 @@ import static com.homepage.common.constant.RedisConstants.REDIS_USER_PREFIX;
  * @Date 5/23/26 01:48
  * @description: 用户业务实现类
  */
+@Slf4j
 @Primary
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
@@ -49,7 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     public UserServiceImpl(JwtUtil jwtUtil,
                            PasswordEncoder passwordEncoder,
-                           @Lazy @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager,
+                           @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager,
                            RedisUtil redisUtil,
                            StringRedisTemplate redisTemplate,
                            MailUtil mailUtil) {
@@ -78,7 +78,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         }
     }
 
-    @Transactional
     @Override
     public void register(RegisterDTO registerDTO) {
         // 验证验证码
@@ -107,7 +106,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         redisTemplate.opsForValue().set(REDIS_USER_PREFIX + registerDTO.getEmail(), userJson, 5, TimeUnit.MINUTES);
 
         // 给输入的邮箱发送验证码邮件
-        mailUtil.sendEmail(registerDTO.getEmail());
+        mailUtil.sendEmail(registerDTO.getEmail())
+                .exceptionally(ex -> {
+                    log.error("验证码邮件发送失败: {}", registerDTO.getEmail(), ex);
+                    throw new BusinessException(ResponseCode.MESSAGE_SEND_FAILED);
+                });
     }
 
     @Override
@@ -132,6 +135,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
     @Override
     public void retryEmail(String email) {
-        mailUtil.sendEmail(email);
+        mailUtil.sendEmail(email)
+                .exceptionally(ex -> {
+                    log.error("重新发送验证码邮件失败: {}", email, ex);
+                    throw new BusinessException(ResponseCode.MESSAGE_SEND_FAILED);
+                });
     }
 }

@@ -1,9 +1,6 @@
 package com.homepage.common.util;
 
 import cn.hutool.core.util.RandomUtil;
-import com.homepage.common.exception.BusinessException;
-import com.homepage.common.web.ResponseCode;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -73,8 +70,6 @@ public class MailUtil {
             mailSender.send(message);
 
             return CompletableFuture.completedFuture(null);
-        } catch (MessagingException e) {
-            throw new BusinessException(ResponseCode.MESSAGE_SEND_FAILED);
         } catch (Exception e) {
             return CompletableFuture.failedFuture(e);
         }

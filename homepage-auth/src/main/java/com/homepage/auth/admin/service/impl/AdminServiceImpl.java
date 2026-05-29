@@ -11,7 +11,6 @@ import com.homepage.common.util.JwtUtil;
 import com.homepage.common.util.RedisUtil;
 import com.homepage.common.web.ResponseCode;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -36,7 +35,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     private final AuthenticationManager adminAuthenticationManager;
 
     public AdminServiceImpl(JwtUtil jwtUtil,
-                            @Lazy @Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
+                            @Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
                             PasswordEncoder passwordEncoder,
                             RedisUtil redisUtil
     ) {
