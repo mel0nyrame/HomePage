@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public Response<Void> handleBusinessException(BusinessException e, HttpServletRequest request) {
-        log.warn("业务异常 [{}] {} -> {}", e.getCode(), request.getRequestURI(), e.getMessage());
+        log.warn("ip:{} 业务异常 [{}] {} -> {}", request.getRemoteAddr(),e.getCode(), request.getRequestURI(), e.getMessage());
         return Response.fail(e.getCode(), e.getMessage());
     }
 

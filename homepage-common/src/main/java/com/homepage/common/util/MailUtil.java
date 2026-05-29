@@ -73,8 +73,6 @@ public class MailUtil {
             mailSender.send(message);
 
             return CompletableFuture.completedFuture(null);
-        } catch (MessagingException e) {
-            throw new BusinessException(ResponseCode.MESSAGE_SEND_FAILED);
         } catch (Exception e) {
             return CompletableFuture.failedFuture(e);
         }
