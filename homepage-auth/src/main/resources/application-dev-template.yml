@@ -1,0 +1,30 @@
+# 使用时将该配置文件改成application-dev.yml
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/homepage?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+    username: # 数据库账号
+    password: # 数据库密码
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+      password: # redis密码，如果没有则为空
+      timeout: 5s
+      connect-timeout: 5s
+  mail:
+    host: # SMTP服务器主机域名
+    protocol: # SMTP协议
+    default-encoding: UTF-8
+    username: # 邮箱地址
+    password: # 授权码
+    port: # 服务器端口
+    ssl:
+      enabled: true
+app:
+  admin:
+    init-nickname: # 初始化管理员昵称
+    init-account: # 初始化管理员账号
+    init-password: # 初始化管理员密码
