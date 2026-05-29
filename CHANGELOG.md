@@ -1655,5 +1655,83 @@
 
 ---
 
-*自动生成于 2026-05-29 07:08:21 UTC*
+## 2026-05-29 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`8809b35`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 93 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — ♻️  refactor(auth): UserDetailsServiceImpl 改用 Mapper 打破循环依赖
+
+**`bc4345e`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 1 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 1 | 2 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminUserDetailsServiceImpl.java` | 8 | 5 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserDetailsServiceImpl.java` | 12 | 8 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 13 | 4 |
+| `homepage-common/src/main/java/com/homepage/common/exception/GlobalExceptionHandler.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/exception/RestAccessDeniedHandler.java` | 2 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/util/MailUtil.java` | 0 | 2 |
+
+### 改动位置
+
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class GlobalExceptionHandler {
+- public class MailUtil {
+- public class RestAccessDeniedHandler implements AccessDeniedHandler {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+
+---
+
+## 2026-05-30 — 🌈 style(auth,common): 修复警告
+
+**`942f010`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 0 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/exception/GlobalExceptionHandler.java` | 0 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/exception/RestAccessDeniedHandler.java` | 0 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/util/MailUtil.java` | 0 | 3 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Merge branch 'dev-mel0ny'
+
+**`d873994`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-30 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`c7a2a5e`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-29 18:26:14 UTC*
 
