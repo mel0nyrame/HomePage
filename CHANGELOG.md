@@ -1563,5 +1563,97 @@
 
 ---
 
-*自动生成于 2026-05-29 05:29:34 UTC*
+## 2026-05-29 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`dc45e8c`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `CHANGELOG.md` | 51 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-29 — 🔒 fix(auth,common): 修复代码审查发现的安全漏洞与质量问题
+
+**`3b7717a`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 0 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 2 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 3 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/config/SecurityConfig.java` | 25 | 3 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/controller/UserController.java` | 1 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 2 | 0 |
+| `homepage-common/pom.xml` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/config/JwtConfig.java` | 8 | 4 |
+| `homepage-common/src/main/java/com/homepage/common/constant/JwtConstants.java` | 3 | 18 |
+| `homepage-common/src/main/java/com/homepage/common/constant/RedisConstants.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/exception/RestAccessDeniedHandler.java` | 2 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/exception/RestAuthenticationEntryPoint.java` | 2 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/AdminRegisterDTO.java` | 1 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/RegisterDTO.java` | 3 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/util/MailUtil.java` | 2 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 2 | 2 |
+| `sql/init.sql` | 3 | 3 |
+
+### 改动位置
+
+- CREATE TABLE homepage_admin
+- CREATE TABLE homepage_user
+- public class AdminRegisterDTO implements CaptchaAware {
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class CaptchaServiceImpl implements CaptchaService {
+- public class JwtConfig {
+- public class MailUtil {
+- public class RedisUtil {
+- public class RegisterDTO implements CaptchaAware {
+- public class SecurityConfig {
+- public class UserController {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+
+---
+
+## 2026-05-29 —  ✨  feat(ci): 集成 GitGuardian 密钥扫描到 GitHub Actions
+
+**`bd27a30`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/workflows/ggshield.yml` | 23 | 0 |
+| `.idea/compiler.xml` | 1 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-29 — Merge branch 'dev-mel0ny'
+
+**`c0a1435`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-29 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`5e38939`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-29 07:08:21 UTC*
 
