@@ -6,7 +6,7 @@ package com.homepage.common.constant;
  * @Date 5/28/26 02:15
  * @description: Redis常量类
  */
-public class RedisConstants {
+public final class RedisConstants {
 
     // 防止实例化
     private RedisConstants() {}

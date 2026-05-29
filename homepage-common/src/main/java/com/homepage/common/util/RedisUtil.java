@@ -76,10 +76,10 @@ public class RedisUtil {
      */
     private void verifyAndDeleteCaptcha(String key, String inputCaptcha) {
         List<String> result = redisTemplate.execute(CAPTCHA_SCRIPT, List.of(key));
-        String captcha = !result.isEmpty() ? result.getFirst() : null;
-        if (captcha == null) {
+        if (result == null || result.isEmpty() || result.getFirst() == null) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }
+        String captcha = result.getFirst();
         // 使用常量时间比较防止时序攻击
         if (!MessageDigest.isEqual(captcha.getBytes(), inputCaptcha.getBytes())) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_ERROR);

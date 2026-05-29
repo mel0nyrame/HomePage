@@ -6,6 +6,8 @@ import cn.hutool.captcha.generator.RandomGenerator;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import com.homepage.auth.captcha.service.CaptchaService;
+import com.homepage.common.exception.BusinessException;
+import com.homepage.common.web.ResponseCode;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -60,7 +62,7 @@ public class CaptchaServiceImpl implements CaptchaService {
             byte[] bytes = bos.toByteArray();
             image = "data:image/png;base64," + Base64.getEncoder().encodeToString(bytes);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new BusinessException(ResponseCode.INTERNAL_SERVER_ERROR);
         }
 
         return new CaptchaService.Captcha(uuid, image);

@@ -8,8 +8,8 @@ CREATE TABLE homepage_user
 (
     `id`          BIGINT       NOT NULL COMMENT '用户ID',
     `nickname`    VARCHAR(64)  NOT NULL COMMENT '用户昵称',
-    `username`    VARCHAR(32)  NULL COMMENT '用户账号',
-    `email`       VARCHAR(64)  NULL COMMENT '邮箱',
+    `username`    VARCHAR(32)  UNIQUE COMMENT '用户账号',
+    `email`       VARCHAR(64)  UNIQUE COMMENT '邮箱',
     `password`    VARCHAR(256) NOT NULL COMMENT '用户密码',
     `enabled`     TINYINT(1)   NOT NULL DEFAULT 1 COMMENT '是否启用 [0=禁用, 1=启用]',
     `authorities` VARCHAR(256) NOT NULL DEFAULT 'USER' COMMENT '用户权限',
@@ -31,7 +31,7 @@ CREATE TABLE homepage_admin
 (
     `id`          BIGINT       NOT NULL COMMENT '管理员ID',
     `nickname`    VARCHAR(64)  NOT NULL COMMENT '管理员昵称',
-    `account`     VARCHAR(32)  NULL COMMENT '管理员账号',
+    `account`     VARCHAR(32)  UNIQUE COMMENT '管理员账号',
     `password`    VARCHAR(256) NOT NULL COMMENT '管理员密码',
     `enabled`     TINYINT(1)   NOT NULL DEFAULT 1 COMMENT '是否启用 [0=禁用, 1=启用]',
     `authorities` VARCHAR(256) NOT NULL DEFAULT 'ADMIN' COMMENT '管理员权限',

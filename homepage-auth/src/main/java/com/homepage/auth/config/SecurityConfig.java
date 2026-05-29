@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,6 +48,15 @@ public class SecurityConfig {
             "/actuator/health"
     };
 
+    private final RestAuthenticationEntryPoint  restAuthenticationEntryPoint;
+    private final RestAccessDeniedHandler restAccessDeniedHandler;
+
+    public SecurityConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint
+            , RestAccessDeniedHandler restAccessDeniedHandler) {
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+        this.restAccessDeniedHandler = restAccessDeniedHandler;
+    }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -68,7 +79,7 @@ public class SecurityConfig {
         http
                 // 关闭csrf保护，因为认证方式是jwt
                 .csrf(AbstractHttpConfigurer::disable)
-                // 会话管理，设置绝不会从HttpSession中获取回话
+                // 会话管理，设置绝不会从HttpSession中获取会话
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // 启用支持JWT编码的持有令牌支持
@@ -76,8 +87,19 @@ public class SecurityConfig {
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter)))
                 // 错误处理
                 .exceptionHandling(exceptions -> exceptions
-                        .authenticationEntryPoint(new RestAuthenticationEntryPoint())
-                        .accessDeniedHandler(new RestAccessDeniedHandler())
+                        .authenticationEntryPoint(restAuthenticationEntryPoint)
+                        .accessDeniedHandler(restAccessDeniedHandler)
+                )
+                // 请求头配置
+                .headers(headers -> headers
+                        // 禁止页面被任何网站通过<frame>、<iframe>、<embed>或<object>嵌入
+                        .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
+                        // 禁止浏览器进行 MIME 类型嗅探
+                        .contentTypeOptions(Customizer.withDefaults())
+                        // 强制使用https，包括子域名
+                        .httpStrictTransportSecurity(hsts -> hsts
+                        .includeSubDomains(true)
+                        .maxAgeInSeconds(31536000))
                 )
                 // 设置认证请求配置
                 .authorizeHttpRequests(authorize -> authorize
