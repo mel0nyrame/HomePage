@@ -28,3 +28,6 @@ app:
     init-nickname: # 初始化管理员昵称
     init-account: # 初始化管理员账号
     init-password: # 初始化管理员密码
+
+jwt:
+  secret:
