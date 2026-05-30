@@ -74,6 +74,7 @@ public class RedisUtil {
      * @param key          Redis键
      * @param inputCaptcha 输入的验证码
      */
+    @SuppressWarnings("ConstantConditions")
     private void verifyAndDeleteCaptcha(String key, String inputCaptcha) {
         List<String> result = redisTemplate.execute(CAPTCHA_SCRIPT, List.of(key));
         if (result == null || result.isEmpty() || result.getFirst() == null) {
