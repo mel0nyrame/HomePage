@@ -1782,5 +1782,46 @@
 
 ---
 
-*自动生成于 2026-05-29 18:44:10 UTC*
+## 2026-05-29 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`4c094c4`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 50 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — 🌈 style(common): 修复 IntelliJ 警告，升级 commons-lang3 修复 CVE-2025-48924
+
+**`d2b86b2`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 1 | 2 |
+| `.idea/inspectionProfiles/Project_Default.xml` | 36 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 0 | 1 |
+| `homepage-auth/src/main/resources/application-dev-template.yml` | 3 | 3 |
+| `homepage-auth/src/main/resources/application.yml` | 2 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/exception/BusinessException.java` | 2 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/util/JwtUtil.java` | 2 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 1 | 0 |
+| `pom.xml` | 8 | 0 |
+
+### 改动位置
+
+- public class JwtUtil {
+- public class RedisUtil {
+
+---
+
+*自动生成于 2026-05-30 07:51:40 UTC*
 
