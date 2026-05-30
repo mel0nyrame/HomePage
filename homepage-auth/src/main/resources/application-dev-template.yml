@@ -25,9 +25,9 @@ spring:
       enabled: true
 app:
   admin:
-    init-nickname: # 初始化管理员昵称
-    init-account: # 初始化管理员账号
-    init-password: # 初始化管理员密码
+    init-nickname: ${app.admin.init-nickname:} # 初始化管理员昵称
+    init-account: ${app.admin.init-account:} # 初始化管理员账号
+    init-password: ${app.admin.init-password:} # 初始化管理员密码
 
 jwt:
   secret:
