@@ -3,16 +3,6 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
-      <profile name="Annotation profile for homepage-main" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-        </processorPath>
-        <module name="homepage-common" />
-        <module name="homepage-auth" />
-      </profile>
       <profile name="Annotation profile for homepage-forum" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -22,10 +12,20 @@
         </processorPath>
         <module name="homepage-forum" />
       </profile>
+      <profile name="Annotation profile for homepage-main" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
+        </processorPath>
+        <module name="homepage-common" />
+        <module name="homepage-auth" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="homepage-admin" target="21" />
-      <module name="homepage-forum" target="21" />
       <module name="homepage-user" target="21" />
     </bytecodeTargetLevel>
   </component>

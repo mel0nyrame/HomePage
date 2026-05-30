@@ -30,4 +30,4 @@ app:
     init-password: ${app.admin.init-password:} # 初始化管理员密码
 
 jwt:
-  secret:
+  secret: ${jwt.secret}
