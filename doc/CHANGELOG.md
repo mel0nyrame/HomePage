@@ -1823,5 +1823,40 @@
 
 ---
 
-*自动生成于 2026-05-30 07:51:40 UTC*
+## 2026-05-30 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`6043ccb`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 42 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — 🐎 ci: 暂时清除配置
+
+**`e2ae552`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/workflows/qodana_code_quality.yml` | 0 | 40 |
+| `.idea/compiler.xml` | 6 | 6 |
+| `homepage-auth/src/main/resources/application-dev-template.yml` | 1 | 1 |
+| `qodana.yaml` | 0 | 49 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+*自动生成于 2026-05-30 08:14:38 UTC*
 
