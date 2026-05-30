@@ -1800,6 +1800,31 @@
 
 ## 2026-05-30 — 🌈 style(common): 修复 IntelliJ 警告，升级 commons-lang3 修复 CVE-2025-48924
 
+**`f7cb32f`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 1 | 2 |
+| `.idea/inspectionProfiles/Project_Default.xml` | 36 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 0 | 1 |
+| `homepage-auth/src/main/resources/application-dev-template.yml` | 3 | 3 |
+| `homepage-auth/src/main/resources/application.yml` | 2 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/exception/BusinessException.java` | 2 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/util/JwtUtil.java` | 2 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 1 | 0 |
+| `pom.xml` | 8 | 0 |
+
+### 改动位置
+
+- public class JwtUtil {
+- public class RedisUtil {
+
+---
+
+## 2026-05-30 — 🌈 style(common): 修复 IntelliJ 警告，升级 commons-lang3 修复 CVE-2025-48924
+
 **`d2b86b2`** | Mel0ny
 
 ### 改动文件
@@ -1914,5 +1939,29 @@
 
 ---
 
-*自动生成于 2026-05-30 08:17:43 UTC*
+## 2026-05-30 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`319d1c0`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 57 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Merge branch 'dev-mel0ny'
+
+**`dcc5fbb`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-30 08:28:08 UTC*
 
