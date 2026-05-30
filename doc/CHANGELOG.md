@@ -1858,5 +1858,61 @@
 
 ---
 
-*自动生成于 2026-05-30 08:14:38 UTC*
+## 2026-05-30 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`d4b4c66`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 36 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Add qodana.yaml file
+
+**`b73c3ba`** | Qodana Application
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `qodana.yaml` | 10 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Add github workflow file
+
+**`6824266`** | Qodana Application
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/workflows/qodana_code_quality.yml` | 28 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Merge pull request #2 from mel0nyrame/qodana-automation-960637266
+
+**`1ba5aeb`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-30 08:17:43 UTC*
 
