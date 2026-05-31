@@ -61,6 +61,7 @@ public enum ResponseCode {
     USER_PHONE_NOT_BIND(1012, "手机号未绑定"),
     USER_VERIFY_CODE_ERROR(1013, "验证码错误"),
     USER_VERIFY_CODE_EXPIRED(1014, "验证码已过期"),
+    USER_PASSWORD_LEAKED(1015, "密码已泄露，请更换密码"),
 
     /**
      * 文件模块

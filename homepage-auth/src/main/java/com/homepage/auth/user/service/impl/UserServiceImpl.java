@@ -21,6 +21,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.password.CompromisedPasswordChecker;
+import org.springframework.security.authentication.password.CompromisedPasswordDecision;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -46,19 +48,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private final RedisUtil redisUtil;
     private final StringRedisTemplate redisTemplate;
     private final MailUtil mailUtil;
+    private final CompromisedPasswordChecker compromisedPasswordChecker;
 
     public UserServiceImpl(JwtUtil jwtUtil,
                            PasswordEncoder passwordEncoder,
                            @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager,
                            RedisUtil redisUtil,
                            StringRedisTemplate redisTemplate,
-                           MailUtil mailUtil) {
+                           MailUtil mailUtil,
+                           CompromisedPasswordChecker compromisedPasswordChecker
+    ) {
         this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.redisUtil = redisUtil;
         this.redisTemplate = redisTemplate;
         this.mailUtil = mailUtil;
+        this.compromisedPasswordChecker = compromisedPasswordChecker;
     }
 
     @Override
@@ -83,12 +89,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         // 验证验证码
         redisUtil.verifyCaptcha(registerDTO);
 
-        // 查询用户
-        if (lambdaQuery().eq(UserEntity::getUsername, registerDTO.getUsername()).exists()) {
-            throw new BusinessException(ResponseCode.USER_ALREADY_EXIST);
+        // 查询密码是否泄漏
+        CompromisedPasswordDecision passwordDecision = compromisedPasswordChecker.check(registerDTO.getPassword());
+        if (passwordDecision.isCompromised()) {
+            throw new BusinessException(ResponseCode.USER_PASSWORD_LEAKED);
         }
 
-        if (lambdaQuery().eq(UserEntity::getEmail, registerDTO.getEmail()).exists()) {
+        // 查询用户
+        if (lambdaQuery()
+                .eq(UserEntity::getUsername, registerDTO.getUsername())
+                .or()
+                .eq(UserEntity::getEmail, registerDTO.getEmail())
+                .exists()) {
+            if (lambdaQuery().eq(UserEntity::getUsername, registerDTO.getUsername()).exists()) {
+                throw new BusinessException(ResponseCode.USER_ALREADY_EXIST);
+            }
             throw new BusinessException(ResponseCode.USER_EMAIL_EXIST);
         }
 
@@ -118,14 +133,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         // 验证邮箱验证码
         redisUtil.verifyEmailCaptcha(emailDTO.getEmail(), emailDTO.getCaptcha());
 
-        // 获取存在redis中的用户信息
-        String userJson = redisTemplate.opsForValue().get(REDIS_USER_PREFIX + emailDTO.getEmail());
+        // 获取存在redis中的用户信息，并删除验证码
+        String userJson = redisTemplate.opsForValue().getAndDelete(REDIS_USER_PREFIX + emailDTO.getEmail());
         if (userJson == null) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }
-
-        // 使用完成之后删除验证码
-        redisTemplate.opsForValue().getAndDelete(REDIS_USER_PREFIX + emailDTO.getEmail());
 
         UserEntity user = JSONUtil.toBean(userJson, UserEntity.class);
 
