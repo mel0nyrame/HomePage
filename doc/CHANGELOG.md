@@ -2184,5 +2184,59 @@
 
 ---
 
-*自动生成于 2026-05-31 06:39:36 UTC*
+## 2026-05-31 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`e8bf717`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 77 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-31 — 🦄 refactor(auth): 实现注册密码泄露检查
+
+**`4425ae5`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 13 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/config/SecurityConfig.java` | 7 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 22 | 10 |
+| `homepage-common/src/main/java/com/homepage/common/web/ResponseCode.java` | 1 | 0 |
+
+### 改动位置
+
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class SecurityConfig {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+- public enum ResponseCode {
+
+---
+
+## 2026-05-31 — Merge branch 'dev-mel0ny'
+
+**`9862782`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-31 — Merge remote-tracking branch 'origin/main'
+
+**`110de19`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-31 09:02:53 UTC*
 
