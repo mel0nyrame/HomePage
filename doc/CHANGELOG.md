@@ -2004,5 +2004,56 @@
 
 ---
 
-*自动生成于 2026-05-31 04:53:37 UTC*
+## 2026-05-31 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`66b4a3c`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 42 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-31 — feat(mq):增加了rabbitmq
+
+**`b8b2f5c`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-common/pom.xml` | 6 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/constant/MqConstants.java` | 15 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/event/UserRegisteredEvent.java` | 13 | 0 |
+| `pom.xml` | 8 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-31 — Merge branch 'dev'
+
+**`aa72051`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-31 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`649306c`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-31 06:11:55 UTC*
 
