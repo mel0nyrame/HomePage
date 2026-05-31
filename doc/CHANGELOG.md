@@ -2108,5 +2108,81 @@
 
 ---
 
-*自动生成于 2026-05-31 06:26:55 UTC*
+## 2026-05-31 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`aa15b92`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 54 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-31 — feat(forum): 添加13个Mapper接口
+
+**`aaf3baf`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumBoardMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumBookmarkFolderMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumBookmarkMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumCommentMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumFollowMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumLikeRecordMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumMessageMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumNotificationMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumPostMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumPostTagMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumReportMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumTagMapper.java` | 9 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/mapper/ForumUserProfileMapper.java` | 9 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-31 — Merge branch 'main' into dev
+
+**`d680fb5`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-31 — feat(mapper):完成了实体类对应的mapper
+
+**`d3b8c17`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-forum/src/main/java/com/homepage/forum/config/RabbitMqConfig.java` | 31 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-31 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`8cf21a4`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-31 06:39:36 UTC*
 
