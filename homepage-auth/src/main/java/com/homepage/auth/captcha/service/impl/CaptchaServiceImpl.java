@@ -3,7 +3,6 @@ package com.homepage.auth.captcha.service.impl;
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.ShearCaptcha;
 import cn.hutool.captcha.generator.RandomGenerator;
-import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.IdUtil;
 import com.homepage.auth.captcha.service.CaptchaService;
 import com.homepage.common.exception.BusinessException;

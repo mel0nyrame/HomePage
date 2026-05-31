@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.homepage.common.constant.JwtConstants.JWT_TOKEN_EXPIRATION_TIME;
@@ -69,6 +70,6 @@ public class JwtUtil {
      * @return 布尔值
      */
     public boolean isTokenExpired(String token) {
-        return decode(token).getExpiresAt().isBefore(Instant.now());
+        return Objects.requireNonNull(decode(token).getExpiresAt()).isBefore(Instant.now());
     }
 }
