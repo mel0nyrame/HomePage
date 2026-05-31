@@ -2055,5 +2055,58 @@
 
 ---
 
-*自动生成于 2026-05-31 06:11:55 UTC*
+## 2026-05-31 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`0c8bb2a`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 52 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-31 — feat(forum-entity):完成了实体类创建
+
+**`45f6c1d`** | klei
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 1 | 10 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumBoard.java` | 23 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumBookmark.java` | 23 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumBookmarkFolder.java` | 25 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumComment.java` | 35 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumFollow.java` | 21 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumLikeRecord.java` | 25 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumMessage.java` | 25 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumNotification.java` | 29 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumPost.java` | 46 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumPostTag.java` | 16 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumReport.java` | 27 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumTag.java` | 23 | 0 |
+| `homepage-forum/src/main/java/com/homepage/forum/entity/ForumUserProfile.java` | 36 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-31 — Merge branch 'main' of https://github.com/mel0nyrame/HomePage
+
+**`652288f`** | klei
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-31 06:26:55 UTC*
 
