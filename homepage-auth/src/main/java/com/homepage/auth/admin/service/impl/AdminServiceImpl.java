@@ -15,6 +15,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.password.CompromisedPasswordChecker;
+import org.springframework.security.authentication.password.CompromisedPasswordDecision;
+import org.springframework.security.authentication.password.CompromisedPasswordException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,16 +36,19 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     private final RedisUtil redisUtil;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager adminAuthenticationManager;
+    private final CompromisedPasswordChecker compromisedPasswordChecker;
 
     public AdminServiceImpl(JwtUtil jwtUtil,
                             @Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
                             PasswordEncoder passwordEncoder,
-                            RedisUtil redisUtil
+                            RedisUtil redisUtil,
+                            CompromisedPasswordChecker compromisedPasswordChecker
     ) {
         this.jwtUtil = jwtUtil;
         this.adminAuthenticationManager = adminAuthenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.redisUtil = redisUtil;
+        this.compromisedPasswordChecker = compromisedPasswordChecker;
     }
 
     @Override
@@ -67,6 +73,12 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     public void register(AdminRegisterDTO adminRegisterDTO) {
         // 验证验证码
         redisUtil.verifyCaptcha(adminRegisterDTO);
+
+        // 查询密码是否泄漏
+        CompromisedPasswordDecision passwordDecision = compromisedPasswordChecker.check(adminRegisterDTO.getPassword());
+        if (passwordDecision.isCompromised()) {
+            throw new BusinessException(ResponseCode.USER_PASSWORD_LEAKED);
+        }
 
         // 查询管理员
         if (lambdaQuery().eq(AdminEntity::getAccount, adminRegisterDTO.getAccount()).exists()) {
