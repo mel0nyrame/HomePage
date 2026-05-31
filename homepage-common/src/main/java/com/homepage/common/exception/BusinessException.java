@@ -1,7 +1,7 @@
 package com.homepage.common.exception;
 
 import com.homepage.common.web.ResponseCode;
-import lombok.Data;
+import lombok.Getter;
 
 /**
  * @Author Mel0ny
@@ -9,7 +9,7 @@ import lombok.Data;
  * @Date 5/21/26 21:18
  * @description: 业务错误类
  */
-@Data
+@Getter
 public class BusinessException extends RuntimeException {
     private final int code;
 

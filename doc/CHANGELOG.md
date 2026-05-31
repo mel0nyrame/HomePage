@@ -1782,5 +1782,186 @@
 
 ---
 
-*自动生成于 2026-05-29 18:44:10 UTC*
+## 2026-05-29 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`4c094c4`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 50 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — 🌈 style(common): 修复 IntelliJ 警告，升级 commons-lang3 修复 CVE-2025-48924
+
+**`f7cb32f`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 1 | 2 |
+| `.idea/inspectionProfiles/Project_Default.xml` | 36 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 0 | 1 |
+| `homepage-auth/src/main/resources/application-dev-template.yml` | 3 | 3 |
+| `homepage-auth/src/main/resources/application.yml` | 2 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/exception/BusinessException.java` | 2 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/util/JwtUtil.java` | 2 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 1 | 0 |
+| `pom.xml` | 8 | 0 |
+
+### 改动位置
+
+- public class JwtUtil {
+- public class RedisUtil {
+
+---
+
+## 2026-05-30 — 🌈 style(common): 修复 IntelliJ 警告，升级 commons-lang3 修复 CVE-2025-48924
+
+**`d2b86b2`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 1 | 2 |
+| `.idea/inspectionProfiles/Project_Default.xml` | 36 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/impl/CaptchaServiceImpl.java` | 0 | 1 |
+| `homepage-auth/src/main/resources/application-dev-template.yml` | 3 | 3 |
+| `homepage-auth/src/main/resources/application.yml` | 2 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/exception/BusinessException.java` | 2 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/util/JwtUtil.java` | 2 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 1 | 0 |
+| `pom.xml` | 8 | 0 |
+
+### 改动位置
+
+- public class JwtUtil {
+- public class RedisUtil {
+
+---
+
+## 2026-05-30 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`6043ccb`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 42 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — 🐎 ci: 暂时清除配置
+
+**`e2ae552`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/workflows/qodana_code_quality.yml` | 0 | 40 |
+| `.idea/compiler.xml` | 6 | 6 |
+| `homepage-auth/src/main/resources/application-dev-template.yml` | 1 | 1 |
+| `qodana.yaml` | 0 | 49 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`d4b4c66`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 36 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Add qodana.yaml file
+
+**`b73c3ba`** | Qodana Application
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `qodana.yaml` | 10 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Add github workflow file
+
+**`6824266`** | Qodana Application
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/workflows/qodana_code_quality.yml` | 28 | 0 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Merge pull request #2 from mel0nyrame/qodana-automation-960637266
+
+**`1ba5aeb`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+## 2026-05-30 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`319d1c0`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 57 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-05-30 — Merge branch 'dev-mel0ny'
+
+**`dcc5fbb`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-05-30 08:28:08 UTC*
 
