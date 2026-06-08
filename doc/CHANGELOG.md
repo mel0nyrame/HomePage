@@ -2238,5 +2238,57 @@
 
 ---
 
-*自动生成于 2026-05-31 09:02:53 UTC*
+## 2026-05-31 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`4f5f765`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 55 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-06-08 — ✨  feat(auth,common): 实现 JWT 双 token 机制，新增刷新 token 接口
+
+**`f6570b3`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 1 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/controller/UserController.java` | 13 | 2 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/UserService.java` | 11 | 3 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 22 | 3 |
+| `homepage-common/src/main/java/com/homepage/common/constant/JwtConstants.java` | 7 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/constant/RedisConstants.java` | 10 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/TokenDTO.java` | 25 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/util/JwtUtil.java` | 47 | 2 |
+
+### 改动位置
+
+- public class JwtUtil {
+- public class UserController {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+- public final class JwtConstants {
+- public final class RedisConstants {
+- public interface UserService extends IService<UserEntity> {
+
+---
+
+## 2026-06-08 — Merge branch 'dev-mel0ny' into main
+
+**`18d7a03`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-06-08 07:17:33 UTC*
 
