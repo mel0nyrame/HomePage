@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
+import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.UserEntity;
+import org.springframework.security.core.Authentication;
 
 /**
  * The interface User service.
@@ -19,9 +21,9 @@ public interface UserService extends IService<UserEntity> {
     /**
      * 用户登录
      * @param loginDTO 用户登陆信息
-     * @return JWT token
+     * @return jwt生成的refresh_token和access_token
      */
-    String login(LoginDTO loginDTO);
+    TokenDTO login(LoginDTO loginDTO);
 
     /**
      * 用户注册
@@ -43,5 +45,11 @@ public interface UserService extends IService<UserEntity> {
      */
     void retryEmail(String email);
 
-    // TODO: refresh token
+    /**
+     * 刷新refreshToken
+     *
+     * @param authentication 用户登陆信息
+     * @return refreshToken
+     */
+    String refreshToken(Authentication authentication);
 }

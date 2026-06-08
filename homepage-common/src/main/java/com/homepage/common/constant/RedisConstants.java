@@ -25,4 +25,14 @@ public final class RedisConstants {
      * 用户信息前缀
      */
     public final static String REDIS_USER_PREFIX = "user:";
+
+    /**
+     * 登陆refreshToken前缀
+     */
+    public final static String REDIS_TOKEN_REFRESH_PREFIX = "token:refresh:";
+
+    /**
+     * 登陆accessToken前缀
+     */
+    public final static String REDIS_TOKEN_ACCESS_PREFIX = "token:access:";
 }

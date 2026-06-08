@@ -8,6 +8,7 @@ import com.homepage.common.exception.BusinessException;
 import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
+import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.UserEntity;
 import com.homepage.common.util.JwtUtil;
 import com.homepage.common.util.MailUtil;
@@ -29,7 +30,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.homepage.common.constant.RedisConstants.REDIS_USER_PREFIX;
+import static com.homepage.common.constant.RedisConstants.*;
 
 /**
  * @Author Mel0ny
@@ -68,7 +69,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public String login(LoginDTO loginDTO) {
+    public TokenDTO login(LoginDTO loginDTO) {
         // 验证验证码
         redisUtil.verifyCaptcha(loginDTO);
 
@@ -76,7 +77,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getAccount(), loginDTO.getPassword())
             );
-            return jwtUtil.generateToken(authentication);
+            // refreshToken和accessToken
+            String refreshToken = jwtUtil.generateRefreshToken(authentication);
+            String accessToken = jwtUtil.generateAccessToken(authentication);
+
+            // 向redis中添加token并且设置过期时间
+            redisTemplate.opsForValue().set(REDIS_TOKEN_REFRESH_PREFIX + loginDTO.getAccount(),
+                    refreshToken, 15, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(REDIS_TOKEN_ACCESS_PREFIX + loginDTO.getAccount(),
+                    accessToken, 7, TimeUnit.DAYS);
+
+            // 返回双token
+            return new TokenDTO(accessToken
+                    , refreshToken);
         } catch (BadCredentialsException e) {
             throw new BusinessException(ResponseCode.USER_PASSWORD_ERROR);
         } catch (DisabledException e) {
@@ -143,6 +156,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
         // 插入信息
         this.save(user);
+    }
+
+    @Override
+    public String refreshToken(Authentication authentication) {
+
+        return jwtUtil.generateRefreshToken(authentication);
     }
 
     @Override

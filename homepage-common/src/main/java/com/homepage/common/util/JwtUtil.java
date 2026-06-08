@@ -10,7 +10,8 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.homepage.common.constant.JwtConstants.JWT_TOKEN_EXPIRATION_TIME;
+import static com.homepage.common.constant.JwtConstants.JWT_ACCESS_TOKEN_EXPIRATION_TIME;
+import static com.homepage.common.constant.JwtConstants.JWT_REFRESH_TOKEN_EXPIRATION_TIME;
 
 /**
  * @Author Mel0ny
@@ -31,7 +32,28 @@ public class JwtUtil {
     }
 
     /**
+     * 生成刷新token
+     *
+     * @param authentication 验证对象
+     * @return 刷新token
+     */
+    public String generateRefreshToken(Authentication authentication) {
+        return generateToken(authentication, "refresh_token", JWT_REFRESH_TOKEN_EXPIRATION_TIME);
+    }
+
+    /**
+     * 生成访问token
+     *
+     * @param authentication 验证对象
+     * @return 访问token
+     */
+    public String generateAccessToken(Authentication authentication) {
+        return generateToken(authentication, "access_token", JWT_ACCESS_TOKEN_EXPIRATION_TIME);
+    }
+
+    /**
      * 生成token
+     *
      * @param authentication 验证对象
      * @return token
      */
@@ -43,9 +65,32 @@ public class JwtUtil {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("homepage")
                 .issuedAt(now)
-                .expiresAt(now.plusMillis(JWT_TOKEN_EXPIRATION_TIME))
+                .expiresAt(now.plusMillis(JWT_ACCESS_TOKEN_EXPIRATION_TIME))
                 .subject(authentication.getName())
                 .claim("scope", scope)
+                .build();
+        JwsHeader jwsHeader = JwsHeader.with(MacAlgorithm.HS256).build();
+        return this.encoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
+    }
+
+    /**
+     * 生成token
+     *
+     * @param authentication 验证对象
+     * @return token
+     */
+    public String generateToken(Authentication authentication, String type, Long expiration) {
+        Instant now = Instant.now();
+        String scope = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.joining(" "));
+        JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("homepage")
+                .issuedAt(now)
+                .expiresAt(now.plusMillis(expiration))
+                .subject(authentication.getName())
+                .claim("scope", scope)
+                .claim("type", type)
                 .build();
         JwsHeader jwsHeader = JwsHeader.with(MacAlgorithm.HS256).build();
         return this.encoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
