@@ -4,9 +4,12 @@ import com.homepage.auth.user.service.UserService;
 import com.homepage.common.model.dto.EmailDTO;
 import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
+import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.web.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +29,8 @@ public class UserController {
 
     @Operation(summary = "用户登录", description = "使用用户名/邮箱和密码登录，返回JWT令牌")
     @PostMapping("/login")
-    public Response<String> login(@Validated @RequestBody LoginDTO loginDTO) {
-        String token = userService.login(loginDTO);
+    public Response<TokenDTO> login(@Validated @RequestBody LoginDTO loginDTO) {
+        TokenDTO token = userService.login(loginDTO);
         return Response.ok(token);
     }
 
@@ -50,5 +53,13 @@ public class UserController {
     public Response<Void> retryEmail(@Validated @RequestBody EmailDTO emailDTO) {
         userService.retryEmail(emailDTO.getEmail());
         return Response.ok();
+    }
+
+    @PreAuthorize("hasRole('USER')")
+    @PostMapping("/refresh")
+    @Operation(summary = "刷新token", description = "当accessToken未过期时生成新的refreshToken")
+    public Response<String> refreshToken(Authentication authentication) {
+        String refreshToken = userService.refreshToken(authentication);
+        return Response.ok(refreshToken);
     }
 }

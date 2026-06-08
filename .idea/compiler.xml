@@ -17,6 +17,7 @@
     <bytecodeTargetLevel>
       <module name="homepage-admin" target="21" />
       <module name="homepage-forum" target="21" />
+      <module name="homepage-main" target="1.5" />
       <module name="homepage-user" target="21" />
     </bytecodeTargetLevel>
   </component>
