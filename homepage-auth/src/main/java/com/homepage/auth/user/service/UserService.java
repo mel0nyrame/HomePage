@@ -6,7 +6,6 @@ import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.UserEntity;
-import org.springframework.security.core.Authentication;
 
 /**
  * The interface User service.
@@ -21,7 +20,7 @@ public interface UserService extends IService<UserEntity> {
     /**
      * 用户登录
      * @param loginDTO 用户登陆信息
-     * @return jwt生成的refresh_token和access_token
+     * @return jwt 生成的 access_token 和 refresh_token
      */
     TokenDTO login(LoginDTO loginDTO);
 
@@ -46,10 +45,25 @@ public interface UserService extends IService<UserEntity> {
     void retryEmail(String email);
 
     /**
-     * 刷新refreshToken
+     * 用 refresh_token 换新的 (access_token, refresh_token) 对
      *
-     * @param authentication 用户登陆信息
-     * @return refreshToken
+     * @param refreshToken 客户端传来的 refresh_token 字符串
+     * @return 新的 token 对
      */
-    String refreshToken(Authentication authentication);
+    TokenDTO refreshToken(String refreshToken);
+
+    /**
+     * 当前会话登出（吊销 access + refresh）
+     *
+     * @param accessJti 当前 access token 的 jti
+     */
+    void logout(String accessJti);
+
+    /**
+     * 吊销指定用户的所有会话（全部下线）
+     *
+     * @param username 用户名
+     * @return 被吊销的会话数量
+     */
+    long logoutAll(String username);
 }

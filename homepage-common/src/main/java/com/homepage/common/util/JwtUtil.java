@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
-import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.homepage.common.constant.JwtConstants.JWT_ACCESS_TOKEN_EXPIRATION_TIME;
@@ -17,67 +17,54 @@ import static com.homepage.common.constant.JwtConstants.JWT_REFRESH_TOKEN_EXPIRA
  * @Author Mel0ny
  * @Package com.homepage.common.util
  * @Date 5/23/26 00:53
- * @description: jwt工具类
+ * @description: JWT 工具类。统一签发 access / refresh token，包含 jti 与 type 声明。
  */
 @Component
 public class JwtUtil {
 
+    /**
+     * access token 在 JWT claims 中的 type 字段值
+     */
+    public static final String TYPE_ACCESS = "access_token";
+
+    /**
+     * refresh token 在 JWT claims 中的 type 字段值
+     */
+    public static final String TYPE_REFRESH = "refresh_token";
+
     private final JwtEncoder encoder;
 
-    private final JwtDecoder decoder;
-
-    public JwtUtil(JwtEncoder jwtEncoder, JwtDecoder jwtDecoder) {
+    public JwtUtil(JwtEncoder jwtEncoder) {
         this.encoder = jwtEncoder;
-        this.decoder = jwtDecoder;
     }
 
     /**
-     * 生成刷新token
+     * 生成刷新 token
      *
      * @param authentication 验证对象
-     * @return 刷新token
+     * @return 刷新 token 字符串
      */
     public String generateRefreshToken(Authentication authentication) {
-        return generateToken(authentication, "refresh_token", JWT_REFRESH_TOKEN_EXPIRATION_TIME);
+        return generateToken(authentication, TYPE_REFRESH, JWT_REFRESH_TOKEN_EXPIRATION_TIME);
     }
 
     /**
-     * 生成访问token
+     * 生成访问 token
      *
      * @param authentication 验证对象
-     * @return 访问token
+     * @return 访问 token 字符串
      */
     public String generateAccessToken(Authentication authentication) {
-        return generateToken(authentication, "access_token", JWT_ACCESS_TOKEN_EXPIRATION_TIME);
+        return generateToken(authentication, TYPE_ACCESS, JWT_ACCESS_TOKEN_EXPIRATION_TIME);
     }
 
     /**
-     * 生成token
+     * 生成 token 核心方法
      *
      * @param authentication 验证对象
-     * @return token
-     */
-    public String generateToken(Authentication authentication) {
-        Instant now = Instant.now();
-        String scope = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
-        JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer("homepage")
-                .issuedAt(now)
-                .expiresAt(now.plusMillis(JWT_ACCESS_TOKEN_EXPIRATION_TIME))
-                .subject(authentication.getName())
-                .claim("scope", scope)
-                .build();
-        JwsHeader jwsHeader = JwsHeader.with(MacAlgorithm.HS256).build();
-        return this.encoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
-    }
-
-    /**
-     * 生成token
-     *
-     * @param authentication 验证对象
-     * @return token
+     * @param type           token 类型（access_token / refresh_token）
+     * @param expiration     过期毫秒数
+     * @return token 字符串
      */
     public String generateToken(Authentication authentication, String type, Long expiration) {
         Instant now = Instant.now();
@@ -89,6 +76,7 @@ public class JwtUtil {
                 .issuedAt(now)
                 .expiresAt(now.plusMillis(expiration))
                 .subject(authentication.getName())
+                .id(UUID.randomUUID().toString())
                 .claim("scope", scope)
                 .claim("type", type)
                 .build();
@@ -96,25 +84,14 @@ public class JwtUtil {
         return this.encoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
     }
 
-    private Jwt decode(String token) throws JwtException {
-        return this.decoder.decode(token);
-    }
-
     /**
-     * 根据token获取用户名
-     * @param token token
-     * @return 用户名
+     * 解码 token 拿到 claims
+     *
+     * @param token    原始 token 字符串
+     * @param decoder  Spring 注入的 JwtDecoder
+     * @return 解析后的 Jwt
      */
-    public String getUsername(String token) {
-        return decode(token).getSubject();
-    }
-
-    /**
-     * 判断token是否过期
-     * @param token token
-     * @return 布尔值
-     */
-    public boolean isTokenExpired(String token) {
-        return Objects.requireNonNull(decode(token).getExpiresAt()).isBefore(Instant.now());
+    public Jwt decode(String token, JwtDecoder decoder) {
+        return decoder.decode(token);
     }
 }

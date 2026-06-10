@@ -6,9 +6,10 @@ import com.homepage.auth.admin.service.AdminService;
 import com.homepage.common.exception.BusinessException;
 import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
+import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.AdminEntity;
-import com.homepage.common.util.JwtUtil;
 import com.homepage.common.util.RedisUtil;
+import com.homepage.common.util.TokenService;
 import com.homepage.common.web.ResponseCode;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,8 +18,8 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
 import org.springframework.security.authentication.password.CompromisedPasswordDecision;
-import org.springframework.security.authentication.password.CompromisedPasswordException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,27 +33,30 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> implements AdminService {
 
-    private final JwtUtil jwtUtil;
     private final RedisUtil redisUtil;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager adminAuthenticationManager;
     private final CompromisedPasswordChecker compromisedPasswordChecker;
+    private final TokenService tokenService;
+    private final UserDetailsService adminUserDetailsService;
 
-    public AdminServiceImpl(JwtUtil jwtUtil,
-                            @Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
+    public AdminServiceImpl(@Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
                             PasswordEncoder passwordEncoder,
                             RedisUtil redisUtil,
-                            CompromisedPasswordChecker compromisedPasswordChecker
+                            CompromisedPasswordChecker compromisedPasswordChecker,
+                            TokenService tokenService,
+                            @Qualifier("adminUserDetailsServiceImpl") UserDetailsService adminUserDetailsService
     ) {
-        this.jwtUtil = jwtUtil;
         this.adminAuthenticationManager = adminAuthenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.redisUtil = redisUtil;
         this.compromisedPasswordChecker = compromisedPasswordChecker;
+        this.tokenService = tokenService;
+        this.adminUserDetailsService = adminUserDetailsService;
     }
 
     @Override
-    public String login(AdminLoginDTO adminLoginDTO) {
+    public TokenDTO login(AdminLoginDTO adminLoginDTO) {
         // 验证验证码
         redisUtil.verifyCaptcha(adminLoginDTO);
 
@@ -60,7 +64,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
             Authentication authentication = adminAuthenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(adminLoginDTO.getAccount(), adminLoginDTO.getPassword())
             );
-            return jwtUtil.generateToken(authentication);
+            return tokenService.issueTokenPair(authentication);
         } catch (BadCredentialsException e) {
             throw new BusinessException(ResponseCode.USER_PASSWORD_ERROR);
         } catch (DisabledException e) {
@@ -93,5 +97,20 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         admin.setAuthorities("ADMIN");
 
         this.save(admin);
+    }
+
+    @Override
+    public TokenDTO refreshToken(String refreshToken) {
+        return tokenService.rotate(refreshToken, adminUserDetailsService);
+    }
+
+    @Override
+    public void logout(String accessJti) {
+        tokenService.revoke(accessJti);
+    }
+
+    @Override
+    public long logoutAll(String account) {
+        return tokenService.revokeAll(account);
     }
 }
