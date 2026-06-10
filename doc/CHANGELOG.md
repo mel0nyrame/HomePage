@@ -2290,5 +2290,67 @@
 
 ---
 
-*自动生成于 2026-06-08 07:17:33 UTC*
+## 2026-06-08 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`94cdea1`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 53 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-06-10 — 🦄 refactor(auth,common): 完善双 token 机制并抽公共层
+
+**`b263e17`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.idea/compiler.xml` | 0 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/controller/AdminController.java` | 30 | 8 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/AdminService.java` | 18 | 2 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 28 | 9 |
+| `homepage-auth/src/main/java/com/homepage/auth/config/SecurityConfig.java` | 9 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/controller/UserController.java` | 24 | 11 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/UserService.java` | 20 | 6 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 23 | 22 |
+| `homepage-common/src/main/java/com/homepage/common/constant/JwtConstants.java` | 5 | 5 |
+| `homepage-common/src/main/java/com/homepage/common/constant/RedisConstants.java` | 15 | 3 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/TokenDTO.java` | 9 | 5 |
+| `homepage-common/src/main/java/com/homepage/common/security/JwtValidationFilter.java` | 79 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/util/JwtUtil.java` | 31 | 54 |
+| `homepage-common/src/main/java/com/homepage/common/util/TokenService.java` | 142 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/util/TokenStore.java` | 115 | 0 |
+
+### 改动位置
+
+- public class AdminController {
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class JwtUtil {
+- public class SecurityConfig {
+- public class UserController {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+- public final class RedisConstants {
+- public interface AdminService extends IService<AdminEntity> {
+- public interface UserService extends IService<UserEntity> {
+
+---
+
+## 2026-06-10 — Merge branch 'dev-mel0ny' into main
+
+**`87da82b`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-06-10 01:14:34 UTC*
 
