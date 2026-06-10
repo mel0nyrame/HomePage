@@ -3,6 +3,7 @@ package com.homepage.auth.admin.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
+import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.AdminEntity;
 
 /**
@@ -17,13 +18,28 @@ public interface AdminService extends IService<AdminEntity> {
      * 管理员登录
      *
      * @param adminLoginDTO 管理员登陆信息
-     * @return JWT token
+     * @return 双 token
      */
-    String login(AdminLoginDTO adminLoginDTO);
+    TokenDTO login(AdminLoginDTO adminLoginDTO);
 
     /**
      * 管理员注册
      * @param adminRegisterDTO 管理员信息
      */
     void register(AdminRegisterDTO adminRegisterDTO);
+
+    /**
+     * 用 refresh_token 换新的 (access_token, refresh_token) 对
+     */
+    TokenDTO refreshToken(String refreshToken);
+
+    /**
+     * 当前会话登出
+     */
+    void logout(String accessJti);
+
+    /**
+     * 吊销管理员的所有会话
+     */
+    long logoutAll(String account);
 }

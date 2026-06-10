@@ -10,9 +10,9 @@ import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.UserEntity;
-import com.homepage.common.util.JwtUtil;
 import com.homepage.common.util.MailUtil;
 import com.homepage.common.util.RedisUtil;
+import com.homepage.common.util.TokenService;
 import com.homepage.common.web.ResponseCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,12 +25,13 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.authentication.password.CompromisedPasswordChecker;
 import org.springframework.security.authentication.password.CompromisedPasswordDecision;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.homepage.common.constant.RedisConstants.*;
+import static com.homepage.common.constant.RedisConstants.REDIS_USER_PREFIX;
 
 /**
  * @Author Mel0ny
@@ -43,29 +44,32 @@ import static com.homepage.common.constant.RedisConstants.*;
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> implements UserService {
 
-    private final JwtUtil jwtUtil;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final RedisUtil redisUtil;
     private final StringRedisTemplate redisTemplate;
     private final MailUtil mailUtil;
     private final CompromisedPasswordChecker compromisedPasswordChecker;
+    private final TokenService tokenService;
+    private final UserDetailsService userDetailsService;
 
-    public UserServiceImpl(JwtUtil jwtUtil,
-                           PasswordEncoder passwordEncoder,
+    public UserServiceImpl(PasswordEncoder passwordEncoder,
                            @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager,
                            RedisUtil redisUtil,
                            StringRedisTemplate redisTemplate,
                            MailUtil mailUtil,
-                           CompromisedPasswordChecker compromisedPasswordChecker
+                           CompromisedPasswordChecker compromisedPasswordChecker,
+                           TokenService tokenService,
+                           @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService
     ) {
-        this.jwtUtil = jwtUtil;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.redisUtil = redisUtil;
         this.redisTemplate = redisTemplate;
         this.mailUtil = mailUtil;
         this.compromisedPasswordChecker = compromisedPasswordChecker;
+        this.tokenService = tokenService;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -77,19 +81,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getAccount(), loginDTO.getPassword())
             );
-            // refreshToken和accessToken
-            String refreshToken = jwtUtil.generateRefreshToken(authentication);
-            String accessToken = jwtUtil.generateAccessToken(authentication);
-
-            // 向redis中添加token并且设置过期时间
-            redisTemplate.opsForValue().set(REDIS_TOKEN_REFRESH_PREFIX + loginDTO.getAccount(),
-                    refreshToken, 15, TimeUnit.MINUTES);
-            redisTemplate.opsForValue().set(REDIS_TOKEN_ACCESS_PREFIX + loginDTO.getAccount(),
-                    accessToken, 7, TimeUnit.DAYS);
-
-            // 返回双token
-            return new TokenDTO(accessToken
-                    , refreshToken);
+            return tokenService.issueTokenPair(authentication);
         } catch (BadCredentialsException e) {
             throw new BusinessException(ResponseCode.USER_PASSWORD_ERROR);
         } catch (DisabledException e) {
@@ -159,9 +151,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     }
 
     @Override
-    public String refreshToken(Authentication authentication) {
+    public TokenDTO refreshToken(String refreshToken) {
+        return tokenService.rotate(refreshToken, userDetailsService);
+    }
 
-        return jwtUtil.generateRefreshToken(authentication);
+    @Override
+    public void logout(String accessJti) {
+        tokenService.revoke(accessJti);
+    }
+
+    @Override
+    public long logoutAll(String username) {
+        return tokenService.revokeAll(username);
     }
 
     @Override

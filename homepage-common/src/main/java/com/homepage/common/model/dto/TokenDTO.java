@@ -1,25 +1,29 @@
 package com.homepage.common.model.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @Author Mel0ny
  * @Package com.homepage.common.model.dto
  * @Date 2026/6/8 14:42
- * @description: 用于传输refresh_token和access_token
+ * @description: 用于传输 refresh_token 和 access_token
  */
 @Data
+@Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class TokenDTO {
 
     /**
-     * refreshToken，时长15分钟
-     */
-    private String refreshToken;
-
-    /**
-     * accessToken，时长7天
+     * accessToken，时长 30 分钟
      */
     private String accessToken;
+
+    /**
+     * refreshToken，时长 7 天
+     */
+    private String refreshToken;
 }
