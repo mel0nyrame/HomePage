@@ -23,6 +23,7 @@ public class AdminUserDetails implements UserDetails {
 
     /**
      * 获取管理员权限
+     *
      * @return 管理员权限集合
      */
     @Override
@@ -32,6 +33,7 @@ public class AdminUserDetails implements UserDetails {
 
     /**
      * 获取管理员密码
+     *
      * @return 管理员密码
      */
     @Override
@@ -41,6 +43,7 @@ public class AdminUserDetails implements UserDetails {
 
     /**
      * 获取管理员名
+     *
      * @return 管理员名
      */
     @Override
@@ -50,6 +53,7 @@ public class AdminUserDetails implements UserDetails {
 
     /**
      * 获取是否开启
+     *
      * @return 布尔值
      */
     @Override
@@ -59,6 +63,7 @@ public class AdminUserDetails implements UserDetails {
 
     /**
      * 管理员是否过期
+     *
      * @return 布尔值
      */
     @Override
@@ -68,6 +73,7 @@ public class AdminUserDetails implements UserDetails {
 
     /**
      * 管理员是否被锁定
+     *
      * @return 布尔值
      */
     @Override
@@ -77,10 +83,20 @@ public class AdminUserDetails implements UserDetails {
 
     /**
      * 获取管理员凭证是否过期
+     *
      * @return 布尔值
      */
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    /**
+     * 获取管理员主键 id，供登录日志等场景直接复用，避免额外 SQL。
+     *
+     * @return 管理员主键
+     */
+    public Long getId() {
+        return admin.getId();
     }
 }
