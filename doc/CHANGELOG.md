@@ -2352,5 +2352,123 @@
 
 ---
 
-*自动生成于 2026-06-10 01:14:34 UTC*
+## 2026-06-10 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`99b7f83`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 63 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-06-15 — 📃 docs(doc): 更新项目文档
+
+**`07ec067`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `项目文档.md` | 687 | 226 |
+
+### 改动位置
+
+- BearerTokenAuthenticationFilter
+- homepage-main (父 POM)
+- public JwtDecoder jwtDecoder() {
+
+---
+
+## 2026-06-18 — 🌈 style: .gitignore 增加 Eclipse 工程文件忽略
+
+**`afef24a`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.gitignore` | 7 | 0 |
+
+### 改动位置
+
+- application-prod.yml
+
+---
+
+## 2026-06-18 — ♻️ refactor(common): RedisUtil 验证码改用 Lua 原子化读取+删除
+
+**`b7a3e1b`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 16 | 9 |
+
+### 改动位置
+
+- public class RedisUtil {
+
+---
+
+## 2026-06-18 — ✨ feat(auth,common): 新增登录日志记录与 IP 归属地解析
+
+**`c375cfe`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/HomepageAuthApplication.java` | 1 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/controller/AdminController.java` | 3 | 2 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/mapper/AdminMapper.java` | 5 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/AdminService.java` | 3 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 15 | 4 |
+| `homepage-auth/src/main/java/com/homepage/auth/loginlog/mapper/LoginLogMapper.java` | 15 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/loginlog/service/LoginLogService.java` | 22 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/loginlog/service/impl/LoginLogServiceImpl.java` | 84 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/controller/UserController.java` | 3 | 3 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/mapper/UserMapper.java` | 5 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/UserService.java` | 3 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 14 | 4 |
+| `homepage-common/pom.xml` | 6 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/config/GeoIpConfig.java` | 25 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/config/MyBatisPlusConfig.java` | 1 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/exception/GlobalExceptionHandler.java` | 2 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/entity/LoginLogEntity.java` | 54 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/util/GeoIpUtil.java` | 29 | 0 |
+| `homepage-common/src/main/resources/geoip/GeoLite2-City-CN.mmdb` | - | - |
+| `pom.xml` | 9 | 0 |
+| `sql/init.sql` | 18 | 1 |
+
+### 改动位置
+
+- CREATE TABLE homepage_admin
+- public class AdminController {
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class GlobalExceptionHandler {
+- public class MyBatisPlusConfig implements MetaObjectHandler {
+- public class UserController {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+- public interface AdminService extends IService<AdminEntity> {
+- public interface UserService extends IService<UserEntity> {
+
+---
+
+## 2026-06-18 — 🔀 merge: dev-mel0ny → main
+
+**`d8f91dd`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-06-18 07:14:29 UTC*
 
