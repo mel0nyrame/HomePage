@@ -2470,5 +2470,175 @@
 
 ---
 
-*自动生成于 2026-06-18 07:14:29 UTC*
+## 2026-06-18 — docs: 更新 CHANGELOG.md [skip ci]
+
+**`cfc5646`** | github-actions[bot]
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `doc/CHANGELOG.md` | 119 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-06-19 — ✨ feat(auth): 登录热路径移除冗余 SELECT id，改为 Authentication.principal.getId()
+
+**`8826392`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/admin/mapper/AdminMapper.java` | 0 | 5 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/impl/AdminServiceImpl.java` | 4 | 6 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/mapper/UserMapper.java` | 1 | 6 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/impl/UserServiceImpl.java` | 6 | 6 |
+| `homepage-common/src/main/java/com/homepage/common/model/security/AdminUserDetails.java` | 16 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/security/HomepageUserDetails.java` | 16 | 0 |
+
+### 改动位置
+
+- public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
+- public class AdminUserDetails implements UserDetails {
+- public class HomepageUserDetails implements UserDetails {
+- public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
+
+---
+
+## 2026-06-19 — 🔒 fix(common): GeoIpUtil 加 IP 字面量校验防 DNS 解析 DoS
+
+**`ef59b99`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-common/src/main/java/com/homepage/common/util/GeoIpUtil.java` | 14 | 2 |
+
+### 改动位置
+
+- public class GeoIpUtil {
+
+---
+
+## 2026-06-19 — ♻️ refactor(loginlog): recordLog 改异步并用 Hutool 工具统一 IP/UA/位置解析
+
+**`e41e443`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-auth/src/main/java/com/homepage/auth/loginlog/service/LoginLogService.java` | 1 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/loginlog/service/impl/LoginLogServiceImpl.java` | 52 | 25 |
+
+### 改动位置
+
+- public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLogEnt
+- public interface LoginLogService extends IService<LoginLogEntity> {
+
+---
+
+## 2026-06-19 — ♻️ refactor(common): 多处用 StrUtil/CollUtil 工具替代手写判空与拼接
+
+**`ab692f8`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-common/src/main/java/com/homepage/common/exception/GlobalExceptionHandler.java` | 3 | 6 |
+| `homepage-common/src/main/java/com/homepage/common/util/JwtUtil.java` | 4 | 6 |
+| `homepage-common/src/main/java/com/homepage/common/util/MailUtil.java` | 4 | 5 |
+| `homepage-common/src/main/java/com/homepage/common/util/RedisUtil.java` | 6 | 5 |
+| `homepage-common/src/main/java/com/homepage/common/util/TokenService.java` | 8 | 7 |
+| `homepage-common/src/main/java/com/homepage/common/util/TokenStore.java` | 11 | 11 |
+
+### 改动位置
+
+- public class GlobalExceptionHandler {
+- public class JwtUtil {
+- public class MailUtil {
+- public class TokenService {
+- public class TokenStore {
+
+---
+
+## 2026-06-19 — 🦄 refactor(common): 统一注入 ObjectMapper 避免手 new，引入 JacksonConfig
+
+**`4470060`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `homepage-common/src/main/java/com/homepage/common/config/JacksonConfig.java` | 20 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/exception/RestAccessDeniedHandler.java` | 6 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/exception/RestAuthenticationEntryPoint.java` | 5 | 1 |
+
+### 改动位置
+
+*无具体位置信息。*
+
+---
+
+## 2026-06-19 — 🌈 style(auth,common,db): IDEA 格式化代码、配置、SQL、邮件模板
+
+**`2c95648`** | Mel0ny
+
+### 改动文件
+
+| 文件 | + | - |
+|------|---|---|
+| `.github/workflows/changelog.yml` | 1 | 1 |
+| `.github/workflows/ggshield.yml` | 2 | 2 |
+| `homepage-auth/pom.xml` | 2 | 2 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/initializer/DataInitializer.java` | 5 | 8 |
+| `homepage-auth/src/main/java/com/homepage/auth/admin/service/AdminService.java` | 1 | 0 |
+| `homepage-auth/src/main/java/com/homepage/auth/captcha/service/CaptchaService.java` | 2 | 1 |
+| `homepage-auth/src/main/java/com/homepage/auth/config/SecurityConfig.java` | 3 | 3 |
+| `homepage-auth/src/main/java/com/homepage/auth/user/service/UserService.java` | 2 | 0 |
+| `homepage-auth/src/main/resources/templates/EmailVerificationCode.html` | 71 | 69 |
+| `homepage-common/pom.xml` | 2 | 2 |
+| `homepage-common/src/main/java/com/homepage/common/constant/JwtConstants.java` | 3 | 3 |
+| `homepage-common/src/main/java/com/homepage/common/constant/RedisConstants.java` | 4 | 9 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/AdminRegisterDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/CaptchaAware.java` | 1 | 0 |
+| `homepage-common/src/main/java/com/homepage/common/model/dto/RegisterDTO.java` | 1 | 1 |
+| `homepage-common/src/main/java/com/homepage/common/security/JwtValidationFilter.java` | 7 | 7 |
+| `homepage-common/src/main/java/com/homepage/common/web/Response.java` | 6 | 9 |
+| `pom.xml` | 2 | 2 |
+| `sql/init.sql` | 3 | 3 |
+
+### 改动位置
+
+- CREATE TABLE homepage_admin
+- CREATE TABLE homepage_user
+- name: Generate Changelog
+- name: GitGuardian Secret Scan
+- public class AdminRegisterDTO implements CaptchaAware {
+- public class DataInitializer implements CommandLineRunner {
+- public class RegisterDTO implements CaptchaAware {
+- public class Response<T> implements Serializable {
+- public class SecurityConfig {
+- public interface AdminService extends IService<AdminEntity> {
+- public interface CaptchaService {
+- public interface UserService extends IService<UserEntity> {
+
+---
+
+## 2026-06-19 — 🔀 merge: dev-mel0ny → main
+
+**`a02337e`** | Mel0ny
+
+*合并提交，变更细节见各子提交。*
+
+---
+
+*自动生成于 2026-06-18 18:28:33 UTC*
 
