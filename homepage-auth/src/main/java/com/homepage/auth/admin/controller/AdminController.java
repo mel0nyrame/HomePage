@@ -8,6 +8,7 @@ import com.homepage.common.web.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -30,8 +31,8 @@ public class AdminController {
 
     @Operation(summary = "管理员登录", description = "使用管理员账号和密码登录，返回 JWT 双令牌")
     @PostMapping("/login")
-    public Response<TokenDTO> login(@Validated @RequestBody AdminLoginDTO adminLoginDTO) {
-        return Response.ok(adminService.login(adminLoginDTO));
+    public Response<TokenDTO> login(@Validated @RequestBody AdminLoginDTO adminLoginDTO, HttpServletRequest request) {
+        return Response.ok(adminService.login(adminLoginDTO, request));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

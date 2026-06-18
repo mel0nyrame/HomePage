@@ -5,6 +5,7 @@ import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
 import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.AdminEntity;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * @Author Mel0ny
@@ -18,9 +19,10 @@ public interface AdminService extends IService<AdminEntity> {
      * 管理员登录
      *
      * @param adminLoginDTO 管理员登陆信息
+     * @param request       HTTP 请求
      * @return 双 token
      */
-    TokenDTO login(AdminLoginDTO adminLoginDTO);
+    TokenDTO login(AdminLoginDTO adminLoginDTO, HttpServletRequest request);
 
     /**
      * 管理员注册

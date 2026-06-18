@@ -8,6 +8,7 @@ import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.web.Response;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -29,9 +30,8 @@ public class UserController {
 
     @Operation(summary = "用户登录", description = "使用用户名/邮箱和密码登录，返回 JWT 双令牌")
     @PostMapping("/login")
-    public Response<TokenDTO> login(@Validated @RequestBody LoginDTO loginDTO) {
-        TokenDTO token = userService.login(loginDTO);
-        return Response.ok(token);
+    public Response<TokenDTO> login(@Validated @RequestBody LoginDTO loginDTO, HttpServletRequest request) {
+        return Response.ok(userService.login(loginDTO, request));
     }
 
     @Operation(summary = "用户注册", description = "注册新用户账号")

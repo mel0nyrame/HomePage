@@ -47,3 +47,20 @@ CREATE TABLE homepage_admin
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci
     COMMENT = '管理员表';
+
+CREATE TABLE homepage_login_log
+(
+    `id`         BIGINT       NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `user_id`    BIGINT       NOT NULL COMMENT '用户/管理员id',
+    `login_time` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '登陆时间',
+    `login_ip`   VARCHAR(64)  NOT NULL COMMENT '登陆ip',
+    `user_agent` VARCHAR(512) NOT NULL COMMENT '特征头',
+    `device_os`  VARCHAR(64)  NOT NULL COMMENT '设备系统',
+    `location`   VARCHAR(64)  NOT NULL COMMENT '登陆地点',
+    PRIMARY KEY (`id`),
+    KEY `idx_user_id` (`user_id`),
+    KEY `idx_ip` (`login_ip`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci
+    COMMENT = '登陆记录表';

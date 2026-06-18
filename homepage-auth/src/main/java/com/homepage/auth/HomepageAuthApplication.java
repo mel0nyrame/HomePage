@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  */
 @SpringBootApplication
 @ComponentScan("com.homepage")
-@MapperScan({"com.homepage.auth.user.mapper", "com.homepage.auth.admin.mapper"})
+@MapperScan({"com.homepage.auth.user.mapper", "com.homepage.auth.admin.mapper", "com.homepage.auth.loginlog.mapper"})
 @EnableAsync
 public class HomepageAuthApplication {
 
