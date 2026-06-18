@@ -24,13 +24,13 @@ import java.io.IOException;
  * @Package com.homepage.common.security
  * @Date 2026/6/10
  * @description: 自定义 JWT 校验过滤器。
- *              加在 {@link BearerTokenAuthenticationFilter} 之后，
- *              在 Spring Security 默认验签 + 验 exp 的基础上，额外校验：
- *                1. type claim 必须是 access_token（防止 refresh_token 被当 access_token 用）
- *                2. access token jti 在 Redis 中仍存在（防吊销 / 防过期）
- *              校验失败：清空 SecurityContext + 调 AuthenticationEntryPoint 返回 401。
- *              <p>
- *              不替代 Spring Security 默认的 BearerToken 解析流程，仅作为后置增强。
+ * 加在 {@link BearerTokenAuthenticationFilter} 之后，
+ * 在 Spring Security 默认验签 + 验 exp 的基础上，额外校验：
+ * 1. type claim 必须是 access_token（防止 refresh_token 被当 access_token 用）
+ * 2. access token jti 在 Redis 中仍存在（防吊销 / 防过期）
+ * 校验失败：清空 SecurityContext + 调 AuthenticationEntryPoint 返回 401。
+ * <p>
+ * 不替代 Spring Security 默认的 BearerToken 解析流程，仅作为后置增强。
  */
 @Component
 public class JwtValidationFilter extends OncePerRequestFilter {

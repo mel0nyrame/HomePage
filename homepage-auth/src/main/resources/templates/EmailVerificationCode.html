@@ -2,84 +2,86 @@
 <html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>邮箱验证码</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #faf9f7; font-family: 'Georgia', 'Times New Roman', 'Songti SC', 'SimSun', serif;">
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color: #faf9f7;">
-        <tr>
-            <td align="center" style="padding: 48px 24px;">
-                <!-- Main Card -->
-                <table role="presentation" width="520" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff;">
-                    <!-- Top Accent Line -->
-                    <tr>
-                        <td style="height: 3px; background-color: #2c2c2c;"></td>
-                    </tr>
+<table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #faf9f7;" width="100%">
+    <tr>
+        <td align="center" style="padding: 48px 24px;">
+            <!-- Main Card -->
+            <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="background-color: #ffffff;"
+                   width="520">
+                <!-- Top Accent Line -->
+                <tr>
+                    <td style="height: 3px; background-color: #2c2c2c;"></td>
+                </tr>
 
-                    <!-- Header -->
-                    <tr>
-                        <td style="padding: 40px 40px 32px; text-align: center;">
-                            <p style="margin: 0 0 8px; color: #888888; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                                HomePage
+                <!-- Header -->
+                <tr>
+                    <td style="padding: 40px 40px 32px; text-align: center;">
+                        <p style="margin: 0 0 8px; color: #888888; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                            HomePage
+                        </p>
+                        <h1 style="margin: 0; color: #2c2c2c; font-size: 24px; font-weight: 400; font-style: italic;">
+                            邮箱验证码
+                        </h1>
+                    </td>
+                </tr>
+
+                <!-- Divider -->
+                <tr>
+                    <td style="padding: 0 40px;">
+                        <div style="border-top: 1px solid #e0e0e0;"></div>
+                    </td>
+                </tr>
+
+                <!-- Content -->
+                <tr>
+                    <td style="padding: 32px 40px;">
+                        <!-- Greeting -->
+                        <p style="margin: 0 0 24px; color: #444444; font-size: 15px; line-height: 1.8; text-align: justify;">
+                            您好，您正在进行注册账号操作。请使用以下验证码完成验证：
+                        </p>
+
+                        <!-- Verification Code -->
+                        <table border="0" cellpadding="0" cellspacing="0" role="presentation"
+                               style="margin: 0 auto 28px;">
+                            <tr>
+                                <td style="padding: 0 6px;" th:each="a, iter : ${verifyCode}">
+                                    <div style="width: 44px; height: 52px; border: 1px solid #2c2c2c; text-align: center; line-height: 52px; font-size: 22px; color: #2c2c2c; font-family: 'Georgia', serif;">
+                                        [[${a}]]
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Expiry Notice -->
+                        <p style="margin: 0 0 32px; color: #999999; font-size: 13px; line-height: 1.5; text-align: center; font-style: italic;">
+                            有效期 5 分钟
+                        </p>
+
+                        <!-- Security Notice -->
+                        <div style="border-top: 1px solid #e0e0e0; padding-top: 24px;">
+                            <p style="margin: 0; color: #888888; font-size: 12px; line-height: 1.8;">
+                                工作人员不会向您索取此验证码，请勿泄露给他人。如非本人操作，请忽略此邮件。
                             </p>
-                            <h1 style="margin: 0; color: #2c2c2c; font-size: 24px; font-weight: 400; font-style: italic;">
-                                邮箱验证码
-                            </h1>
-                        </td>
-                    </tr>
+                        </div>
+                    </td>
+                </tr>
 
-                    <!-- Divider -->
-                    <tr>
-                        <td style="padding: 0 40px;">
-                            <div style="border-top: 1px solid #e0e0e0;"></div>
-                        </td>
-                    </tr>
-
-                    <!-- Content -->
-                    <tr>
-                        <td style="padding: 32px 40px;">
-                            <!-- Greeting -->
-                            <p style="margin: 0 0 24px; color: #444444; font-size: 15px; line-height: 1.8; text-align: justify;">
-                                您好，您正在进行注册账号操作。请使用以下验证码完成验证：
-                            </p>
-
-                            <!-- Verification Code -->
-                            <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin: 0 auto 28px;">
-                                <tr>
-                                    <td th:each="a, iter : ${verifyCode}" style="padding: 0 6px;">
-                                        <div style="width: 44px; height: 52px; border: 1px solid #2c2c2c; text-align: center; line-height: 52px; font-size: 22px; color: #2c2c2c; font-family: 'Georgia', serif;">
-                                            [[${a}]]
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
-
-                            <!-- Expiry Notice -->
-                            <p style="margin: 0 0 32px; color: #999999; font-size: 13px; line-height: 1.5; text-align: center; font-style: italic;">
-                                有效期 5 分钟
-                            </p>
-
-                            <!-- Security Notice -->
-                            <div style="border-top: 1px solid #e0e0e0; padding-top: 24px;">
-                                <p style="margin: 0; color: #888888; font-size: 12px; line-height: 1.8;">
-                                    工作人员不会向您索取此验证码，请勿泄露给他人。如非本人操作，请忽略此邮件。
-                                </p>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- Footer -->
-                    <tr>
-                        <td style="background-color: #faf9f7; padding: 24px 40px; border-top: 1px solid #e0e0e0;">
-                            <p style="margin: 0; color: #aaaaaa; font-size: 11px; line-height: 1.6; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-                                此为系统邮件，请勿回复<br>
-                                请保管好您的邮箱，避免账号被他人盗用
-                            </p>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-    </table>
+                <!-- Footer -->
+                <tr>
+                    <td style="background-color: #faf9f7; padding: 24px 40px; border-top: 1px solid #e0e0e0;">
+                        <p style="margin: 0; color: #aaaaaa; font-size: 11px; line-height: 1.6; text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+                            此为系统邮件，请勿回复<br>
+                            请保管好您的邮箱，避免账号被他人盗用
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
 </body>
 </html>

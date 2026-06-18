@@ -20,6 +20,7 @@ public interface UserService extends IService<UserEntity> {
 
     /**
      * 用户登录
+     *
      * @param loginDTO 用户登陆信息
      * @param request  HTTP 请求
      * @return jwt 生成的 access_token 和 refresh_token
@@ -42,6 +43,7 @@ public interface UserService extends IService<UserEntity> {
 
     /**
      * 重新发送验证码
+     *
      * @param email 邮箱
      */
     void retryEmail(String email);

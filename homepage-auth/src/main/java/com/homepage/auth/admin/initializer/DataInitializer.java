@@ -18,20 +18,17 @@ public class DataInitializer implements CommandLineRunner {
 
     private final AdminMapper adminMapper;
     private final PasswordEncoder passwordEncoder;
+    @Value("${app.admin.init-nickname}")
+    private String initNickname;
+    @Value("${app.admin.init-account}")
+    private String initAccount;
+    @Value("${app.admin.init-password}")
+    private String initPassword;
 
     public DataInitializer(AdminMapper adminMapper, PasswordEncoder passwordEncoder) {
         this.adminMapper = adminMapper;
         this.passwordEncoder = passwordEncoder;
     }
-
-    @Value("${app.admin.init-nickname}")
-    private String initNickname;
-
-    @Value("${app.admin.init-account}")
-    private String initAccount;
-
-    @Value("${app.admin.init-password}")
-    private String initPassword;
 
     @Override
     public void run(String... args) {

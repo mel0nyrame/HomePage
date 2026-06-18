@@ -8,5 +8,6 @@ package com.homepage.common.model.dto;
  */
 public interface CaptchaAware {
     String getCaptchaId();
+
     String getCaptcha();
 }

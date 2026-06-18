@@ -26,6 +26,7 @@ public interface AdminService extends IService<AdminEntity> {
 
     /**
      * 管理员注册
+     *
      * @param adminRegisterDTO 管理员信息
      */
     void register(AdminRegisterDTO adminRegisterDTO);

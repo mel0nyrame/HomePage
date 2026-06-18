@@ -52,7 +52,7 @@ public class SecurityConfig {
             "/actuator/health"
     };
 
-    private final RestAuthenticationEntryPoint  restAuthenticationEntryPoint;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private final RestAccessDeniedHandler restAccessDeniedHandler;
     private final JwtValidationFilter jwtValidationFilter;
 
@@ -108,8 +108,8 @@ public class SecurityConfig {
                         .contentTypeOptions(Customizer.withDefaults())
                         // 强制使用https，包括子域名
                         .httpStrictTransportSecurity(hsts -> hsts
-                        .includeSubDomains(true)
-                        .maxAgeInSeconds(31536000))
+                                .includeSubDomains(true)
+                                .maxAgeInSeconds(31536000))
                 )
                 // 设置认证请求配置
                 .authorizeHttpRequests(authorize -> authorize
