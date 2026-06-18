@@ -1,5 +1,6 @@
 package com.homepage.common.util;
 
+import cn.hutool.core.collection.CollUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.homepage.common.constant.JwtConstants.JWT_ACCESS_TOKEN_EXPIRATION_TIME;
 import static com.homepage.common.constant.JwtConstants.JWT_REFRESH_TOKEN_EXPIRATION_TIME;
@@ -68,9 +68,7 @@ public class JwtUtil {
      */
     public String generateToken(Authentication authentication, String type, Long expiration) {
         Instant now = Instant.now();
-        String scope = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.joining(" "));
+        String scope = CollUtil.join(authentication.getAuthorities(), " ", GrantedAuthority::getAuthority);
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("homepage")
                 .issuedAt(now)
@@ -87,8 +85,8 @@ public class JwtUtil {
     /**
      * 解码 token 拿到 claims
      *
-     * @param token    原始 token 字符串
-     * @param decoder  Spring 注入的 JwtDecoder
+     * @param token   原始 token 字符串
+     * @param decoder Spring 注入的 JwtDecoder
      * @return 解析后的 Jwt
      */
     public Jwt decode(String token, JwtDecoder decoder) {

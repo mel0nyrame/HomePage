@@ -26,15 +26,13 @@ import static com.homepage.common.constant.RedisConstants.REDIS_EMAIL_CAPTCHA_PR
 @Component
 public class MailUtil {
 
-    @Value("${spring.mail.username}")
-    private String sender;
-
     private static final int CAPTCHA_LENGTH = 6;
     private static final long CAPTCHA_EXPIRE_SECONDS = 5 * 60;
-
     private final JavaMailSender mailSender;
     private final StringRedisTemplate redisTemplate;
     private final TemplateEngine templateEngine;
+    @Value("${spring.mail.username}")
+    private String sender;
 
     public MailUtil(JavaMailSender mailSender, StringRedisTemplate redisTemplate, TemplateEngine templateEngine) {
         this.mailSender = mailSender;
@@ -54,7 +52,7 @@ public class MailUtil {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
-            helper.setFrom('<' + sender + '>');
+            helper.setFrom(sender);
             helper.setTo(email);
             helper.setSubject("HomePage 邮箱验证码");
 
@@ -77,6 +75,7 @@ public class MailUtil {
 
     /**
      * 生成邮件内容
+     *
      * @param captcha 验证码
      * @return {@link String } 邮件内容
      */
