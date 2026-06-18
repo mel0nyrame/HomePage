@@ -7,7 +7,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
-import java.security.MessageDigest;
 import java.util.List;
 
 import static com.homepage.common.constant.RedisConstants.REDIS_AUTH_CAPTCHA_PREFIX;
@@ -24,8 +23,12 @@ public class RedisUtil {
 
     private static final String CAPTCHA_VERIFY_LUA =
             "local v = redis.call('GET', KEYS[1]) " +
-            "if v then redis.call('DEL', KEYS[1]) end " +
-            "return {v}";
+            "if not v then return {'NOT_FOUND'} end " +
+            "if v == ARGV[1] then redis.call('DEL', KEYS[1]); return {'OK'} end " +
+            "return {'WRONG'}";
+
+    private static final String RESULT_OK = "OK";
+    private static final String RESULT_WRONG = "WRONG";
 
     @SuppressWarnings("unchecked")
     private static final RedisScript<List<String>> CAPTCHA_SCRIPT =
@@ -76,14 +79,18 @@ public class RedisUtil {
      */
     @SuppressWarnings("ConstantConditions")
     private void verifyAndDeleteCaptcha(String key, String inputCaptcha) {
-        List<String> result = redisTemplate.execute(CAPTCHA_SCRIPT, List.of(key));
-        if (result == null || result.isEmpty() || result.getFirst() == null) {
+        List<String> result = redisTemplate.execute(CAPTCHA_SCRIPT, List.of(key), inputCaptcha);
+        if (result == null || result.isEmpty()) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }
-        String captcha = result.getFirst();
-        // 使用常量时间比较防止时序攻击
-        if (!MessageDigest.isEqual(captcha.getBytes(), inputCaptcha.getBytes())) {
-            throw new BusinessException(ResponseCode.USER_VERIFY_CODE_ERROR);
+        String status = result.getFirst();
+        switch (status) {
+            case RESULT_OK:
+                return;
+            case RESULT_WRONG:
+                throw new BusinessException(ResponseCode.USER_VERIFY_CODE_ERROR);
+            default:
+                throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }
     }
 }

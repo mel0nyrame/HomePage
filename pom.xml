@@ -31,6 +31,7 @@
         <hutool.version>5.8.46</hutool.version>
         <redisson.version>4.4.0</redisson.version>
         <commons-lang3.version>3.18.0</commons-lang3.version>
+        <geoip2.version>5.1.0</geoip2.version>
     </properties>
 
     <dependencyManagement>
@@ -125,6 +126,14 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-amqp</artifactId>
                 <version>${spring-boot.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <!-- Geoip2 -->
+            <dependency>
+                <groupId>com.maxmind.geoip2</groupId>
+                <artifactId>geoip2</artifactId>
+                <version>${geoip2.version}</version>
                 <scope>compile</scope>
             </dependency>
 

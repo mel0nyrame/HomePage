@@ -19,3 +19,10 @@ application-prod.yml
 # AI
 .claude
 .codegraph
+
+# Eclipse
+.project
+.classpath
+.factorypath
+.settings/
+bin/

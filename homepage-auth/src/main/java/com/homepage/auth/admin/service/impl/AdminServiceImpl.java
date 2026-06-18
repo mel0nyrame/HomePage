@@ -1,8 +1,10 @@
 package com.homepage.auth.admin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.homepage.auth.admin.mapper.AdminMapper;
 import com.homepage.auth.admin.service.AdminService;
+import com.homepage.auth.loginlog.service.LoginLogService;
 import com.homepage.common.exception.BusinessException;
 import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
@@ -11,6 +13,7 @@ import com.homepage.common.model.entity.AdminEntity;
 import com.homepage.common.util.RedisUtil;
 import com.homepage.common.util.TokenService;
 import com.homepage.common.web.ResponseCode;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -39,24 +42,29 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     private final CompromisedPasswordChecker compromisedPasswordChecker;
     private final TokenService tokenService;
     private final UserDetailsService adminUserDetailsService;
+    private final LoginLogService loginLogService;
+    private final AdminMapper adminMapper;
 
     public AdminServiceImpl(@Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
                             PasswordEncoder passwordEncoder,
                             RedisUtil redisUtil,
                             CompromisedPasswordChecker compromisedPasswordChecker,
                             TokenService tokenService,
-                            @Qualifier("adminUserDetailsServiceImpl") UserDetailsService adminUserDetailsService
-    ) {
+                            @Qualifier("adminUserDetailsServiceImpl") UserDetailsService adminUserDetailsService,
+                            LoginLogService loginLogService,
+                            AdminMapper adminMapper) {
         this.adminAuthenticationManager = adminAuthenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.redisUtil = redisUtil;
         this.compromisedPasswordChecker = compromisedPasswordChecker;
         this.tokenService = tokenService;
         this.adminUserDetailsService = adminUserDetailsService;
+        this.loginLogService = loginLogService;
+        this.adminMapper = adminMapper;
     }
 
     @Override
-    public TokenDTO login(AdminLoginDTO adminLoginDTO) {
+    public TokenDTO login(AdminLoginDTO adminLoginDTO, HttpServletRequest request) {
         // 验证验证码
         redisUtil.verifyCaptcha(adminLoginDTO);
 
@@ -64,7 +72,10 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
             Authentication authentication = adminAuthenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(adminLoginDTO.getAccount(), adminLoginDTO.getPassword())
             );
-            return tokenService.issueTokenPair(authentication);
+            TokenDTO token = tokenService.issueTokenPair(authentication);
+
+            loginLogService.recordLog(request,adminMapper.selectIdByAccount(adminLoginDTO.getAccount()));
+            return token;
         } catch (BadCredentialsException e) {
             throw new BusinessException(ResponseCode.USER_PASSWORD_ERROR);
         } catch (DisabledException e) {

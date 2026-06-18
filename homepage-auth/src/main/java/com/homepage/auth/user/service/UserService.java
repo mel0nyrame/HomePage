@@ -6,6 +6,7 @@ import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.UserEntity;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * The interface User service.
@@ -20,9 +21,10 @@ public interface UserService extends IService<UserEntity> {
     /**
      * 用户登录
      * @param loginDTO 用户登陆信息
+     * @param request  HTTP 请求
      * @return jwt 生成的 access_token 和 refresh_token
      */
-    TokenDTO login(LoginDTO loginDTO);
+    TokenDTO login(LoginDTO loginDTO, HttpServletRequest request);
 
     /**
      * 用户注册

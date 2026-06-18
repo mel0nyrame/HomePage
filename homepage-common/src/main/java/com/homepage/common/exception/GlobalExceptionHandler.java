@@ -1,5 +1,6 @@
 package com.homepage.common.exception;
 
+import cn.hutool.extra.servlet.JakartaServletUtil;
 import com.homepage.common.web.Response;
 import com.homepage.common.web.ResponseCode;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public Response<Void> handleBusinessException(BusinessException e, HttpServletRequest request) {
-        log.warn("ip:{} 业务异常 [{}] {} -> {}", request.getRemoteAddr(),e.getCode(), request.getRequestURI(), e.getMessage());
+        log.warn("ip:{} 业务异常 [{}] {} -> {}", JakartaServletUtil.getClientIP(request),e.getCode(), request.getRequestURI(), e.getMessage());
         return Response.fail(e.getCode(), e.getMessage());
     }
 
