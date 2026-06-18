@@ -3,8 +3,6 @@ package com.homepage.auth.admin.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.homepage.common.model.entity.AdminEntity;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 
 /**
  * @Author Mel0ny
@@ -14,7 +12,4 @@ import org.apache.ibatis.annotations.Select;
  */
 @Mapper
 public interface AdminMapper extends BaseMapper<AdminEntity> {
-
-    @Select("SELECT id FROM homepage_admin WHERE account = #{account}")
-    Long selectIdByAccount(@Param("account") String account);
 }

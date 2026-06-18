@@ -24,7 +24,7 @@ public class AdminRegisterDTO implements CaptchaAware {
     @Pattern(regexp = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$",
             message = "密码必须由数字和字母组成，并且长度大于等于8个字符")
     @Schema(description = "管理员密码，必须包含数字和字母，长度>=8", example = "admin123456")
-    @Size(min = 8,message = "密码必须大于8位数")
+    @Size(min = 8, message = "密码必须大于8位数")
     private String password;
 
     @NotBlank(message = "验证码id不能空")

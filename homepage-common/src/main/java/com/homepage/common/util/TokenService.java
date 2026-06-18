@@ -1,5 +1,6 @@
 package com.homepage.common.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.homepage.common.exception.BusinessException;
 import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.web.ResponseCode;
@@ -22,7 +23,7 @@ import static com.homepage.common.util.JwtUtil.TYPE_REFRESH;
  * @Package com.homepage.common.util
  * @Date 2026/6/10
  * @description: Token 业务层。统一负责签发、旋转、吊销、解析。
- *              User 与 Admin 各自的 service 只需调本类即可。
+ * User 与 Admin 各自的 service 只需调本类即可。
  */
 @Slf4j
 @Component
@@ -51,10 +52,10 @@ public class TokenService {
         long accessTtl = JWT_ACCESS_TOKEN_EXPIRATION_TIME / 1000;
         long refreshTtl = JWT_REFRESH_TOKEN_EXPIRATION_TIME / 1000;
 
-        if (accessJti != null) {
+        if (StrUtil.isNotBlank(accessJti)) {
             tokenStore.saveAccess(accessJti, accessToken, accessTtl);
         }
-        if (refreshJti != null) {
+        if (StrUtil.isNotBlank(refreshJti)) {
             tokenStore.saveRefresh(refreshJti, authentication.getName(), refreshToken, refreshTtl);
         }
 
@@ -67,8 +68,8 @@ public class TokenService {
     /**
      * 用 refreshToken 换新 (access, refresh) 对，带 rotation 和 reuse-detection
      *
-     * @param refreshToken         客户端传来的 refresh_token 字符串
-     * @param userDetailsService   用来按 username 重新加载 Authentication 的服务
+     * @param refreshToken       客户端传来的 refresh_token 字符串
+     * @param userDetailsService 用来按 username 重新加载 Authentication 的服务
      */
     public TokenDTO rotate(String refreshToken, UserDetailsService userDetailsService) {
         Jwt jwt = decodeOrThrow(refreshToken);
@@ -88,7 +89,7 @@ public class TokenService {
 
         // 异常路径：旧 refresh 已经失效但又出现 → 视为复用，踢掉该账号所有会话
         String indexedUsername = tokenStore.getUsernameByRefreshJti(jti);
-        if (indexedUsername != null) {
+        if (StrUtil.isNotBlank(indexedUsername)) {
             tokenStore.revokeAllByUsername(indexedUsername);
             log.warn("检测到 refresh token 复用，jti={}，已吊销账号 {} 所有会话", jti, indexedUsername);
         }
@@ -99,7 +100,7 @@ public class TokenService {
      * 当前会话登出：吊销传入 jti 对应的 access + refresh
      */
     public void revoke(String accessJti) {
-        if (accessJti == null) {
+        if (StrUtil.isBlank(accessJti)) {
             return;
         }
         tokenStore.revoke(accessJti);

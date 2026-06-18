@@ -1,6 +1,5 @@
 package com.homepage.auth.admin.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.homepage.auth.admin.mapper.AdminMapper;
 import com.homepage.auth.admin.service.AdminService;
@@ -10,6 +9,7 @@ import com.homepage.common.model.dto.AdminLoginDTO;
 import com.homepage.common.model.dto.AdminRegisterDTO;
 import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.AdminEntity;
+import com.homepage.common.model.security.AdminUserDetails;
 import com.homepage.common.util.RedisUtil;
 import com.homepage.common.util.TokenService;
 import com.homepage.common.web.ResponseCode;
@@ -43,7 +43,6 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
     private final TokenService tokenService;
     private final UserDetailsService adminUserDetailsService;
     private final LoginLogService loginLogService;
-    private final AdminMapper adminMapper;
 
     public AdminServiceImpl(@Qualifier("adminAuthenticationManager") AuthenticationManager adminAuthenticationManager,
                             PasswordEncoder passwordEncoder,
@@ -51,8 +50,7 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
                             CompromisedPasswordChecker compromisedPasswordChecker,
                             TokenService tokenService,
                             @Qualifier("adminUserDetailsServiceImpl") UserDetailsService adminUserDetailsService,
-                            LoginLogService loginLogService,
-                            AdminMapper adminMapper) {
+                            LoginLogService loginLogService) {
         this.adminAuthenticationManager = adminAuthenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.redisUtil = redisUtil;
@@ -60,7 +58,6 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
         this.tokenService = tokenService;
         this.adminUserDetailsService = adminUserDetailsService;
         this.loginLogService = loginLogService;
-        this.adminMapper = adminMapper;
     }
 
     @Override
@@ -74,7 +71,8 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, AdminEntity> impl
             );
             TokenDTO token = tokenService.issueTokenPair(authentication);
 
-            loginLogService.recordLog(request,adminMapper.selectIdByAccount(adminLoginDTO.getAccount()));
+            AdminUserDetails principal = (AdminUserDetails) authentication.getPrincipal();
+            loginLogService.recordLog(request, principal.getId());
             return token;
         } catch (BadCredentialsException e) {
             throw new BusinessException(ResponseCode.USER_PASSWORD_ERROR);

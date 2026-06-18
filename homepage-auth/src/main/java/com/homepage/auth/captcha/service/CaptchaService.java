@@ -21,5 +21,6 @@ public interface CaptchaService {
      * @param captchaId 验证码id
      * @param image     验证码图片base64编码
      */
-    record Captcha(String captchaId, String image) {}
+    record Captcha(String captchaId, String image) {
+    }
 }

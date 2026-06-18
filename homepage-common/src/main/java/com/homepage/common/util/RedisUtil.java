@@ -21,11 +21,12 @@ import static com.homepage.common.constant.RedisConstants.REDIS_EMAIL_CAPTCHA_PR
 @Component
 public class RedisUtil {
 
-    private static final String CAPTCHA_VERIFY_LUA =
-            "local v = redis.call('GET', KEYS[1]) " +
-            "if not v then return {'NOT_FOUND'} end " +
-            "if v == ARGV[1] then redis.call('DEL', KEYS[1]); return {'OK'} end " +
-            "return {'WRONG'}";
+    private static final String CAPTCHA_VERIFY_LUA = """
+            local v = redis.call('GET', KEYS[1])
+            if not v then return {'NOT_FOUND'} end
+            if v == ARGV[1] then redis.call('DEL', KEYS[1]); return {'OK'} end
+            return {'WRONG'}
+            """;
 
     private static final String RESULT_OK = "OK";
     private static final String RESULT_WRONG = "WRONG";

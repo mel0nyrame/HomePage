@@ -1,5 +1,6 @@
 package com.homepage.common.exception;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.extra.servlet.JakartaServletUtil;
 import com.homepage.common.web.Response;
 import com.homepage.common.web.ResponseCode;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import java.util.stream.Collectors;
-
 /**
  * @Author Mel0ny
  * @Package com.homepage.common
@@ -30,16 +29,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public Response<Void> handleBusinessException(BusinessException e, HttpServletRequest request) {
-        log.warn("ip:{} 业务异常 [{}] {} -> {}", JakartaServletUtil.getClientIP(request),e.getCode(), request.getRequestURI(), e.getMessage());
+        log.warn("ip:{} 业务异常 [{}] {} -> {}", JakartaServletUtil.getClientIP(request), e.getCode(), request.getRequestURI(), e.getMessage());
         return Response.fail(e.getCode(), e.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response<Void> handleValidationException(MethodArgumentNotValidException e) {
-        String message = e.getBindingResult().getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage)
-                .collect(Collectors.joining(" "));
+        String message = CollUtil.join(e.getBindingResult().getFieldErrors(), " ", FieldError::getDefaultMessage);
         return Response.fail(ResponseCode.PARAM_VALID_ERROR.getCode(), message);
     }
 

@@ -18,5 +18,5 @@ public interface LoginLogService extends IService<LoginLogEntity> {
      * @param request 请求
      * @param id      用户主键id
      */
-    void recordLog(HttpServletRequest request,Long id);
+    void recordLog(HttpServletRequest request, Long id);
 }

@@ -1,5 +1,7 @@
 package com.homepage.common.util;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -13,11 +15,11 @@ import static com.homepage.common.constant.RedisConstants.*;
  * @Package com.homepage.common.util
  * @Date 2026/6/10
  * @description: Token 在 Redis 中的存取与吊销工具。
- *              key 设计：
- *                token:access:{jti}        -> accessToken 字符串
- *                token:refresh:{jti}       -> refreshToken 字符串
- *                token:user:refresh:{user} -> Set<jti> 该用户所有 refresh 会话
- *                token:refresh:index       -> Hash jti -> username
+ * key 设计：
+ * token:access:{jti}        -> accessToken 字符串
+ * token:refresh:{jti}       -> refreshToken 字符串
+ * token:user:refresh:{user} -> Set<jti> 该用户所有 refresh 会话
+ * token:refresh:index       -> Hash jti -> username
  */
 @Component
 public class TokenStore {
@@ -59,7 +61,7 @@ public class TokenStore {
      * 校验 accessToken 是否有效：Redis 中存在且与传入 token 一致
      */
     public boolean isAccessValid(String jti, String token) {
-        if (jti == null || token == null) {
+        if (!StrUtil.isAllNotBlank(jti, token)) {
             return false;
         }
         String stored = redisTemplate.opsForValue().get(REDIS_TOKEN_ACCESS_PREFIX + jti);
@@ -70,7 +72,7 @@ public class TokenStore {
      * 校验 refreshToken 是否有效
      */
     public boolean isRefreshValid(String jti, String token) {
-        if (jti == null || token == null) {
+        if (!StrUtil.isAllNotBlank(jti, token)) {
             return false;
         }
         String stored = redisTemplate.opsForValue().get(REDIS_TOKEN_REFRESH_PREFIX + jti);
@@ -102,13 +104,11 @@ public class TokenStore {
     public long revokeAllByUsername(String username) {
         String setKey = REDIS_USER_REFRESH_SET_PREFIX + username;
         Set<String> jtis = redisTemplate.opsForSet().members(setKey);
-        if (jtis == null || jtis.isEmpty()) {
+        if (CollUtil.isEmpty(jtis)) {
             redisTemplate.delete(setKey);
             return 0L;
         }
-        for (String jti : jtis) {
-            revoke(jti);
-        }
+        jtis.forEach(this::revoke);
         redisTemplate.delete(setKey);
         return jtis.size();
     }

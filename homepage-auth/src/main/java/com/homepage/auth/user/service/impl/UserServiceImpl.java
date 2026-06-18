@@ -1,5 +1,6 @@
 package com.homepage.auth.user.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.homepage.auth.loginlog.service.LoginLogService;
@@ -11,6 +12,7 @@ import com.homepage.common.model.dto.LoginDTO;
 import com.homepage.common.model.dto.RegisterDTO;
 import com.homepage.common.model.dto.TokenDTO;
 import com.homepage.common.model.entity.UserEntity;
+import com.homepage.common.model.security.HomepageUserDetails;
 import com.homepage.common.util.MailUtil;
 import com.homepage.common.util.RedisUtil;
 import com.homepage.common.util.TokenService;
@@ -55,7 +57,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
     private final TokenService tokenService;
     private final UserDetailsService userDetailsService;
     private final LoginLogService loginLogService;
-    private final UserMapper userMapper;
 
     public UserServiceImpl(PasswordEncoder passwordEncoder,
                            @Qualifier("userAuthenticationManager") AuthenticationManager authenticationManager,
@@ -65,8 +66,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
                            CompromisedPasswordChecker compromisedPasswordChecker,
                            TokenService tokenService,
                            @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
-                           LoginLogService loginLogService,
-                           UserMapper userMapper) {
+                           LoginLogService loginLogService) {
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.redisUtil = redisUtil;
@@ -76,7 +76,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
         this.tokenService = tokenService;
         this.userDetailsService = userDetailsService;
         this.loginLogService = loginLogService;
-        this.userMapper = userMapper;
     }
 
     @Override
@@ -90,7 +89,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
             );
             TokenDTO token = tokenService.issueTokenPair(authentication);
 
-            loginLogService.recordLog(request,userMapper.selectIdByUsername(loginDTO.getAccount()));
+            HomepageUserDetails principal = (HomepageUserDetails) authentication.getPrincipal();
+            loginLogService.recordLog(request, principal.getId());
             return token;
         } catch (BadCredentialsException e) {
             throw new BusinessException(ResponseCode.USER_PASSWORD_ERROR);
@@ -150,7 +150,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, UserEntity> impleme
 
         // 获取存在redis中的用户信息，并删除验证码
         String userJson = redisTemplate.opsForValue().getAndDelete(REDIS_USER_PREFIX + emailDTO.getEmail());
-        if (userJson == null) {
+        if (StrUtil.isBlank(userJson)) {
             throw new BusinessException(ResponseCode.USER_VERIFY_CODE_EXPIRED);
         }
 

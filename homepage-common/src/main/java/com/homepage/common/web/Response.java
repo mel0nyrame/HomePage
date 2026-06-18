@@ -14,21 +14,18 @@ public class Response<T> implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+    @Schema(description = "状态码", example = "200")
+    private final int code;
+    @Schema(description = "提示信息", example = "ok")
+    private final String message;
+    @Schema(description = "响应数据")
+    private final T data;
 
     public Response(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
-
-    @Schema(description = "状态码", example = "200")
-    private final int code;
-
-    @Schema(description = "提示信息", example = "ok")
-    private final String message;
-
-    @Schema(description = "响应数据")
-    private final T data;
 
     public static <T> Response<T> ok() {
         return new Response<>(ResponseCode.SUCCESS.getCode(), ResponseCode.SUCCESS.getMessage(), null);
